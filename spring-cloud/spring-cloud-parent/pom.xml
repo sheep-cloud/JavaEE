@@ -1,8 +1,75 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>cn.colg</groupId>
-  <artifactId>spring-cloud-parent</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  <name>spring-cloud-parent :: 父工程，主要是定义POM文件，将后续各个子模块共用的jar包等统一提取出来，类似一个抽象类</name>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>cn.colg</groupId>
+	<artifactId>spring-cloud-parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>spring-cloud-parent :: 父工程，主要是定义POM文件，将后续各个子模块共用的jar包等统一提取出来，类似一个抽象父类</name>
+
+	<!-- 集中定义依赖版本号 -->
+	<properties>
+		<java.version>1.8</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<junit.version>4.12</junit.version>
+		<hutool.version>4.0.10</hutool.version>
+		<sprign-boot.version>1.5.12.RELEASE</sprign-boot.version>
+		<spring-cloud.version>Dalston.SR5</spring-cloud.version>
+		<druid.version>1.1.9</druid.version>
+		<mybatis-spring-boot.version>1.3.2</mybatis-spring-boot.version>
+	</properties>
+
+	<!-- 集中管理依赖 -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>cn.hutool</groupId>
+				<artifactId>hutool-all</artifactId>
+				<version>${hutool.version}</version>
+			</dependency>
+
+			<!-- spirng-boot 依赖 -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${sprign-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!-- spring-cloud 依赖 -->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- mysql 依赖 -->
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<!-- <version>5.1.46</version> -->
+			</dependency>
+			<!-- druid 依赖 -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+				<version>${druid.version}</version>
+			</dependency>
+			<!-- mybatis-spring-boot 依赖 -->
+			<dependency>
+				<groupId>org.mybatis.spring.boot</groupId>
+				<artifactId>mybatis-spring-boot-starter</artifactId>
+				<version>${mybatis-spring-boot.version}</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
 </project>
