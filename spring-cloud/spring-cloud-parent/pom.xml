@@ -81,5 +81,6 @@
 	<modules>
 		<module>spring-cloud-api</module>
 		<module>spring-cloud-provider-dept-8001</module>
+		<module>spring-cloud-consumer-dept-80</module>
 	</modules>
 </project>
