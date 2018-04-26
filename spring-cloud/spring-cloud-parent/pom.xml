@@ -10,10 +10,14 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 		<junit.version>4.12</junit.version>
 		<hutool.version>4.0.10</hutool.version>
+		<lombok.version>1.16.20</lombok.version>
 		<sprign-boot.version>1.5.12.RELEASE</sprign-boot.version>
 		<spring-cloud.version>Dalston.SR5</spring-cloud.version>
+		<mysql.version>5.1.46</mysql.version>
 		<druid.version>1.1.9</druid.version>
 		<mybatis-spring-boot.version>1.3.2</mybatis-spring-boot.version>
 	</properties>
@@ -21,12 +25,14 @@
 	<!-- 集中管理依赖 -->
 	<dependencyManagement>
 		<dependencies>
+			<!-- junit 依赖 -->
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>${junit.version}</version>
 				<scope>test</scope>
 			</dependency>
+			<!-- hutool 依赖 -->
 			<dependency>
 				<groupId>cn.hutool</groupId>
 				<artifactId>hutool-all</artifactId>
@@ -54,7 +60,7 @@
 			<dependency>
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
-				<!-- <version>5.1.46</version> -->
+				<version>${mysql.version}</version>
 			</dependency>
 			<!-- druid 依赖 -->
 			<dependency>
@@ -68,8 +74,12 @@
 				<artifactId>mybatis-spring-boot-starter</artifactId>
 				<version>${mybatis-spring-boot.version}</version>
 			</dependency>
-
 		</dependencies>
 	</dependencyManagement>
 
+	<!-- 子模块 -->
+	<modules>
+		<module>spring-cloud-api</module>
+		<module>spring-cloud-provider-dept-8001</module>
+	</modules>
 </project>
