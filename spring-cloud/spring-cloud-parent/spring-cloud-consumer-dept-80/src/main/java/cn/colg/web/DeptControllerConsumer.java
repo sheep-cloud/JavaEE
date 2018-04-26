@@ -43,7 +43,7 @@ public class DeptControllerConsumer {
     }
 
     @GetMapping("/list")
-    public ResultBean List() {
+    public ResultBean list() {
         return restTemplate.getForObject(REST_URL_PREFIX + "/dept/list", ResultBean.class);
     }
 
