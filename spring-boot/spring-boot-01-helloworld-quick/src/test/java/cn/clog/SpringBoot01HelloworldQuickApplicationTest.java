@@ -5,9 +5,14 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+/**
+ * Spring Boot 测试类
+ *
+ * @author colg
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class Mapper01HelloworldApplicationTests {
+public class SpringBoot01HelloworldQuickApplicationTest {
 
 	@Test
 	public void contextLoads() {
