@@ -2,12 +2,28 @@ server:
   port: 8001
   
 spring:
+  application:
+    name: spring-cloud-dept                               # 应用名称（对外暴露的微服务名称）
   profiles:
     include:
       - mybatis                                           # 激活配置文件
-  application:
-    name: spring-cloud-dept                               # 应用名称（对外暴露的微服务名称）
     
 logging:
   level:
     cn.colg.dao: debug
+    
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka/         # 将客户端注册进eureka服务列表内
+  instance:
+    instance-id: spring-cloud-provider-dept-8001         # 自定义服务名称信息
+    prefer-ip-address: true                              # 访问路径可以显示ip地址
+    
+#  配置   eureka info信息
+info:
+  app.name: ${spring.application.name}
+  company.name: www.arrow.com
+  build.groupId: $project.groupId$
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
