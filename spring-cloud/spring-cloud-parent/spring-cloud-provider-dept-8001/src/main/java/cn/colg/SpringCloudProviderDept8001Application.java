@@ -17,10 +17,9 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @EnableEurekaClient
 @MapperScan("cn.colg.dao")
 @SpringBootApplication
-public class ProviderDept8001 {
+public class SpringCloudProviderDept8001Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(ProviderDept8001.class, args);
+        SpringApplication.run(SpringCloudProviderDept8001Application.class, args);
     }
-
 }

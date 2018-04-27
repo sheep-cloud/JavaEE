@@ -9,9 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author colg
  */
 @SpringBootApplication
-public class ConsumerDept80 {
+public class SpringCloudConsumerDept80Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(ConsumerDept80.class, args);
+        SpringApplication.run(SpringCloudConsumerDept80Application.class, args);
     }
 }

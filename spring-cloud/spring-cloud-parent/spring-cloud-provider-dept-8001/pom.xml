@@ -32,7 +32,6 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 		
-		
 		<!-- junit 依赖 -->
 		<dependency>
 			<groupId>junit</groupId>

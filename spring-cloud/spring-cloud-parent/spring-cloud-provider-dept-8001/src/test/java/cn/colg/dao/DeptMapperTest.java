@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.colg.ProviderDept8001Test;
+import cn.colg.SpringCloudProviderDept8001ApplicationTest;
 import cn.colg.entity.Dept;
 
 /**
@@ -15,7 +15,9 @@ import cn.colg.entity.Dept;
  *
  * @author colg
  */
-public class DeptMapperTest extends ProviderDept8001Test {
+public class DeptMapperTest extends SpringCloudProviderDept8001ApplicationTest {
+
+    public static final String DATA_PREFIX = "Junit_Test_";
 
     @Autowired
     private DeptMapper deptMapper;
@@ -23,7 +25,7 @@ public class DeptMapperTest extends ProviderDept8001Test {
     @Test
     public void testAddDept() {
         Dept dept = new Dept();
-        dept.setDeptName("前端部门");
+        dept.setDeptName(DATA_PREFIX + "前端部");
         boolean existed = deptMapper.addDept(dept);
         assertTrue(existed);
     }
