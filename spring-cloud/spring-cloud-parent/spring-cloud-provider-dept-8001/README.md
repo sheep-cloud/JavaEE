@@ -1,4 +1,5 @@
-## 1、swagger2 
+# Swagger2 配置
+## 1、swagger2 展示
 访问地址：http://localhost:8001/swagger-ui.html
 
 ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqrccmjc8jj31gq0qat9r.jpg)
@@ -10,7 +11,6 @@
 		<swagger2.version>2.8.0</swagger2.version>
 	</properties>
 
-        <!-- swagger2 依赖-->
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
