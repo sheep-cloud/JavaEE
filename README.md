@@ -8,4 +8,6 @@
 # 相关技术
 
 -   [Lombok](https://github.com/colg-cloud/JavaEE/tree/master/spring-cloud/spring-cloud-parent/spring-cloud-api)
--   [swagger2](https://github.com/colg-cloud/JavaEE/tree/master/spring-cloud/spring-cloud-parent/spring-cloud-provider-dept-8001)
+-   [Swagger2](https://github.com/colg-cloud/JavaEE/tree/master/spring-cloud/spring-cloud-parent/spring-cloud-provider-dept-8001)
+-   [Eureka](https://github.com/colg-cloud/JavaEE/tree/master/spring-cloud/spring-cloud-parent/spring-cloud-eureka-7001)
+
