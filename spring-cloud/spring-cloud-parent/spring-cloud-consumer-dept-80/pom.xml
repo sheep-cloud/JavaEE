@@ -6,6 +6,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>spring-cloud-consumer-dept-80</artifactId>
+	<name>spring-cloud :: 服务消费者 consumer-dept-80</name>
 
 	<dependencies>
 		<!-- 引入自己定义的API通用包，可以使用Dept部门的Entity -->
@@ -15,7 +16,7 @@
 			<!-- 跟随依赖变动版本 -->
 			<version>${project.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>

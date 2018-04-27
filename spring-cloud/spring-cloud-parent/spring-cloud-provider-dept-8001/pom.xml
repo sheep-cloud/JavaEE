@@ -6,6 +6,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>spring-cloud-provider-dept-8001</artifactId>
+	<name>spring-cloud :: 服务提供者 provider-dept-8001</name>
 
 	<dependencies>
 		<!-- 引入自己定义的API通用包，可以使用Dept部门的Entity -->

@@ -8,6 +8,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>spring-cloud-api</artifactId>
+	<name>spring-cloud :: 通用模块api</name>
 
 	<dependencies>
 		<!-- lombok 依赖 -->
@@ -33,5 +34,6 @@
 			<version>${swagger2.version}</version>
 		</dependency>
 	</dependencies>
+
 
 </project>
