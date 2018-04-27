@@ -1,6 +1,5 @@
-# 相关技术
-## eclipse中使用Lombok
-### windows环境
+# eclipse中使用Lombok
+## windows环境
 1. 下载lombok.jar包https://projectlombok.org/download.html
 
 2. 运行Lombok.jar: java -jar E:\maven\repository\org\projectlombok\lombok\1.16.20\lombok-1.16.20.jar	lombok.jar所在路径
