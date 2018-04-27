@@ -63,8 +63,28 @@ public class ResultBean implements Serializable {
     @ApiModelProperty("返回的数据")
     private Object data;
 
+    /// ----------------------------------------------------------------------------------------------------
+
+    /**
+     * 未知异常
+     *
+     * @param e
+     */
     public ResultBean(Throwable e) {
         this.msg = e.toString();
         this.code = UNKNOWN_EXCEPTION;
     }
+
+    /**
+     * 成功时的响应
+     *
+     * @param data
+     * @return
+     */
+    public static ResultBean success(Object data) {
+        ResultBean resultBean = new ResultBean();
+        resultBean.setData(data);
+        return resultBean;
+    }
+
 }

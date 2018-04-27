@@ -24,6 +24,8 @@ public class Swagger2 {
     @Bean
     public Docket docket() {
         return new Docket(DocumentationType.SWAGGER_2)
+                    .enable(true)
+                    .groupName("01. spring-cloud-provider-dept-8001")
                     .apiInfo(apiInfo())
                     .select()
                     .apis(RequestHandlerSelectors.basePackage("cn.colg.web"))
@@ -33,14 +35,17 @@ public class Swagger2 {
 
     /**
      * 设置api基本信息
+     * 
      * @return
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                    .title("spring-cloud-provider-dept-8001 API 提供者")
+                    .title("部门服务 API 提供")
+                    .description("部门相关操作的接口")
+                    .license("该文档仅限公司内部传阅")
+                    .version("1.0.0")
                     .termsOfServiceUrl("https://github.com/colg-cloud/JavaEE")
                     .contact(new Contact("colg", "https://github.com/colg-cloud/JavaEE/tree/master/spring-cloud", "121529654@qq.com"))
-                    .version("1.0.0")
                     .build();
     }
 }

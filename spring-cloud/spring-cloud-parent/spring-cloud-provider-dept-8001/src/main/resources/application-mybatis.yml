@@ -1,5 +1,6 @@
 mybatis:
   config-location: classpath:mybatis/mybatis.cfg.xml      # mybatis配置文件所在路径
+  type-aliases-package: cn.colg.bean
   mapper-locations:
     - classpath:mybatis/mapper/**/*.xml                   # mapper映射文件
     

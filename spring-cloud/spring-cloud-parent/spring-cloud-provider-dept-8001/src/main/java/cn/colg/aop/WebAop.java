@@ -26,13 +26,13 @@ public class WebAop {
     private void controllerMethod() {}
 
     @Around("controllerMethod()")
-    public Object handlerControllerMethod(ProceedingJoinPoint point) {
+    public ResultBean handlerControllerMethod(ProceedingJoinPoint point) {
         long startTime = System.currentTimeMillis();
 
         ResultBean resultBean = new ResultBean();
         try {
             // 执行目标方法
-            point.proceed();
+            resultBean = (ResultBean)point.proceed();
             log.info(point.getSignature() + " USE TIME: [{}ms]", System.currentTimeMillis() - startTime);
         } catch (Throwable e) {
             // 执行目标方法异常，包装异常
@@ -61,8 +61,7 @@ public class WebAop {
         else {
             log.error(point.getSignature() + " ERROR {}", e);
             // TODO colg [未知异常，应该格外注意，可以发邮件通知等]
-            resultBean.setMsg(e.toString());
-            resultBean.setCode(ResultBean.UNKNOWN_EXCEPTION);
+            resultBean = new ResultBean(e);
         }
 
         return resultBean;

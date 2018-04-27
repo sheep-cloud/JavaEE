@@ -10,6 +10,8 @@ import cn.hutool.core.util.StrUtil;
  */
 public class CheckUtil {
 
+    private CheckUtil() {}
+
     /**
      * 
      * 表达式的结果为false时，抛出校验异常

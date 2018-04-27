@@ -1,7 +1,7 @@
 package cn.colg.service.impl;
 
-import static cn.colg.util.CheckUtil.*;
-import static cn.colg.util.ValidUtil.*;
+import static cn.colg.util.CheckUtil.check;
+import static cn.colg.util.ValidUtil.isIntegerPositive;
 
 import java.util.List;
 
@@ -43,7 +43,9 @@ public class DeptServiceImpl implements DeptService {
     
     @Override
     public List<Dept> list() {
-        return deptMapper.queryAll();
+        List<Dept> list = deptMapper.queryAll();
+        log.info("DeptServiceImpl.list() : size : {}", list.size());
+        return list;
     }
 
 }

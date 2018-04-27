@@ -15,5 +15,4 @@ INSERT INTO dept(deptname, dbsource) VALUES('市场部', DATABASE());
 INSERT INTO dept(deptname, dbsource) VALUES('运维部', DATABASE());
 
 
-SELECT *
-FROM dept;
+SELECT d.deptno, d.deptname, d.dbsource FROM dept d;
