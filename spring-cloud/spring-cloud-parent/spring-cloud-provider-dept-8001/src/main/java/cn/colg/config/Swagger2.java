@@ -42,10 +42,11 @@ public class Swagger2 {
         return new ApiInfoBuilder()
                     .title("部门服务 API 提供")
                     .description("部门相关操作的接口")
-                    .license("该文档仅限公司内部传阅")
                     .version("1.0.0")
                     .termsOfServiceUrl("https://github.com/colg-cloud/JavaEE")
                     .contact(new Contact("colg", "https://github.com/colg-cloud/JavaEE/tree/master/spring-cloud", "121529654@qq.com"))
+                    .license("该文档仅限公司内部传阅")
+                    .licenseUrl("https://springcloud.cc/")
                     .build();
     }
 }
