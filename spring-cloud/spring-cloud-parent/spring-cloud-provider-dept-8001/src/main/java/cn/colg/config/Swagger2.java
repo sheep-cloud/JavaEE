@@ -21,6 +21,19 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 public class Swagger2 {
 
+    /**
+     * 配置Swagger2
+     * 
+     * <pre>
+     * enable：                                      是否启用swagger
+     * groupName：                            api组的名字，会在swagger-ui的api下拉列表中显示；组名前的序号，多个组可以排序；最好不要写中文
+     * apiInfo：                                  响应中包含的api元信息。
+     * select：                                      api启动的构建器
+     * apis：                                            扫描的包
+     * </pre>
+     *
+     * @return
+     */
     @Bean
     public Docket docket() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -35,6 +48,16 @@ public class Swagger2 {
 
     /**
      * 设置api基本信息
+     * 
+     * <pre>
+     * title：                                           api组的标题，会在swagger-ui的标题处显示
+     * description：                         pi组的描述，会在swagger-ui的描述中显示
+     * version：                                     api版本
+     * termsOfServiceUrl：       服务条款地址
+     * contact：                                     文档联系人信息
+     * license：                                     授权协议
+     * licenseUrl：                           授权协议地址
+     * </pre>
      * 
      * @return
      */

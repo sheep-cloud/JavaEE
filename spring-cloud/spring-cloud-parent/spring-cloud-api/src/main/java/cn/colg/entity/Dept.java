@@ -24,12 +24,25 @@ import lombok.experimental.Accessors;
  * 
  * @author colg
  */
+@ApiModel(description = "部门对象")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Accessors(chain = true)
-@ApiModel(description = "部门对象")
 public class Dept implements Serializable {
+
+    /*
+     * Swagger2 语法：
+     * 作用在Model上：
+     *  1. @ApiModel(description = "部门对象") ：    Model的描述
+     *  2. @ApiModelProperty("主键")：                                 属性描述
+     *  
+     * 作用在Controller上：
+     *  1. @Api(tags = {"部门管理"})：                                   Controller的类描述
+     *  2. @ApiOperation("添加部门")：                                   Controller的方法描述
+     *  3. @ApiImplicitParam(name = "id", value = "部门id", paramType = "Long", required = true)
+     *      name：属性；value：属性描述；paramType：属性类型；required：是否必填
+     */
 
     private static final long serialVersionUID = 1L;
 
