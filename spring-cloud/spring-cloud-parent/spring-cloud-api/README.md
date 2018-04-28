@@ -1,5 +1,5 @@
 # eclipse中使用Lombok
-## windows环境
+## 1、Lombok安装
 1. 下载lombok.jar包https://projectlombok.org/download.html
 
 2. 运行Lombok.jar: java -jar E:\maven\repository\org\projectlombok\lombok\1.16.20\lombok-1.16.20.jar	lombok.jar所在路径
@@ -16,3 +16,6 @@
 	如果上面的答案均为true，那么恭喜你已经安装成功，否则将缺少的部分添加到相应的位置即可
 
 5. 重启eclipse或spring-tool-suite
+
+## 2、Lombok 基本用法
+![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqs7fgrptvj30fh0asmx7.jpg)
