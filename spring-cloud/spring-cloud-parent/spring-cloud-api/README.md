@@ -11,6 +11,7 @@
 4. 安装完成之后，请确认eclipse安装路径下是否多了一个lombok.jar包，并且其
 
 	配置文件eclipse.ini中是否 添加了如下内容: 
+	
     `-javaagent:D:\Spring Tool Suite\spring-tool-suite-3.7.3.RELEASE\lombok.jar`
     
 	如果上面的答案均为true，那么恭喜你已经安装成功，否则将缺少的部分添加到相应的位置即可
