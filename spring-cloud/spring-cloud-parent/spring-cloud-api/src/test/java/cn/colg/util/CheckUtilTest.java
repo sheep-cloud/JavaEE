@@ -1,6 +1,9 @@
 package cn.colg.util;
 
-import static cn.colg.util.CheckUtil.*;
+import static cn.colg.util.CheckUtil.check;
+import static cn.colg.util.CheckUtil.notBlank;
+import static cn.colg.util.CheckUtil.notEmpty;
+import static cn.colg.util.CheckUtil.notNull;
 
 import org.junit.Test;
 

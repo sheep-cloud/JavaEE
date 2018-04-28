@@ -60,7 +60,16 @@ public class ResultBean implements Serializable {
     }
 
     /**
-     * 成功时的响应
+     * 成功时的响应：无返回数据
+     *
+     * @return
+     */
+    public static ResultBean success() {
+        return success(null);
+    }
+
+    /**
+     * 成功时的响应：有返回数据
      *
      * @param data
      * @return
