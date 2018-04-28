@@ -37,5 +37,6 @@ No instances available：没有服务被发现，因为没有注册服务进来�
 ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqrm05csh8j311e0cl0t3.jpg)
 
 ## 4、微服务info内容构建
+![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqs7ptri5kj30hz0bm3yp.jpg)
 ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqs6tlbqwqj30u204y3yh.jpg)
 ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqs6u7pg1nj30tr09mglp.jpg)
