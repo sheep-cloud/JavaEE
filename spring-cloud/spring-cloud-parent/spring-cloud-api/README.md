@@ -8,7 +8,7 @@
 
 3. 确认完eclipse的安装路径后，点击install/update按钮，即可安装完成
 
-4. 安装完成之后，请确认eclipse安装路径下是否多了一个lombok.jar包，并且其
+4. 安装完成之后，请确认eclipse安装路径下是否多了一个`lombok.jar`包，并且其
 
 	配置文件eclipse.ini中是否 添加了如下内容: 
 	
