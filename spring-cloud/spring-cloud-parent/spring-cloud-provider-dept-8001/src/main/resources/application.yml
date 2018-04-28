@@ -28,4 +28,4 @@ info:                                                    # 配置   eureka info�
     groupId: $project.groupId$
     artifactId: $project.artifactId$
     version: $project.version$
-  github: https://github.com/colg-cloud/JavaEE/tree/master/spring-cloud/spring-cloud-parent/spring-cloud-eureka-7001
+  github: https://github.com/colg-cloud/JavaEE/tree/master/spring-cloud/spring-cloud-parent/spring-cloud-provider-dept-8001

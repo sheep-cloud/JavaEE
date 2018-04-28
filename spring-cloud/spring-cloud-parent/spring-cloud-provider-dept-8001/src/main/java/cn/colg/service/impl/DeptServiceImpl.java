@@ -1,7 +1,9 @@
 package cn.colg.service.impl;
 
-import static cn.colg.util.CheckUtil.*;
-import static cn.colg.util.ValidUtil.*;
+import static cn.colg.util.CheckUtil.check;
+import static cn.colg.util.CheckUtil.notBlank;
+import static cn.colg.util.ValidUtil.isGeneralWithChinese;
+import static cn.colg.util.ValidUtil.isIntegerPositive;
 
 import java.util.List;
 

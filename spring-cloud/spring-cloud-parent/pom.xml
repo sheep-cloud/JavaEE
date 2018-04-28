@@ -16,6 +16,7 @@
 		<maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
 		<junit.version>4.12</junit.version>
 		<hutool.version>4.0.10</hutool.version>
+		<fastjson.version>1.2.47</fastjson.version>
 		<lombok.version>1.16.20</lombok.version>
 		<sprign-boot.version>1.5.12.RELEASE</sprign-boot.version>
 		<spring-cloud.version>Dalston.SR5</spring-cloud.version>
@@ -40,6 +41,12 @@
 				<groupId>cn.hutool</groupId>
 				<artifactId>hutool-all</artifactId>
 				<version>${hutool.version}</version>
+			</dependency>
+			<!-- fastjson 依赖 -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>${fastjson.version}</version>
 			</dependency>
 
 			<!-- spirng-boot 依赖 -->

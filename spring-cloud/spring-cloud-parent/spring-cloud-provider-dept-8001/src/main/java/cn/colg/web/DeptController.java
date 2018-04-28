@@ -1,13 +1,20 @@
 package cn.colg.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import static cn.colg.bean.ResultBean.success;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import cn.colg.bean.ResultBean;
 import cn.colg.entity.Dept;
 import cn.colg.service.DeptService;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -17,10 +24,12 @@ import io.swagger.annotations.ApiOperation;
  *
  * @author colg
  */
-@Api(tags = {"部门管理"})
+@Api(tags = "部门管理")
 @RestController
 @RequestMapping("/dept")
 public class DeptController {
+    
+    public static final Log log = LogFactory.get();
 
     @Autowired
     private DeptService deptService;
@@ -44,4 +53,5 @@ public class DeptController {
     public ResultBean list() {
         return success(deptService.list());
     }
+    
 }
