@@ -2,7 +2,8 @@
 ## 1、Lombok安装
 1. 下载lombok.jar包 https://projectlombok.org/download.html
 
-2. 运行Lombok.jar: `java -jar E:\maven\repository\org\projectlombok\lombok\1.16.20\lombok-1.16.20.jar`	lombok.jar所在路径
+2. 运行Lombok.jar: 
+`java -jar E:\maven\repository\org\projectlombok\lombok\1.16.20\lombok-1.16.20.jar`	lombok.jar所在路径
 
 	数秒后将弹出一框，以确认eclipse的安装路径
 
