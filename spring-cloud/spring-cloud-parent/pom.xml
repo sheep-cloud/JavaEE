@@ -121,5 +121,7 @@
 		<module>spring-cloud-provider-dept-8001</module>
 		<module>spring-cloud-consumer-dept-80</module>
 		<module>spring-cloud-eureka-7001</module>
+		<module>spring-cloud-eureka-7002</module>
+		<module>spring-cloud-eureka-7003</module>
 	</modules>
 </project>
