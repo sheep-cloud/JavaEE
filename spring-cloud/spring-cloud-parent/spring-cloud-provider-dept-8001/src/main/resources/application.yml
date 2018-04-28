@@ -20,9 +20,12 @@ eureka:
     instance-id: spring-cloud-provider-dept-8001         # 自定义服务名称信息
     prefer-ip-address: true                              # 访问路径可以显示ip地址
     
-info:                                                    #  配置   eureka info信息
-  app.name: ${spring.application.name}
-  company.name: www.arrow.com
-  build.groupId: $project.groupId$
-  build.artifactId: $project.artifactId$
-  build.version: $project.version$
+info:                                                    # 配置   eureka info信息
+  application:
+    name: ${spring.application.name}
+    descript: 部门服务
+  build:
+    groupId: $project.groupId$
+    artifactId: $project.artifactId$
+    version: $project.version$
+  github: https://github.com/colg-cloud/JavaEE/tree/master/spring-cloud/spring-cloud-parent/spring-cloud-eureka-7001
