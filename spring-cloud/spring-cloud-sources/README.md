@@ -109,6 +109,84 @@ Eureka是Netfix的一个子模块，也是核心模块hi亿。Eureka是一个基
 
 在SpringCloud中，可以使用eureka.server.enable-self-preservation=false禁用自我保护模式（没必要）
 
+### 3. Eureka集群配置
+
+#### 1. 配置hosts解析地址：
+
+```
+# eureka
+127.0.0.1 eureka-7001.com
+127.0.0.1 eureka-7002.com
+127.0.0.1 eureka-7003.com
+```
+
+#### 2. 配置 Eureka 集群
+
+节点1：
+
+```
+server:
+  port: 7001
+  
+eureka:
+  instance:
+# 单机   hostname: eureka-7001.com         # eureka 服务端的实例名称
+    hostname: eureka-7001.com         # 添加hosts解析：127.0.0.1 eureka-7001.com
+  client:
+    register-with-eureka: false       # false 表示不向注册中心注册自己
+    fetch-registry: false             # false 表示自己端就是注册中心，职责就是维护服务实例，并不需要去检索服务
+    service-url:                      # 设置与Eureka Server交互的地址查询服务和注册服务
+# 单机     defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://eureka-7002.com:7002/eureka/,http://eureka-7003.com:7003/eureka/
+```
+
+节点2：
+
+```
+server:
+  port: 7002
+  
+eureka:
+  instance:
+    hostname: eureka-7002.com         # 添加hosts解析：127.0.0.1 eureka-7002.com
+  client:
+    register-with-eureka: false       # false 表示不向注册中心注册自己
+    fetch-registry: false             # false 表示自己端就是注册中心，职责就是维护服务实例，并不需要去检索服务
+    service-url:                      # 设置与Eureka Server交互的地址查询服务和注册服务
+      defaultZone: http://eureka-7001.com:7001/eureka/,http://eureka-7003.com:7003/eureka/
+```
+
+节点3：
+
+```
+server:
+  port: 7003
+  
+eureka:
+  instance:
+    hostname: eureka-7003.com         # 添加hosts解析：127.0.0.1 eureka-7003.com
+  client:
+    register-with-eureka: false       # false 表示不向注册中心注册自己
+    fetch-registry: false             # false 表示自己端就是注册中心，职责就是维护服务实例，并不需要去检索服务
+    service-url:                      # 设置与Eureka Server交互的地址查询服务和注册服务
+      defaultZone: http://eureka-7001.com:7001/eureka/,http://eureka-7002.com:7002/eureka/
+```
+
+#### 3. 微服务注册到Eureka集群中
+
+```
+eureka:
+  client:
+    service-url:                                        # 将客户端注册进eureka服务列表内
+# 单机     defaultZone: http://localhost:7001/eureka/
+      defaultZone: http://eureka-7001.com:7001/eureka/,http://eureka-7002.com:7002/eureka/,http://eureka-7003.com:7003/eureka/
+  instance:
+    instance-id: spring-cloud-provider-dept-8001         # 自定义服务名称信息
+    prefer-ip-address: true                              # 访问路径可以显示ip地址
+```
+
+
+
 ## 6、Ribbon负载均衡
 
 ## 7、Feign负载均衡

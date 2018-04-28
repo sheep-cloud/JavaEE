@@ -5,8 +5,8 @@ spring:
   application:
     name: spring-cloud-dept                               # 应用名称（对外暴露的微服务名称）
   profiles:
-    include:
-      - mybatis                                           # 激活配置文件
+    include:                                              # 激活配置文件
+      - mybatis
     
 logging:
   level:
@@ -14,8 +14,9 @@ logging:
     
 eureka:
   client:
-    service-url:
-      defaultZone: http://localhost:7001/eureka/         # 将客户端注册进eureka服务列表内
+    service-url:                                        # 将客户端注册进eureka服务列表内
+# 单机     defaultZone: http://localhost:7001/eureka/
+      defaultZone: http://eureka-7001.com:7001/eureka/,http://eureka-7002.com:7002/eureka/,http://eureka-7003.com:7003/eureka/
   instance:
     instance-id: spring-cloud-provider-dept-8001         # 自定义服务名称信息
     prefer-ip-address: true                              # 访问路径可以显示ip地址
@@ -23,7 +24,7 @@ eureka:
 info:                                                    # 配置   eureka info信息
   application:
     name: ${spring.application.name}
-    descript: 部门服务
+    descript: 部门管理，发现服务管理
   build:
     groupId: $project.groupId$
     artifactId: $project.artifactId$

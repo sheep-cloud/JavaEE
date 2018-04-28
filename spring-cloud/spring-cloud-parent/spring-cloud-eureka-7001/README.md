@@ -1,4 +1,4 @@
-# Eureka 服务注册中心
+# 一、Eureka 服务注册中心（单机版）
 
 ## 1、引入服务端
 
@@ -40,3 +40,27 @@ No instances available：没有服务被发现，因为没有注册服务进来�
 ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqs7ptri5kj30hz0bm3yp.jpg)
 ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqs6tlbqwqj30u204y3yh.jpg)
 ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqs6u7pg1nj30tr09mglp.jpg)
+
+# 二、Eureka 服务注册中心（集群版，参考单机版）
+
+## hosts解析（模拟）
+![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqt0kxeqn6j306701v741.jpg)
+
+## Eureka 节点
+
+### 节点1：spring-cloud-eureka-7001
+![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqt0jiomxbj30n9074jrh.jpg)
+
+### 节点2：spring-cloud-eureka-7002
+![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqt0jydef9j30nr061jre.jpg)
+
+### 节点3：spring-cloud-eureka-7003
+![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqt0k9ltruj30ne05zglm.jpg)
+
+### 客户端
+![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqt0lakkhyj30wj04bweg.jpg)
+
+### 展示
+![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqt0s3oe0wj31170hpdgk.jpg)
+![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqt0sfzp50j311l0hqaas.jpg)
+![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqt0sx1sexj31170i1aas.jpg)
