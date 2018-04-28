@@ -4,11 +4,11 @@ import cn.colg.exception.CheckException;
 import cn.hutool.core.util.StrUtil;
 
 /**
- * 校验工具类
+ * 校验工具
  *
  * @author colg
  */
-public class CheckUtil {
+public final class CheckUtil {
 
     private CheckUtil() {}
 

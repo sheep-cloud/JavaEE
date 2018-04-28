@@ -5,13 +5,13 @@ import java.util.regex.Pattern;
 import cn.hutool.core.util.StrUtil;
 
 /**
- * 字段验证器
+ * 字段验证工具
  * 
  * <a href="http://www.runoob.com/java/java-regular-expressions.html">正则表达式</a>
  *
  * @author colg
  */
-public class ValidUtil {
+public final class ValidUtil {
 
     private ValidUtil() {}
 
