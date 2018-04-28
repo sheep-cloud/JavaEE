@@ -14,11 +14,11 @@ import lombok.experimental.Accessors;
  *
  * @author colg
  */
+@ApiModel(description = "API 响应")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Accessors(chain = true)
-@ApiModel(description = "API 响应")
 public class ResultBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,13 +48,12 @@ public class ResultBean implements Serializable {
      * 接口返回码，0代表成功，其他看对应的定义
      * 
      * <pre>
-     * 推荐做法：
      *   0： 成功 
      *  >0： 表示已知的异常（例如业务异常，提示错误等，需要单独处理）
      *  <0： 表示未知的异常（例如没有登录，网络异常等，需要统一处理）
      * </pre>
      */
-    @ApiModelProperty("0： 成功 ；>0： 表示已知的异常；<0： 表示未知的异常")
+    @ApiModelProperty("接口返回码，0： 成功 ；>0： 表示已知的异常；<0： 表示未知的异常")
     private int code = SUCCESS;
 
     /**
