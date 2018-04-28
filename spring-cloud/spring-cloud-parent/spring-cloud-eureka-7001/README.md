@@ -61,6 +61,11 @@ No instances available：没有服务被发现，因为没有注册服务进来�
 ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqt0lakkhyj30wj04bweg.jpg)
 
 ### 展示
+
+	http://eureka-7001.com:7001/
+	http://eureka-7002.com:7002/
+	http://eureka-7003.com:7003/
+
 ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqt0s3oe0wj31170hpdgk.jpg)
 ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqt0sfzp50j311l0hqaas.jpg)
 ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqt0sx1sexj31170i1aas.jpg)
