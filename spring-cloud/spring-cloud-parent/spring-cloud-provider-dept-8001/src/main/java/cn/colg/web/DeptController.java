@@ -26,14 +26,14 @@ public class DeptController {
     private DeptService deptService;
 
     @ApiOperation("添加部门")
-    @ApiImplicitParam(name = "dept", value = "部门对象", paramType = "Dept")
+    @ApiImplicitParam(name = "dept", value = "部门Entity", dataType = "Dept")
     @PostMapping("/add")
     public ResultBean add(@RequestBody Dept dept) {
         return success(deptService.add(dept));
     }
 
     @ApiOperation("根据id获取部门")
-    @ApiImplicitParam(name = "id", value = "部门id", paramType = "Long", required = true)
+    @ApiImplicitParam(name = "id", value = "主键", paramType = "Long", required = true)
     @GetMapping("/get/{id}")
     public ResultBean get(@PathVariable Long id) {
         return success(deptService.get(id));

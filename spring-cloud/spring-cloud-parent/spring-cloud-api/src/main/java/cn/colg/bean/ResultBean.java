@@ -38,27 +38,12 @@ public class ResultBean implements Serializable {
     /** 未知异常 */
     public static final int UNKNOWN_EXCEPTION = -99;
 
-    /**
-     * 返回的信息（主要出错的时候使用）
-     */
     @ApiModelProperty("返回的信息（主要出错的时候使用）")
     private String msg = "success";
 
-    /**
-     * 接口返回码，0代表成功，其他看对应的定义
-     * 
-     * <pre>
-     *   0： 成功 
-     *  >0： 表示已知的异常（例如业务异常，提示错误等，需要单独处理）
-     *  <0： 表示未知的异常（例如没有登录，网络异常等，需要统一处理）
-     * </pre>
-     */
-    @ApiModelProperty("接口返回码，0： 成功 ；>0： 表示已知的异常；<0： 表示未知的异常")
+    @ApiModelProperty("接口返回码， 0：成功；>0：表示已知的异常（例如业务异常，提示错误等，需要单独处理）；<0：表示未知的异常（例如没有登录，网络异常等，需要统一处理）")
     private int code = SUCCESS;
 
-    /**
-     * 返回的数据
-     */
     @ApiModelProperty("返回的数据")
     private Object data;
 
@@ -81,9 +66,7 @@ public class ResultBean implements Serializable {
      * @return
      */
     public static ResultBean success(Object data) {
-        ResultBean resultBean = new ResultBean();
-        resultBean.setData(data);
-        return resultBean;
+        return new ResultBean().setData(data);
     }
 
 }
