@@ -132,5 +132,7 @@
 		<module>spring-cloud-eureka-7003</module>
 		<module>spring-cloud-provider-dept-8002</module>
 		<module>spring-cloud-provider-dept-8003</module>
+		<module>spring-cloud-consumer-dept-feign</module>
+		<module>spring-cloud-consumer-dept-80-feign</module>
 	</modules>
 </project>
