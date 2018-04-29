@@ -16,6 +16,12 @@
 			<!-- 跟随依赖变动版本 -->
 			<version>${project.version}</version>
 		</dependency>
+		<!-- junit 依赖 -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
 		
 		<!-- eureka 依赖 -->
 		<dependency>

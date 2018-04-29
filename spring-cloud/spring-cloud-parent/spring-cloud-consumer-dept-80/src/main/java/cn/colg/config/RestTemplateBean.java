@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
+import com.netflix.loadbalancer.IRule;
+import com.netflix.loadbalancer.RetryRule;
+
 /**
  * 自定义bean
  * 
@@ -30,5 +33,19 @@ public class RestTemplateBean {
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
+    }
+    
+    /**
+     * 设置负载均衡算法规则，默认为"轮询"
+     *
+     * @return
+     */
+    @Bean
+    public IRule iRule() {
+        // 随机
+        // return new RandomRule();
+        
+        // 按照轮询策略，如果获取服务失败，则在指定时间内进行重试，获取可用的服务
+        return new RetryRule();
     }
 }
