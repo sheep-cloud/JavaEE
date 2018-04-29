@@ -1,5 +1,5 @@
 server:
-  port: 8001
+  port: 8003
   
 spring:
   application:
@@ -28,4 +28,4 @@ info:                                                    # 配置   eureka info�
     groupId: $project.groupId$
     artifactId: $project.artifactId$
     version: $project.version$
-  github: https://github.com/colg-cloud/JavaEE/tree/master/spring-cloud/spring-cloud-parent/spring-cloud-provider-dept-8001
+  github: https://github.com/colg-cloud/JavaEE/tree/master/spring-cloud/spring-cloud-parent/spring-cloud-provider-dept-8003
