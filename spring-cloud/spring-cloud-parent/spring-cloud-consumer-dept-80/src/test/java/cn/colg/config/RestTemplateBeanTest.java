@@ -18,7 +18,7 @@ public class RestTemplateBeanTest {
      */
     @Test
     public void testRule() {
-        int sendCount = 10;
+        int sendCount = 35;
         for (int i = 0; i < sendCount; i++) {
             String result = HttpUtil.get("http://localhost/consumer/dept/get/1 ");
             Console.log(result);
