@@ -19,7 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @EnableSwagger2
 @Configuration
-public class Swagger2 {
+public class Swagger2Bean {
 
     /**
      * 配置Swagger2

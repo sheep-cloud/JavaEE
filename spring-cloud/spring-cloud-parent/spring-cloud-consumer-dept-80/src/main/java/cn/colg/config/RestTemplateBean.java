@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
  * @author colg
  */
 @Configuration
-public class ConfigBean {
+public class RestTemplateBean {
 
     /**
      * Spring的中心类用于同步客户端HTTP访问。它简化了与HTTP服务器的通信，并实施了RESTful原则。它处理HTTP连接，让应用程序代码提供URL（带有可能的模板变量）并提取结果。
