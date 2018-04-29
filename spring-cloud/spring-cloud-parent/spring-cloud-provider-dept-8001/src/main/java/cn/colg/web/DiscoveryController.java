@@ -42,20 +42,18 @@ public class DiscoveryController {
         
         // 获取所有可用的服务
         services.stream()
-            // 非空
-            .filter(service -> service != null)
-            // 遍历所有服务，获取服务名
-            .forEach(service -> {
-                log.info(service);
-                // 服务名转大写，对应 Eureka Application
-                service = service.toUpperCase();
-
-                // 根据服务名获取所有 服务实例
-                List<ServiceInstance> instances = discoveryClient.getInstances(service);
-                // 遍历服务实例，打印具体信息
-                instances.forEach(instance -> log.info(JSON.toJSONString(instance)));
-            });
-
+                // 非空
+                .filter(service -> service != null)
+                // 遍历所有服务，获取服务名
+                .forEach(service -> {
+                    log.info(service);
+                    
+                    // 根据服务名获取所有 服务实例（服务名转大写，对应Eureka Application）
+                    List<ServiceInstance> instances = discoveryClient.getInstances(service.toUpperCase());
+                    // 遍历服务实例，打印具体信息
+                    instances.forEach(instance -> log.info(JSON.toJSONString(instance)));
+                });
+        
         return success(this.discoveryClient);
     }
 
