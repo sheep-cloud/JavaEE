@@ -9,7 +9,7 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
  * Spirng Boot 启动类
  * 
  * <pre>
- * `@EnableFeignClients("cn.colg.web")`：    开启Feign功能，接口调用
+ * `@EnableFeignClients`：    开启Feign功能，接口调用
  * </pre>
  * 
  * @author colg
@@ -17,9 +17,9 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 @EnableFeignClients
 @EnableEurekaClient
 @SpringBootApplication
-public class SpringCloudConsumerDept80FeignApplication {
+public class SpringCloudConsumerDeptFeign80Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringCloudConsumerDept80FeignApplication.class, args);
+        SpringApplication.run(SpringCloudConsumerDeptFeign80Application.class, args);
     }
 }
