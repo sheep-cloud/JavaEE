@@ -12,12 +12,12 @@ import cn.hutool.http.HttpUtil;
  */
 public class ConsumerDeptControllerTest {
 
-    private int sendCount = 10;
+    private int sendCount = 1;
 
     @Test
     public void testGet() {
         for (int i = 0; i < sendCount ; i++) {
-            String result = HttpUtil.get("http://localhost/consumer/dept/get/1");
+            String result = HttpUtil.get("http://localhost/consumer/dept/get/10");
             Console.log(result);
         }
     }

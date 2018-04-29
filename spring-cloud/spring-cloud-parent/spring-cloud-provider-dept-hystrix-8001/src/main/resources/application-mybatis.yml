@@ -1,0 +1,17 @@
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml      # mybatis配置文件所在路径
+  mapper-locations:
+    - classpath:mybatis/mapper/**/*.xml                   # mapper映射文件
+    
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource          # 当前数据源操作类型
+    driver-class-name: org.gjt.mm.mysql.Driver            # mysql驱动包
+    url: jdbc:mysql://127.0.0.1:3306/spring_cloud_8001?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+    username: root
+    password: root
+    dbcp2:
+      initial-size: 5                                     # 初始化连接数
+      min-idle: 5                                         # 最小连接数
+      max-total: 10                                       # 最大连接数
+      max-wait-millis: 60000                              # 等待连接获取的最大超时时间

@@ -1,0 +1,31 @@
+server:
+  port: 8001
+  
+spring:
+  application:
+    name: spring-cloud-dept                               # 应用名称（对外暴露的微服务名称）
+  profiles:
+    include:                                              # 激活配置文件
+      - mybatis
+    
+logging:
+  level:
+    cn.colg.dao: debug
+    
+eureka:
+  client:
+    service-url:                                        # 将客户端注册进eureka服务列表内
+      defaultZone: http://eureka-7001.com:7001/eureka/,http://eureka-7002.com:7002/eureka/,http://eureka-7003.com:7003/eureka/
+  instance:
+    instance-id: ${spring.application.name}-hystrix-${server.port}  # 自定义hystrix相关的服务名称信息
+    prefer-ip-address: true                              # 访问路径可以显示ip地址
+    
+info:                                                    # 配置   eureka info信息
+  application:
+    name: ${spring.application.name}
+    descript: 部门管理，发现服务管理
+  build:
+    groupId: $project.groupId$
+    artifactId: $project.artifactId$
+    version: $project.version$
+  github: https://github.com/colg-cloud/JavaEE/tree/master/spring-cloud/spring-cloud-parent/spring-cloud-provider-dept-hystrix-8001
