@@ -38,16 +38,16 @@ public class ConsumerDeptController {
 
     @GetMapping("/get/{id}")
     public ResultBean get(@PathVariable Long id) {
-        return restTemplate.getForObject(RestUrlConst.DEPT_REST_URL_PREFIX + "/dept/get/" + id, ResultBean.class);
+        return restTemplate.getForObject(RestUrlConst.DEPT_RIBBON_URL_PREFIX + "/dept/get/" + id, ResultBean.class);
     }
 
     @GetMapping("/list")
     public ResultBean list() {
-        return restTemplate.getForObject(RestUrlConst.DEPT_REST_URL_PREFIX + "/dept/list", ResultBean.class);
+        return restTemplate.getForObject(RestUrlConst.DEPT_RIBBON_URL_PREFIX + "/dept/list", ResultBean.class);
     }
 
     @PostMapping("/add")
     public ResultBean add(Dept dept) {
-        return restTemplate.postForObject(RestUrlConst.DEPT_REST_URL_PREFIX + "/dept/add", dept, ResultBean.class);
+        return restTemplate.postForObject(RestUrlConst.DEPT_RIBBON_URL_PREFIX + "/dept/add", dept, ResultBean.class);
     }
 }

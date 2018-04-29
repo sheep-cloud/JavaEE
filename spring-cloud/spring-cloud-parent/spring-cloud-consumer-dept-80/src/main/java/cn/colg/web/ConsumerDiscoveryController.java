@@ -23,6 +23,6 @@ public class ConsumerDiscoveryController {
     
     @GetMapping("/client")
     public ResultBean client() {
-        return restTemplate.getForObject(RestUrlConst.DEPT_REST_URL_PREFIX + "/discovery/client", ResultBean.class);
+        return restTemplate.getForObject(RestUrlConst.DEPT_RIBBON_URL_PREFIX + "/discovery/client", ResultBean.class);
     }
 }
