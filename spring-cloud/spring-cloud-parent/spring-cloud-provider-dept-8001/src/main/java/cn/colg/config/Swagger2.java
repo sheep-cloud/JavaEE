@@ -26,8 +26,8 @@ public class Swagger2 {
      * 
      * <pre>
      * enable：                                      是否启用swagger
-     * groupName：                            api组的名字，会在swagger-ui的api下拉列表中显示；组名前的序号，多个组可以排序；最好不要写中文
-     * apiInfo：                                  响应中包含的api元信息。
+     * groupName：                             api组的名字，会在swagger-ui的api下拉列表中显示；组名前的序号，多个组可以排序；最好不要写中文
+     * apiInfo：                                   响应中包含的api元信息。
      * select：                                      api启动的构建器
      * apis：                                            扫描的包
      * </pre>
@@ -56,7 +56,7 @@ public class Swagger2 {
      * termsOfServiceUrl：       服务条款地址
      * contact：                                     文档联系人信息
      * license：                                     授权协议
-     * licenseUrl：                           授权协议地址
+     * licenseUrl：                            授权协议地址
      * </pre>
      * 
      * @return
