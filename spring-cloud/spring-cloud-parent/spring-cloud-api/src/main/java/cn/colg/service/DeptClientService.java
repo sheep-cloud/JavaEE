@@ -11,6 +11,10 @@ import cn.colg.fallback.DeptClientServiceFallback;
 
 /**
  * 部门Service - 客户端
+ * 
+ * <pre>
+ * `fallbackFactory = DeptClientServiceFallback.class`： 一旦返回异常信息，将进入 {@link cn.colg.fallback.DeptClientServiceFallback}，使用备用逻辑
+ * </pre>
  *
  * @author colg
  */

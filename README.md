@@ -8,10 +8,15 @@
 - [ ] [mapper](https://github.com/colg-cloud/JavaEE/tree/master/mapper) 
 - [ ] [spring-cloud](https://github.com/colg-cloud/JavaEE/tree/master/spring-cloud)
 
+
 # 相关技术
 
--   [Lombok](https://github.com/colg-cloud/JavaEE/tree/master/spring-cloud/spring-cloud-parent/spring-cloud-api)
--   [Swagger2](https://github.com/colg-cloud/JavaEE/tree/master/spring-cloud/spring-cloud-parent/spring-cloud-provider-dept-8001)
--   [Eureka](https://github.com/colg-cloud/JavaEE/tree/master/spring-cloud/spring-cloud-parent/spring-cloud-eureka-7001)
+-   spring-cloud
+    -   [Lombok](https://github.com/colg-cloud/JavaEE/blob/master/spring-cloud/spring-cloud-sources/sources/md/Lombok.md)
+    -   [Swagger2](https://github.com/colg-cloud/JavaEE/blob/master/spring-cloud/spring-cloud-sources/sources/md/Swagger2.md)
+    -   [Eureka](https://github.com/colg-cloud/JavaEE/blob/master/spring-cloud/spring-cloud-sources/sources/md/Eureka.md)
+    -   [Hystrix-Server](https://github.com/colg-cloud/JavaEE/blob/master/spring-cloud/spring-cloud-sources/sources/md/Hystrix-Server.md)
+    -   [Hystrix-Client](https://github.com/colg-cloud/JavaEE/blob/master/spring-cloud/spring-cloud-sources/sources/md/Hystrix-Client.md)
+    -   [HystrixDashboard](https://github.com/colg-cloud/JavaEE/blob/master/spring-cloud/spring-cloud-sources/sources/md/HystrixDashboard.md)
 
 

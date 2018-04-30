@@ -10,7 +10,7 @@ import cn.colg.service.DeptClientService;
 import feign.hystrix.FallbackFactory;
 
 /**
- * 接口熔断机制处理 - 服务降级
+ * 接口熔断机制处理 - 服务降级（必须设置'@Component'）
  *
  * @author colg
  */
