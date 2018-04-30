@@ -11,7 +11,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  * Spring Boot 启动类
  * 
  * <pre>
- * '@EnableCircuitBreaker'：              对hystrix熔断机制的支持
+ * '@EnableCircuitBreaker'：             开启对hystrix熔断机制的支持
  * </pre>
  *
  * @author colg

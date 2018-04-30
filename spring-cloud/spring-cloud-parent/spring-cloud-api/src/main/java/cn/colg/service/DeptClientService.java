@@ -7,13 +7,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import cn.colg.bean.ResultBean;
 import cn.colg.entity.Dept;
+import cn.colg.fallback.DeptClientServiceFallback;
 
 /**
  * 部门Service - 客户端
  *
  * @author colg
  */
-@FeignClient("SPRING-CLOUD-DEPT")
+@FeignClient(value = "SPRING-CLOUD-DEPT", fallbackFactory = DeptClientServiceFallback.class)
 @RequestMapping("/dept")
 public interface DeptClientService {
 
