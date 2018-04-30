@@ -15,7 +15,7 @@ public class SpringCloudConsumerHystrixDashboard9001ApplicationTest {
 
     @Test
     public void test() {
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 10; i++) {
             String id = RandomUtil.randomString("12345", 1);
             String result = HttpUtil.get("http://localhost:8001/dept/get/" + id);
             Console.log(result);
