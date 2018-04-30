@@ -13,4 +13,11 @@
 ### 2. 启动
 ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fquxiosq14j30pu094mx9.jpg)
 
-## 3. 
+## 3. 使用
+
+### 1. 设置访问地址
+![](http://ww1.sinaimg.cn/large/005PjuVtgy1fquyycy8lxj30p7072t8t.jpg)
+
+### 2. 仪表盘说明
+![](http://ww1.sinaimg.cn/large/005PjuVtgy1fquyznq6bdj319a0i9h21.jpg)
+![](http://ww1.sinaimg.cn/large/005PjuVtgy1fquz0972ibj319x067wkp.jpg)
