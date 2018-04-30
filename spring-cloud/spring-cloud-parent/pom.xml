@@ -136,5 +136,7 @@
 		<module>spring-cloud-consumer-dept-80-feign</module>
 		<module>spring-cloud-consumer-dept-feign-80</module>
 		<module>spring-cloud-provider-dept-hystrix-8001</module>
+		<module>spring-cloud-hystrix-dashboard-9001</module>
+		<module>spring-cloud-consumer-hystrix-dashboard-9001</module>
 	</modules>
 </project>
