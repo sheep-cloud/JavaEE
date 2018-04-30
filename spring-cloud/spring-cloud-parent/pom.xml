@@ -139,5 +139,6 @@
 		<module>spring-cloud-hystrix-dashboard-9001</module>
 		<module>spring-cloud-consumer-hystrix-dashboard-9001</module>
 		<module>spring-cloud-zuul-gateway-9527</module>
+		<module>spring-cloud-config-3344</module>
 	</modules>
 </project>
