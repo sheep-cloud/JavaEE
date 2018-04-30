@@ -13,6 +13,14 @@ eureka:
     instance-id: ${spring.application.name}-${server.port}  # 自定义服务名称信息
     prefer-ip-address: true                               # 访问路径可以显示ip地址
     
+zuul:
+  ignored-services: "*"                                   # 忽略真是服务名称，使用自定义的路由映射
+  prefix: /colg                                           # 服务前缀
+  routes:                                                 # 路由映射
+    mydept:
+      serviceId: spring-cloud-dept
+      path: /mydept/**
+    
 info:
   application:
     name: ${spring.application.name}
