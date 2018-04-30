@@ -89,7 +89,7 @@
 
 	<!-- 修改 eureka info信息 -->
 	<build>
-		<finalName>${project.artifactId}}</finalName>
+		<finalName>${project.artifactId}</finalName>
 		<!-- 可以获取groupId、artifactId等构建信息 -->
 		<resources>
 			<resource>
