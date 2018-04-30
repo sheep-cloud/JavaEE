@@ -138,5 +138,6 @@
 		<module>spring-cloud-provider-dept-hystrix-8001</module>
 		<module>spring-cloud-hystrix-dashboard-9001</module>
 		<module>spring-cloud-consumer-hystrix-dashboard-9001</module>
+		<module>spring-cloud-zuul-gateway-9527</module>
 	</modules>
 </project>
