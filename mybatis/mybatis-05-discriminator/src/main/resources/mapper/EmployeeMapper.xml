@@ -28,7 +28,7 @@
 				<result property="email" column="last_name" />
 			</case>
 		</discriminator>
-		
+
 	</resultMap>
 	<select id="findByIdWithGender" resultMap="MyDepDis">
 		SELECT te.id, te.last_name, te.gender, te.email, te.dept_id
