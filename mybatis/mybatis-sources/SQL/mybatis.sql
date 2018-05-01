@@ -29,27 +29,9 @@ ALTER TABLE tbl_employee ADD CONSTRAINT fk_emp_dept FOREIGN KEY(dept_id) REFEREN
 # /// ----------------------------------------------------------------------------------------------------
 
 SELECT te.id, te.last_name, te.gender, te.email, te.dept_id
-FROM tbl_employee te
-WHERE te.dept_id = ?
-WHERE te.id = 1;
+FROM tbl_employee te;
 
 
 SELECT td.id, td.dept_name
 FROM tbl_dept td
 WHERE td.id = 1;
-
-SELECT
-	td.id, td.dept_name,
-	te.id, te.last_name, te.gender, te.email
-FROM tbl_dept td
-INNER JOIN tbl_employee te ON td.id = te.dept_id
-WHERE td.id = 1;
-
-SELECT
-	td.id, td.dept_name,
-	te.id te_id, te.last_name, te.gender, te.email, te.dept_id
-FROM tbl_dept td
-INNER JOIN tbl_employee te ON td.id = te.dept_id
-WHERE td.id = 1 AND td.dept_name LIKE ?;
-
-SELECT td.id, td.dept_name FROM tbl_dept td WHERE td.id = 1
