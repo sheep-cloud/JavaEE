@@ -21,8 +21,11 @@
 
 ## 2、Lombok 基本用法
 - entity
+
   ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqs7fgrptvj30fh0asmx7.jpg)
+
 - log
+
 ```
 @CommonsLog  
 Creates private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(LogExample.class);  
