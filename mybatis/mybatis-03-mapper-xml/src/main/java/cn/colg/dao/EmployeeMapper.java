@@ -43,7 +43,7 @@ public interface EmployeeMapper {
      * @return
      */
     List<Employee> queryByLastName(@Param("lastName") String lastName);
-    
+
     /**
      * 根据map查询一个员工
      *
@@ -51,7 +51,7 @@ public interface EmployeeMapper {
      * @return
      */
     Employee findByMap(@Param("map") Map<String, Object> map);
-    
+
     /**
      * 根据id和姓名查询员工
      *
@@ -60,7 +60,7 @@ public interface EmployeeMapper {
      * @return
      */
     Employee findByIdAndLastName(@Param("id") Integer id, @Param("lastName") String lastName);
-    
+
     /**
      * 根据id查询员工
      *
@@ -68,7 +68,15 @@ public interface EmployeeMapper {
      * @return
      */
     Employee findById(@Param("id") Integer id);
-    
+
+    /**
+     * 根据id查询员工姓名
+     *
+     * @param id
+     * @return
+     */
+    String findLastNameById(@Param("id") Integer id);
+
     /**
      * 新增员工，返回主键
      *
@@ -76,7 +84,7 @@ public interface EmployeeMapper {
      * @return
      */
     Integer addEmployee(@Param("employee") Employee employee);
-    
+
     /**
      * 修改员工，返回修改记录数
      *
@@ -84,7 +92,7 @@ public interface EmployeeMapper {
      * @return
      */
     Integer updateEmployee(@Param("employee") Employee employee);
-    
+
     /**
      * 删除员工，返回是否成功
      *

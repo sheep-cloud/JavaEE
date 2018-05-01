@@ -8,7 +8,7 @@
 	<select id="queryByLastNameResultMap" resultType="cn.colg.entity.Employee">
 		SELECT tl.id, tl.last_name lastName, tl.gender, tl.email
 		FROM tbl_employee tl
-		WHERE tl.last_name LIKE '${lastName}'
+		WHERE tl.last_name LIKE '%${lastName}%'
 	</select>
 	
 	<select id="findByIdResultMap" resultType="map">
@@ -21,7 +21,7 @@
 	<select id="queryByLastName" resultType="cn.colg.entity.Employee">
 		SELECT tl.id, tl.last_name lastName, tl.gender, tl.email
 		FROM tbl_employee tl
-		WHERE tl.last_name LIKE '${lastName}'
+		WHERE tl.last_name LIKE '%${lastName}%'
 	</select>
 	
 	<select id="findByMap" resultType="cn.colg.entity.Employee">
@@ -33,11 +33,17 @@
 	<select id="findByIdAndLastName" resultType="cn.colg.entity.Employee">
 		SELECT tl.id, tl.last_name lastName, tl.gender, tl.email
 		FROM tbl_employee tl
-		WHERE tl.id = #{id} AND tl.last_name LIKE '${lastName}'
+		WHERE tl.id = #{id} AND tl.last_name LIKE '%${lastName}%'
 	</select>
 	
 	<select id="findById" resultType="cn.colg.entity.Employee">
 		SELECT tl.id, tl.last_name lastName, tl.gender, tl.email
+		FROM tbl_employee tl
+		WHERE tl.id = #{id}
+	</select>
+	
+	<select id="findLastNameById" resultType="string">
+		SELECT tl.last_name lastName
 		FROM tbl_employee tl
 		WHERE tl.id = #{id}
 	</select>
