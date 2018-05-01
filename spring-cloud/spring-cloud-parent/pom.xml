@@ -17,7 +17,6 @@
 		<junit.version>4.12</junit.version>
 		<hutool.version>4.0.10</hutool.version>
 		<fastjson.version>1.2.47</fastjson.version>
-		<lombok.version>1.16.20</lombok.version>
 		<sprign-boot.version>1.5.12.RELEASE</sprign-boot.version>
 		<spring-cloud.version>Dalston.SR5</spring-cloud.version>
 		<mysql.version>5.1.46</mysql.version>
