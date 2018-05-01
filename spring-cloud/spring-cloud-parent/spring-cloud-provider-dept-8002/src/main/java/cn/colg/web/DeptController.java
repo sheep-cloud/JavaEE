@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.colg.bean.ResultBean;
 import cn.colg.entity.Dept;
 import cn.colg.service.DeptService;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -29,8 +27,6 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/dept")
 public class DeptController {
     
-    public static final Log log = LogFactory.get();
-
     @Autowired
     private DeptService deptService;
 

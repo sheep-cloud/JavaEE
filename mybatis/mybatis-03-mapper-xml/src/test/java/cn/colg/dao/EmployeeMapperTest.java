@@ -8,17 +8,15 @@ import org.junit.Test;
 import cn.colg.BaseMapperTest;
 import cn.colg.entity.Employee;
 import cn.hutool.core.lang.Dict;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 员工Mapper 测试
  *
  * @author colg
  */
+@Slf4j
 public class EmployeeMapperTest extends BaseMapperTest {
-
-    public static final Log log = LogFactory.get();
 
     /**
      * Test method for {@link cn.colg.dao.EmployeeMapper#queryByLastNameResultMap(java.lang.String)}.

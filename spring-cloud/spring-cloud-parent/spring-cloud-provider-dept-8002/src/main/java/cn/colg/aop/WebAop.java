@@ -8,19 +8,17 @@ import org.springframework.stereotype.Component;
 
 import cn.colg.bean.ResultBean;
 import cn.colg.exception.CheckException;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * aop 处理、包装异常
  *
  * @author colg
  */
+@Slf4j
 @Aspect
 @Component
 public class WebAop {
-
-    public static final Log log = LogFactory.get();
 
     @Pointcut("execution(public cn.colg.bean.ResultBean *(..))")
     private void controllerMethod() {}

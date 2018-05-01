@@ -14,22 +14,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 
 import cn.colg.bean.ResultBean;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 发现服务Controller
  *
  * @author colg
  */
+@Slf4j
 @Api(tags = "发现服务管理")
 @RestController
 @RequestMapping("/discovery")
 public class DiscoveryController {
-
-    public static final Log log = LogFactory.get();
 
     /** 发现可用的服务 */
     @Autowired

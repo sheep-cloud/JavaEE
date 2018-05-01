@@ -34,8 +34,17 @@ public abstract class BaseMapperTest {
 
     @Before
     public void setUp() throws Exception {
-        // 从SqlsessionFactory 中获取 sqlSession
-        sqlSession = sqlSessionFactory.openSession();
+        /// 从SqlsessionFactory 中获取 sqlSession
+        
+        /*
+         * 1、Mybatis允许增删改查直接定义以下类型返回值
+         *      Integer、Long、Boolean
+         * 
+         * 2、需要手动提交数据
+         *      sqlSessionFactory.openSession();        ===>    手动提交
+         *      sqlSessionFactory.openSession(true);    ===>    自动提交
+         */
+        sqlSession = sqlSessionFactory.openSession(true);
     }
 
     @After

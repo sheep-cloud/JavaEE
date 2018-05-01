@@ -14,18 +14,16 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.colg.dao.DeptMapper;
 import cn.colg.entity.Dept;
 import cn.colg.service.DeptService;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 部门ServiceImpl
  *
  * @author colg
  */
+@Slf4j
 @Service
 public class DeptServiceImpl implements DeptService {
-
-    public static final Log log = LogFactory.get();
 
     @Autowired
     private DeptMapper deptMapper;
