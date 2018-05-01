@@ -8,5 +8,17 @@
 		FROM tbl_dept dd
 		WHERE dd.id = #{id}
 	</select>
+	
+	<!-- 
+		根据id查询部门，把员工也查询出来
+	 -->
+<!-- 	 <select id="findByIdPlus" resultMap="">
+		SELECT
+			td.id, td.dept_name,
+			tl.id, tl.last_name, tl.gender, tl.email, tl.dept_id
+		FROM tbl_dept td
+		INNER JOIN tbl_employee tl ON td.id = tl.id
+		WHERE td.id = #{id}
+	 </select> -->
 
 </mapper>

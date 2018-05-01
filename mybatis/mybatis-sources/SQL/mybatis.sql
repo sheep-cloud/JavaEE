@@ -28,12 +28,18 @@ ALTER TABLE tbl_employee ADD CONSTRAINT fk_emp_dept FOREIGN KEY(dept_id) REFEREN
 
 # /// ----------------------------------------------------------------------------------------------------
 
-SELECT tl.id, tl.last_name lastName, tl.gender, tl.email, tl.dept_id
-FROM tbl_employee tl;
+SELECT tl.id, tl.last_name, tl.gender, tl.email, tl.dept_id
+FROM tbl_employee tl
+WHERE tl.id = ?;
 
 SELECT dd.id, dd.dept_name
 FROM tbl_dept dd;
 
-SELECT tl.id, tl.last_name lastName, tl.gender, tl.email, tl.dept_id, td.id, td.dept_name
+SELECT tl.id, tl.last_name, tl.gender, tl.email, tl.dept_id, td.id, td.dept_name
 FROM tbl_employee tl
 INNER JOIN tbl_dept td ON td.id = tl.dept_id;
+
+SELECT td.id, td.dept_name, tl.id, tl.last_name, tl.gender, tl.email, tl.dept_id
+FROM tbl_dept td
+INNER JOIN tbl_employee tl ON td.id = tl.id
+WHERE td.id = 1;

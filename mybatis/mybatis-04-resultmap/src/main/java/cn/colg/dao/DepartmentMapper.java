@@ -18,4 +18,12 @@ public interface DepartmentMapper {
      * @return
      */
     Department findById(@Param("id") Integer id);
+
+    /**
+     * 根据id查询部门，把员工也查询出来
+     *
+     * @param id
+     * @return
+     */
+    Department findByIdPlus(@Param("id") Integer id);
 }

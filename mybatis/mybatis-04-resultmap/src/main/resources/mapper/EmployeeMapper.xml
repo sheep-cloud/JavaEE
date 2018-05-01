@@ -35,8 +35,8 @@
 	 -->
 	<select id="findEmpAndDept01" resultType="cn.colg.entity.Employee">
 		SELECT
-				tl.id, tl.last_name 'lastName', tl.gender, tl.email,
-				td.id 'dept.id', td.dept_name 'dept.departmentName'
+			tl.id, tl.last_name 'lastName', tl.gender, tl.email,
+			td.id 'dept.id', td.dept_name 'dept.departmentName'
 		FROM tbl_employee tl
 		INNER JOIN tbl_dept td ON td.id = tl.dept_id
 		WHERE tl.id = #{id}
@@ -55,7 +55,9 @@
 		<result property="dept.departmentName" column="dept_name"/>
 	</resultMap>
 	<select id="findEmpAndDept02" resultMap="MyDifEmp">
-		SELECT tl.id, tl.last_name, tl.gender, tl.email, tl.dept_id, td.id, td.dept_name
+		SELECT
+			tl.id, tl.last_name, tl.gender, tl.email, tl.dept_id,
+			td.id, td.dept_name
 		FROM tbl_employee tl
 		INNER JOIN tbl_dept td ON td.id = tl.dept_id
 		WHERE tl.id = #{id}
@@ -77,7 +79,9 @@
 		</association>
 	</resultMap>
 	<select id="findEmpAndDept03" resultMap="MydifEmp2">
-		SELECT tl.id, tl.last_name, tl.gender, tl.email, tl.dept_id, td.id, td.dept_name
+		SELECT
+			tl.id, tl.last_name, tl.gender, tl.email, tl.dept_id,
+			td.id, td.dept_name
 		FROM tbl_employee tl
 		INNER JOIN tbl_dept td ON td.id = tl.dept_id
 		WHERE tl.id = #{id}

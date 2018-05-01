@@ -42,6 +42,6 @@ public abstract class BaseMapperTest {
     public void tearDown() throws Exception {
         // 销毁sqlSession
         sqlSession.close();
-        log.info("tearDown() : {}", "----------------------------------------------------------------------------------------------------");
+        log.info("tearDown() : {}", "----------------------------------------------------------------------------------------------------\n");
     }
 }
