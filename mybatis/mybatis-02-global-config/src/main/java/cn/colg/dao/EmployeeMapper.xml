@@ -13,8 +13,8 @@
 	Employee findById(Integer id);
  -->
 	<select id="findById" resultType="cn.colg.entity.Employee">
-		SELECT tl.id, tl.last_name lastName, tl.gender, tl.email
-		FROM tbl_employee tl
-		WHERE tl.id = #{id}
+		SELECT te.id, te.last_name lastName, te.gender, te.email
+		FROM tbl_employee te
+		WHERE te.id = #{id}
 	</select>
 </mapper>

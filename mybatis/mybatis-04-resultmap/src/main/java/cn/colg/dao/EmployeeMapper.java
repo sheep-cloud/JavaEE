@@ -1,5 +1,7 @@
 package cn.colg.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import cn.colg.entity.Employee;
@@ -38,7 +40,7 @@ public interface EmployeeMapper {
      * @return
      */
     Employee findEmpAndDept02(@Param("id") Integer id);
-    
+
     /**
      * 根据id查询员工，把部门也查出来；
      * 
@@ -48,7 +50,7 @@ public interface EmployeeMapper {
      * @return
      */
     Employee findEmpAndDept03(@Param("id") Integer id);
-    
+
     /**
      * 根据id查询员工，把部门也查出来；
      * 
@@ -58,4 +60,21 @@ public interface EmployeeMapper {
      * @return
      */
     Employee findEmpAndDeptStep04(@Param("id") Integer id);
+
+    /**
+     * 根据部门id查询所有员工
+     *
+     * @param deptId
+     * @return
+     */
+    List<Employee> queryByDeptId(@Param("deptId") Integer deptId);
+
+    /**
+     * 根据部门id和员工姓名模糊查询
+     *
+     * @param deptId
+     * @param lastName
+     * @return
+     */
+    List<Employee> queryByDeptIdAndLastName(@Param("deptId") Integer deptId, @Param("lastName") String lastName);
 }

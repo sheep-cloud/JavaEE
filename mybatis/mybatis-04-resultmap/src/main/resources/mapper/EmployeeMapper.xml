@@ -23,9 +23,9 @@
 	
 	<!-- resultMap：自定义结果集映射规则；resultType和resultMap只能用其中一个 -->
 	<select id="findById" resultMap="BaseResultMap">
-		SELECT tl.id, tl.last_name, tl.gender, tl.email
-		FROM tbl_employee tl
-		WHERE tl.id = #{id}
+		SELECT te.id, te.last_name, te.gender, te.email
+		FROM tbl_employee te
+		WHERE te.id = #{id}
 	</select>
 	
 	
@@ -35,11 +35,11 @@
 	 -->
 	<select id="findEmpAndDept01" resultType="cn.colg.entity.Employee">
 		SELECT
-			tl.id, tl.last_name 'lastName', tl.gender, tl.email,
+			te.id, te.last_name 'lastName', te.gender, te.email,
 			td.id 'dept.id', td.dept_name 'dept.departmentName'
-		FROM tbl_employee tl
-		INNER JOIN tbl_dept td ON td.id = tl.dept_id
-		WHERE tl.id = #{id}
+		FROM tbl_employee te
+		INNER JOIN tbl_dept td ON td.id = te.dept_id
+		WHERE te.id = #{id}
 	</select>
 	
 	<!-- 
@@ -56,11 +56,11 @@
 	</resultMap>
 	<select id="findEmpAndDept02" resultMap="MyDifEmp">
 		SELECT
-			tl.id, tl.last_name, tl.gender, tl.email, tl.dept_id,
+			te.id, te.last_name, te.gender, te.email, te.dept_id,
 			td.id, td.dept_name
-		FROM tbl_employee tl
-		INNER JOIN tbl_dept td ON td.id = tl.dept_id
-		WHERE tl.id = #{id}
+		FROM tbl_employee te
+		INNER JOIN tbl_dept td ON td.id = te.dept_id
+		WHERE te.id = #{id}
 	</select>
 	
 	<resultMap type="cn.colg.entity.Employee" id="MydifEmp2">
@@ -69,7 +69,7 @@
 		<result property="gender" column="gender" />
 		<result property="email" column="email" />
 		<!-- 
-			association可以指定联合的javaBean对象
+			association:	定义联合的javaBean对象
 				property="dept"：							指定哪个属性是联合的对象
 				javaType="cn.colg.entity.Department"：		指定这个属性对象的类型（不能省略）
 		 -->
@@ -80,11 +80,11 @@
 	</resultMap>
 	<select id="findEmpAndDept03" resultMap="MydifEmp2">
 		SELECT
-			tl.id, tl.last_name, tl.gender, tl.email, tl.dept_id,
+			te.id, te.last_name, te.gender, te.email, te.dept_id,
 			td.id, td.dept_name
-		FROM tbl_employee tl
-		INNER JOIN tbl_dept td ON td.id = tl.dept_id
-		WHERE tl.id = #{id}
+		FROM tbl_employee te
+		INNER JOIN tbl_dept td ON td.id = te.dept_id
+		WHERE te.id = #{id}
 	</select>
 	
 	<resultMap type="cn.colg.entity.Employee" id="MydifEmpStep3">
@@ -98,12 +98,24 @@
 				column="id"：										指定将哪一列的值传给这个方法；findById(Integer id);入参
 			流程：使用select指定的方法（传入column指定的这列参数的值）查出对象，并封装给property指定的属性。
 		 -->
-		<association property="dept" select="cn.colg.dao.DepartmentMapper.findById" column="id"></association>
+		<association property="dept" select="cn.colg.dao.DepartmentMapper.findById" column="id" ></association>
 	</resultMap>
 	<select id="findEmpAndDeptStep04" resultMap="MydifEmpStep3">
-		SELECT tl.id, tl.last_name, tl.gender, tl.email, tl.dept_id
-		FROM tbl_employee tl
-		WHERE tl.id = #{id}
+		SELECT te.id, te.last_name, te.gender, te.email, te.dept_id
+		FROM tbl_employee te
+		WHERE te.id = #{id}
+	</select>
+	
+	<select id="queryByDeptId" resultType="cn.colg.entity.Employee">
+		SELECT te.id, te.last_name 'lastName', te.gender, te.email, te.dept_id
+		FROM tbl_employee te
+		WHERE te.dept_id = #{deptId}
+	</select>
+	
+	<select id="queryByDeptIdAndLastName" resultType="cn.colg.entity.Employee">
+		SELECT te.id, te.last_name 'lastName', te.gender, te.email, te.dept_id
+		FROM tbl_employee te
+		WHERE te.dept_id = #{deptId} AND te.last_name LIKE '%${lastName}%'
 	</select>
 	
 </mapper>

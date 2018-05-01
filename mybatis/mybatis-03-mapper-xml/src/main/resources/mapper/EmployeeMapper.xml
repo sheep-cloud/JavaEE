@@ -6,46 +6,46 @@
 <mapper namespace="cn.colg.dao.EmployeeMapper">
 
 	<select id="queryByLastNameResultMap" resultType="cn.colg.entity.Employee">
-		SELECT tl.id, tl.last_name lastName, tl.gender, tl.email
-		FROM tbl_employee tl
-		WHERE tl.last_name LIKE '%${lastName}%'
+		SELECT te.id, te.last_name lastName, te.gender, te.email
+		FROM tbl_employee te
+		WHERE te.last_name LIKE '%${lastName}%'
 	</select>
 	
 	<select id="findByIdResultMap" resultType="map">
-		SELECT tl.id, tl.last_name lastName, tl.gender, tl.email
-		FROM tbl_employee tl
-		WHERE tl.id = #{id}
+		SELECT te.id, te.last_name lastName, te.gender, te.email
+		FROM tbl_employee te
+		WHERE te.id = #{id}
 	</select>
 
 	<!-- resultType: 如果返回的是一个集合，要写集合中元素的类型 -->
 	<select id="queryByLastName" resultType="cn.colg.entity.Employee">
-		SELECT tl.id, tl.last_name lastName, tl.gender, tl.email
-		FROM tbl_employee tl
-		WHERE tl.last_name LIKE '%${lastName}%'
+		SELECT te.id, te.last_name lastName, te.gender, te.email
+		FROM tbl_employee te
+		WHERE te.last_name LIKE '%${lastName}%'
 	</select>
 	
 	<select id="findByMap" resultType="cn.colg.entity.Employee">
-		SELECT tl.id, tl.last_name lastName, tl.gender, tl.email
-		FROM ${map.tableName} tl
-		WHERE tl.id = #{map.id} AND tl.last_name LIKE '${map.lastName}'
+		SELECT te.id, te.last_name lastName, te.gender, te.email
+		FROM ${map.tableName} te
+		WHERE te.id = #{map.id} AND te.last_name LIKE '${map.lastName}'
 	</select>
 	
 	<select id="findByIdAndLastName" resultType="cn.colg.entity.Employee">
-		SELECT tl.id, tl.last_name lastName, tl.gender, tl.email
-		FROM tbl_employee tl
-		WHERE tl.id = #{id} AND tl.last_name LIKE '%${lastName}%'
+		SELECT te.id, te.last_name lastName, te.gender, te.email
+		FROM tbl_employee te
+		WHERE te.id = #{id} AND te.last_name LIKE '%${lastName}%'
 	</select>
 	
 	<select id="findById" resultType="cn.colg.entity.Employee">
-		SELECT tl.id, tl.last_name lastName, tl.gender, tl.email
-		FROM tbl_employee tl
-		WHERE tl.id = #{id}
+		SELECT te.id, te.last_name lastName, te.gender, te.email
+		FROM tbl_employee te
+		WHERE te.id = #{id}
 	</select>
 	
 	<select id="findLastNameById" resultType="string">
-		SELECT tl.last_name lastName
-		FROM tbl_employee tl
-		WHERE tl.id = #{id}
+		SELECT te.last_name lastName
+		FROM tbl_employee te
+		WHERE te.id = #{id}
 	</select>
 	
 	<!-- 

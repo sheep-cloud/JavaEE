@@ -28,18 +28,28 @@ ALTER TABLE tbl_employee ADD CONSTRAINT fk_emp_dept FOREIGN KEY(dept_id) REFEREN
 
 # /// ----------------------------------------------------------------------------------------------------
 
-SELECT tl.id, tl.last_name, tl.gender, tl.email, tl.dept_id
-FROM tbl_employee tl
-WHERE tl.id = ?;
+SELECT te.id, te.last_name, te.gender, te.email, te.dept_id
+FROM tbl_employee te
+WHERE te.dept_id = ?
+WHERE te.id = 1;
 
-SELECT dd.id, dd.dept_name
-FROM tbl_dept dd;
 
-SELECT tl.id, tl.last_name, tl.gender, tl.email, tl.dept_id, td.id, td.dept_name
-FROM tbl_employee tl
-INNER JOIN tbl_dept td ON td.id = tl.dept_id;
-
-SELECT td.id, td.dept_name, tl.id, tl.last_name, tl.gender, tl.email, tl.dept_id
+SELECT td.id, td.dept_name
 FROM tbl_dept td
-INNER JOIN tbl_employee tl ON td.id = tl.id
 WHERE td.id = 1;
+
+SELECT
+	td.id, td.dept_name,
+	te.id, te.last_name, te.gender, te.email
+FROM tbl_dept td
+INNER JOIN tbl_employee te ON td.id = te.dept_id
+WHERE td.id = 1;
+
+SELECT
+	td.id, td.dept_name,
+	te.id te_id, te.last_name, te.gender, te.email, te.dept_id
+FROM tbl_dept td
+INNER JOIN tbl_employee te ON td.id = te.dept_id
+WHERE td.id = 1 AND td.dept_name LIKE ?;
+
+SELECT td.id, td.dept_name FROM tbl_dept td WHERE td.id = 1
