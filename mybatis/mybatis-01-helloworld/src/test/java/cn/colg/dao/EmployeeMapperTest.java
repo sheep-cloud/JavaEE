@@ -1,0 +1,79 @@
+package cn.colg.dao;
+
+import java.io.InputStream;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import cn.colg.entity.Employee;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
+
+/**
+ * 员工Mapper 测试
+ *
+ * @author colg
+ */
+public class EmployeeMapperTest {
+
+    public static final Log log = LogFactory.get();
+
+    private static SqlSession session;
+
+    /*
+     * 1、接口式编程 
+     *      原生：                        Dao     ===>        DaoImpl
+     *      Mybatis:    Mapper  ===>        xxMapper.xml
+     * 
+     * 2、SqlSession代表和数据库的一次回话，用完必须关闭；
+     * 
+     * 3、SqlSession和Connection一样都是非线程安全的。每次使用都应该去获取新的对象。
+     * 
+     * 4、Mapper接口没有实现类，但是Mybatis会为这个接口生成一个代理对象。
+     *      (将接口和xml进行绑定)
+     *      EmployeeMapper mapper = session.getMapper(EmployeeMapper.class);
+     * 
+     * 5、两个重要的配置文件：
+     *      1). Mybatis的全局配置文件，包括数据库连接池信息，事务管理器信息等。。系统运行环境信息
+     *      2). Sql映射文件：保存了每一个sql语句的映射信息：将sql抽取出来
+     */
+
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {
+        // 从 XML 中构建 SqlSessionFactory
+        InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+        // 从 SqlSessionFactory 中获取 SqlSession
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        session = sqlSessionFactory.openSession();
+    }
+
+    @AfterClass
+    public static void tearDownAfterClass() throws Exception {
+        session.close();
+    }
+
+    @Test
+    public void testFindById01() throws Exception {
+        // 1. 唯一标识符。
+        // 2. 传递给语句的参数对象。
+        Employee employee = session.selectOne("cn.colg.dao.EmployeeMapper.findById", 1);
+        log.info("testFindById01() >> employee : {}", employee);
+    }
+
+    @Test
+    public void testFindById02() throws Exception {
+        // mybatis会为接口自动创建一个代理对象，代理对象去执行增删改查方法
+        EmployeeMapper employeeMapper = session.getMapper(EmployeeMapper.class);
+        // class com.sun.proxy.$Proxy8
+        log.info("testFindById02() >> employeeMapper : {}", employeeMapper);
+        
+        Employee employee = employeeMapper.findById(1);
+        log.info("testFindById02() >> employee : {}", employee);
+    }
+
+}
