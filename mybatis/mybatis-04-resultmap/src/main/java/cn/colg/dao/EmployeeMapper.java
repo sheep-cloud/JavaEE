@@ -24,7 +24,7 @@ public interface EmployeeMapper {
     /**
      * 根据id查询员工，把部门也查出来；
      * 
-     * 方式一：级联属性封装，jstl表达式，对象.属性
+     * 方式一：级联属性封装，OGNL表达式，对象.属性
      *
      * @param id
      * @return
