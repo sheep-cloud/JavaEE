@@ -1,29 +1,20 @@
 package cn.colg.dao;
 
-import java.io.InputStream;
-
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
+import cn.colg.BaseMapperTest;
 import cn.colg.entity.Employee;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 
 /**
- * 员工Mapper 测试
+ * 测试
  *
  * @author colg
  */
-public class EmployeeMapperTest {
+public class EmployeeMapperTest extends BaseMapperTest {
 
     public static final Log log = LogFactory.get();
-
-    private static SqlSession session;
 
     /*
      * 1、接口式编程 
@@ -43,35 +34,29 @@ public class EmployeeMapperTest {
      *      2). Sql映射文件：保存了每一个sql语句的映射信息：将sql抽取出来
      */
 
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-        // 从 XML 中构建 SqlSessionFactory
-        InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
-        // 从 SqlSessionFactory 中获取 SqlSession
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-        session = sqlSessionFactory.openSession();
-    }
+    /// ----------------------------------------------------------------------------------------------------
 
-    @AfterClass
-    public static void tearDownAfterClass() throws Exception {
-        session.close();
-    }
-
+    /**
+     * Test method for {@link cn.colg.dao.EmployeeMapper#findById(java.lang.Integer)}.
+     */
     @Test
-    public void testFindById01() throws Exception {
+    public void testFindById01() {
         // 1. 唯一标识符。
         // 2. 传递给语句的参数对象。
-        Employee employee = session.selectOne("cn.colg.dao.EmployeeMapper.findById", 1);
+        Employee employee = sqlSession.selectOne("cn.colg.dao.EmployeeMapper.findById", 1);
         log.info("testFindById01() >> employee : {}", employee);
     }
 
+    /**
+     * Test method for {@link cn.colg.dao.EmployeeMapper#findById(java.lang.Integer)}.
+     */
     @Test
-    public void testFindById02() throws Exception {
+    public void testFindById02() {
         // mybatis会为接口自动创建一个代理对象，代理对象去执行增删改查方法
-        EmployeeMapper employeeMapper = session.getMapper(EmployeeMapper.class);
-        // class com.sun.proxy.$Proxy8
-        log.info("testFindById02() >> employeeMapper : {}", employeeMapper);
-        
+        EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
+        // class com.sun.proxy.$Proxy11
+        log.info("testFindById02() >> employeeMapper.getClass() : {}", employeeMapper.getClass());
+
         Employee employee = employeeMapper.findById(1);
         log.info("testFindById02() >> employee : {}", employee);
     }
