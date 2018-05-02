@@ -17,6 +17,7 @@ public class HelloSchedulerTest {
      */
     public static void main(String[] args) throws SchedulerException {
         HelloScheduler.startHelloJob();
+        // TODO colg [quartz 未完成]
     }
 
 }
