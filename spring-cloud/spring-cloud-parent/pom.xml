@@ -6,26 +6,32 @@
 	<packaging>pom</packaging>
 	<name>spring-cloud-parent :: 父工程，主要是定义POM文件，将后续各个子模块共用的jar包等统一提取出来，类似一个抽象父类</name>
 
-	<!-- 集中定义依赖版本号 -->
+	<!-- 
+		! Centralized definition of dependent versions
+	 -->
 	<properties>
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven-resources-plugin>3.0.2</maven-resources-plugin>
+		<maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
 		<maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
+		<skipTests>true</skipTests>
 		<junit.version>4.12</junit.version>
 		<hutool.version>4.0.10</hutool.version>
 		<fastjson.version>1.2.47</fastjson.version>
 		<sprign-boot.version>1.5.12.RELEASE</sprign-boot.version>
 		<spring-cloud.version>Dalston.SR5</spring-cloud.version>
+		<swagger2.version>2.8.0</swagger2.version>
 		<mysql.version>5.1.46</mysql.version>
 		<druid.version>1.1.9</druid.version>
 		<mybatis.version>1.3.2</mybatis.version>
-		<swagger2.version>2.8.0</swagger2.version>
 	</properties>
 
-	<!-- 集中管理依赖 -->
+	<!-- 
+		! Centralized management dependence	
+	 -->
 	<dependencyManagement>
 		<dependencies>
 			<!-- junit 依赖 -->
@@ -64,6 +70,17 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+        	<!-- swagger2 依赖-->
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger2</artifactId>
+				<version>${swagger2.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger-ui</artifactId>
+				<version>${swagger2.version}</version>
+			</dependency>
 
 			<!-- mysql 依赖 -->
 			<dependency>
@@ -86,10 +103,9 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<!-- 修改 eureka info信息 -->
 	<build>
 		<finalName>${project.artifactId}</finalName>
-		<!-- 可以获取groupId、artifactId等构建信息 -->
+		<!-- 获取构建信息（用于修改cloud，服务info信息） -->
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -97,26 +113,25 @@
 			</resource>
 		</resources>
 		<plugins>
-			<!-- 资源拷贝插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>${maven-resources-plugin}</version>
+				<version>${maven-resources-plugin.version}</version>
 				<configuration>
 					<delimiters>
 						<delimit>$</delimit>
 					</delimiters>
 				</configuration>
 			</plugin>
-			<!-- 单元测试插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${maven-surefire-plugin.version}</version>
-				<configuration>
-					<!-- 跳过测试，开启（mvn install -DskipTests=false） -->
-					<skipTests>true</skipTests>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
