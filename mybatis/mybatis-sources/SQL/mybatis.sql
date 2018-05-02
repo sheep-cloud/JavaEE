@@ -29,9 +29,32 @@ ALTER TABLE tbl_employee ADD CONSTRAINT fk_emp_dept FOREIGN KEY(dept_id) REFEREN
 # /// ----------------------------------------------------------------------------------------------------
 
 SELECT te.id, te.last_name, te.gender, te.email, te.dept_id
-FROM tbl_employee te;
+FROM tbl_employee te
+WHERE te.id = ? AND te.last_name = ? AND te.gender = ? AND te.email = ?
+;
 
 
 SELECT td.id, td.dept_name
 FROM tbl_dept td
 WHERE td.id = 1;
+
+SELECT te.id, te.last_name, te.gender, te.email, te.dept_id
+FROM tbl_employee te
+WHERE te.id = 1 AND te.last_name LIKE '%j%' AND te.gender = '1' AND te.email LIKE '%j%';
+
+
+SELECT
+    te.id, te.last_name lastName, te.gender, te.email, te.dept_id
+FROM
+    tbl_employee te
+WHERE te.gender = '0'
+    AND te.email LIKE '%j%';
+    
+SELECT
+    te.id, te.last_name, te.gender, te.email, te.dept_id
+FROM
+    tbl_employee te
+WHERE te.id IN (1, 22, 23);
+
+
+INSERT INTO tbl_employee(last_name, gender, email) VALUES ('smith', '0', 'smith@colg.com') , ('allen', '1', 'allen@colg.com');
