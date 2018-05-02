@@ -8,7 +8,7 @@ import org.quartz.SchedulerException;
  * @author colg
  */
 public class HelloSchedulerTest {
-    
+
     /**
      * Test method for {@link cn.colg.job.HelloScheduler#startHelloJob()}.
      *
