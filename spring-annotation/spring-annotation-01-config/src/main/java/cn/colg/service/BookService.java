@@ -1,4 +1,4 @@
-package cn.colg.web.service;
+package cn.colg.service;
 
 /**
  * BookService

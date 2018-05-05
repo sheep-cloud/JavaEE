@@ -6,7 +6,7 @@
 	   					   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- 包扫描，只要标注了@Controller、@Service、@Repository、@Component -->
-	<!-- <context:component-scan base-package="cn.colg" /> -->
+	<context:component-scan base-package="cn.colg" />
 	<bean id="person" class="cn.colg.bean.Person">
 		<property name="name" value="Jack" />
 		<property name="age" value="18" />

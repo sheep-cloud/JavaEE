@@ -12,10 +12,17 @@
 			<version>0.0.1</version>
 		</dependency>
 
+		<!-- spring-context 依赖，包含（core、beans、context、aop、expression、commons-logging） -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>4.3.16.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>4.3.16.RELEASE</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>
