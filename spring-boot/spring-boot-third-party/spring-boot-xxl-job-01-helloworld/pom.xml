@@ -17,7 +17,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
+		
 		<!-- xxl-job-core 轻量级分布式任务调度框架 -->
 		<dependency>
 			<groupId>com.xuxueli</groupId>

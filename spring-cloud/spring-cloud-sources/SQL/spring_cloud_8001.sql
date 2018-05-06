@@ -5,8 +5,8 @@ USE spring_cloud_8001;
 CREATE TABLE dept(
 	deptno BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '主键',
 	deptname VARCHAR(32) COMMENT '部门名称',
-	dbsource VARBINARY(32) COMMENT '来自哪个数据库'
-);
+	dbsource VARCHAR(32) COMMENT '来自哪个数据库'
+) COMMENT '部门表';
 
 INSERT INTO dept(deptname, dbsource) VALUES('开发部', DATABASE());
 INSERT INTO dept(deptname, dbsource) VALUES('人事部', DATABASE());
