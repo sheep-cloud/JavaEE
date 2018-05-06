@@ -2,7 +2,8 @@ package cn.colg.cache;
 
 import java.util.List;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -11,7 +12,8 @@ import redis.clients.jedis.JedisPool;
  *
  * @author colg
  */
-@Data
+@Getter
+@Setter
 public class JedisPoolCache implements JedisClient {
 
     private JedisPool jedisPool;

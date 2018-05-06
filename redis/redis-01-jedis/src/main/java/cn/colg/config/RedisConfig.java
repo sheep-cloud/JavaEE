@@ -2,9 +2,10 @@ package cn.colg.config;
 
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 import cn.colg.cache.JedicClusterCache;
 import cn.colg.cache.JedisPoolCache;
@@ -25,42 +26,58 @@ import redis.clients.jedis.JedisPool;
  *
  * @author colg
  */
+@PropertySource(value = {"classpath:/redis.properties"})
 @Configuration
 public class RedisConfig {
+
+    @Value("${redis.host}")
+    private String host;
+    @Value("${redis.port}")
+    private int port;
+
+    @Value("${redis.cluster.host}")
+    private String clusterHost;
+    @Value("${redis.cluster.port1}")
+    private int clusterPort1;
+    @Value("${redis.cluster.port2}")
+    private int clusterPort2;
+    @Value("${redis.cluster.port3}")
+    private int clusterPort3;
+    @Value("${redis.cluster.port4}")
+    private int clusterPort4;
+    @Value("${redis.cluster.port5}")
+    private int clusterPort5;
+    @Value("${redis.cluster.port6}")
+    private int clusterPort6;
 
     /**
      * redis，单机版配置
      *
      * @return
      */
-    @Conditional(JedisPoolCatchCondition.class)
     @Bean
     public JedisPoolCache jedisClientPool() {
         JedisPoolCache jedisClientPool = new JedisPoolCache();
-        String host = "192.168.21.103";
-        JedisPool jedisPool = new JedisPool(host, 6379);
+        JedisPool jedisPool = new JedisPool(host, port);
         jedisClientPool.setJedisPool(jedisPool);
         return jedisClientPool;
     }
-    
 
     /**
      * redis，集群版配置
      *
      * @return
      */
-    @Conditional(JedicClusterCacheCondition.class)
     @Bean
     public JedicClusterCache jedisClientCluster() {
         JedicClusterCache jedisClientCluster = new JedicClusterCache();
-        String host = "192.168.21.103";
         Set<HostAndPort> nodes = CollUtil.newHashSet(
-                new HostAndPort(host, 7000),
-                new HostAndPort(host, 7001),
-                new HostAndPort(host, 7002),
-                new HostAndPort(host, 7003),
-                new HostAndPort(host, 7004),
-                new HostAndPort(host, 7005)
+                new HostAndPort(clusterHost, clusterPort1),
+                new HostAndPort(clusterHost, clusterPort2),
+                new HostAndPort(clusterHost, clusterPort3),
+                new HostAndPort(clusterHost, clusterPort4),
+                new HostAndPort(clusterHost, clusterPort5),
+                new HostAndPort(clusterHost, clusterPort6)
             );
         JedisCluster jedisCluster = new JedisCluster(nodes);
         jedisClientCluster.setJedisCluster(jedisCluster);

@@ -39,6 +39,7 @@ public class JedisClientTest {
      */
     @Test
     public void testGet() {
+        log.info("testGet() >> jedisClient : {}", jedisClient);
         String result = jedisClient.get("aaa");
         log.info("testGet() >> result : {}", result);
     }
