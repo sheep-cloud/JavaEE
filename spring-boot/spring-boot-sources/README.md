@@ -37,24 +37,24 @@
 ```xml
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>cn.colg</groupId>
-	<artifactId>spring-boot-01-helloworld</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot-01-helloworld :: sprign-boot 初识</name>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>cn.colg</groupId>
+    <artifactId>spring-boot-01-helloworld</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>spring-boot-01-helloworld :: sprign-boot 初识</name>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.12.RELEASE</version>
-	</parent>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.12.RELEASE</version>
+    </parent>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
 ```
@@ -113,15 +113,15 @@ public class HelloController {
 #### 6、简化部署
 
 ```xml
-	<build>
-		<plugins>
+    <build>
+        <plugins>
 			<!-- 这个插件，可以将应用打包成一个可执行的jar包 -->
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 ```
 
 
@@ -143,20 +143,20 @@ public class HelloController {
 			</parent>
 		Spring Boot应用里面的所有依赖版本；以后导入依赖默认是不需要写版本；（没有在dependencies里面管理的依赖自然需要声明版本号）
 	 -->
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.12.RELEASE</version>
-	</parent>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.12.RELEASE</version>
+    </parent>
 ```
 
 ##### 2、启动器
 
 ```xml
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 ```
 
 - spring-boot-starter-web
@@ -367,11 +367,11 @@ public class Person implements Serializable {
 spring-boot-configuration-processor依赖：
 
 ```xml
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
 ```
 
 ### 4、配置文件占位符
