@@ -1,7 +1,5 @@
 package cn.colg.config;
 
-import static org.junit.Assert.fail;
-
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -30,30 +28,6 @@ public class Config01OfProfileTest {
 
         String[] definitionNames = applicationContext.getBeanDefinitionNames();
         CollUtil.newArrayList(definitionNames).forEach(name -> log.info("test() >> name : {}", name));
-    }
-
-    /**
-     * Test method for {@link cn.colg.config.Config01OfProfile#dataSourceTest(java.lang.String)}.
-     */
-    @Test
-    public void testDataSourceTest() {
-        fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for {@link cn.colg.config.Config01OfProfile#dataSourceDev(java.lang.String)}.
-     */
-    @Test
-    public void testDataSourceDev() {
-        fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for {@link cn.colg.config.Config01OfProfile#dataSourceProd(java.lang.String)}.
-     */
-    @Test
-    public void testDataSourceProd() {
-        fail("Not yet implemented"); // TODO
     }
 
 }
