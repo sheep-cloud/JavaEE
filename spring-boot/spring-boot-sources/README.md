@@ -26,7 +26,7 @@
 
 ### 4、Spring Boot HelloWorld
 
-```
+```java
 一个功能：浏览器发送hello请求，服务器接收请求并处理，响应Hello World字符串；
 ```
 
@@ -34,11 +34,57 @@
 
 #### 2、导入Spring Boot相关的依赖
 
-![](http://ww1.sinaimg.cn/large/005PjuVtgy1fr26wrins4j30ks0bkaab.jpg)
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>cn.colg</groupId>
+	<artifactId>spring-boot-01-helloworld</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>spring-boot-01-helloworld :: sprign-boot 初识</name>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.12.RELEASE</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+	</dependencies>
+
+</project>
+```
 
 #### 3、编写一个主程序；启动Spring Boot应用
 
-![](http://ww1.sinaimg.cn/large/005PjuVtgy1fr26yr9330j30kt0970st.jpg)
+```java
+package cn.colg;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+/**
+ * Spring Boot 启动类
+ * 
+ * <pre>
+ * '@SpringBootApplication'：    标注一个主程序类，说明这是一个Spring Boot的主配置类，SpringBoot就应该运行这个类的main方法来启动SpringBoot应用
+ * </pre>
+ *
+ * @author colg
+ */
+@SpringBootApplication
+public class SpringBoot01HelloworldApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(SpringBoot01HelloworldApplication.class, args);
+    }
+}
+
+```
 
 #### 4、编写相关的Controler、Service
 
@@ -90,26 +136,68 @@ SpringBoot使用一个全局的配置文件，配置文件名是固定的：
 配置文件的作用：修改SpringBoot自动配置的默认值；SpringBoot在底层都给我们自动配置好；
 properties：
 
-```
+```properties
 server.port=8001
 ```
 
 yml:
 
-```
+```yaml
 server:
   port: 8001
 ```
 
 xml:
 
-```
+```xml
 <server>
 	<port>8001</prot>
 </server>
 ```
 
 ### 2、YAML语法
+
+#### 1、基本语法
+
+k(空格)v： 表示一对键值对（空格必须有）；
+
+以空格的缩进来控制层级关系；只要在左对齐的一列数据，都是同一个层级的，属性和值也是大小写敏感；
+
+#### 2、值的写法
+
+##### 1、字面量、数字、字符串、布尔
+
+k:v
+
+​	字面值直接写；
+
+​	字符串默认不用加上单引号或者双引号；
+
+​	""：	双引号；不会转义字符串里面的特殊字符；特殊字符会作为本身想表达的意思
+
+​		name: "Jack \n Rose"；输出：Jack 换行 Rose
+
+​	''：	单引号；会转义特殊字符，特殊字符最终知识一个普通的字符串数据
+
+​		name: 'Jack \n Rose'；输出：Jack \n Rose
+
+##### 2、对象、Map
+
+k: v
+
+​	在下一行写对象的属性和值的关系；注意缩进
+
+​	对象还是k: v的方式
+
+```yaml
+friends:
+  lastName: Jack
+  age: 20
+```
+
+
+
+##### 3、数组、List、Set
 
 ### 3、配置文件注入
 
