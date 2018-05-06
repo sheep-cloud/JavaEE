@@ -39,6 +39,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>cn.colg</groupId>
+			<artifactId>colg-dependencies</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>

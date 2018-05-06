@@ -1,2 +1,18 @@
 server:
   port: 8001
+  
+person:
+  last-name: hello
+  age: 18
+  boss: false
+  birth:
+    2017/12/12
+  maps:
+    k1: v1
+    k2: v2
+  lists:
+    - Jack
+    - Rose
+  dog:
+    name: 小狗
+    age: 3

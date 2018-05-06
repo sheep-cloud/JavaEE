@@ -83,18 +83,48 @@ public class SpringBoot01HelloworldApplication {
         SpringApplication.run(SpringBoot01HelloworldApplication.class, args);
     }
 }
-
 ```
 
 #### 4、编写相关的Controler、Service
 
-![](http://ww1.sinaimg.cn/large/005PjuVtgy1fr270jcy4zj30gk09maa3.jpg)
+```java
+package cn.colg.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * HelloController
+ *
+ * @author colg
+ */
+@RestController
+public class HelloController {
+
+    @GetMapping("/hello")
+    public String hello() {
+        return "hello world";
+    }
+}
+```
 
 #### 5、运行主程序测试
 
 #### 6、简化部署
 
-![](http://ww1.sinaimg.cn/large/005PjuVtgy1fr272w2qb2j30hx04s3yf.jpg)
+```xml
+	<build>
+		<plugins>
+			<!-- 这个插件，可以将应用打包成一个可执行的jar包 -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+```
+
+
 
 ### 5、Hello World探究
 
@@ -102,11 +132,32 @@ public class SpringBoot01HelloworldApplication {
 
 ##### 1、父项目
 
-![](http://ww1.sinaimg.cn/large/005PjuVtgy1fr279ofwqhj30p207yt8t.jpg)
+```xml
+	<!-- 
+		它的父项目是：
+			<parent>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>1.5.12.RELEASE</version>
+				<relativePath>../../spring-boot-dependencies</relativePath>
+			</parent>
+		Spring Boot应用里面的所有依赖版本；以后导入依赖默认是不需要写版本；（没有在dependencies里面管理的依赖自然需要声明版本号）
+	 -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.12.RELEASE</version>
+	</parent>
+```
 
 ##### 2、启动器
 
-![](http://ww1.sinaimg.cn/large/005PjuVtgy1fr27afjpzhj30ds027mwy.jpg)
+```xml
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+```
 
 - spring-boot-starter-web
   - spring-boot-starter：spring-boot场景启动器；帮我们导入了web模块正常运行所依赖的组件；
@@ -195,11 +246,133 @@ friends:
   age: 20
 ```
 
+​	行内写法：
 
+```yaml
+friedns: {lastName: Jack, age: 20}
+```
 
 ##### 3、数组、List、Set
 
+用-值来表示数组中的一个元素
+
+```yaml
+pets:
+  - cat
+  - dog
+  - pig
+```
+
+行内写法：
+
+```yaml
+pets: [cat, dog, pig]
+```
+
 ### 3、配置文件注入
+
+配置文件：
+
+​	普通写法：
+
+```yaml
+person:
+  last-name: hello
+  age: 18
+  boss: false
+  birth:
+    2017/12/12
+  maps:
+    k1: v1
+    k2: v2
+  lists:
+    - Jack
+    - Rose
+  dog:
+    name: 小狗
+    age: 3
+```
+
+​	行内写法：
+
+```yaml
+server:
+  port: 8001
+  
+person:
+  last-name: hello
+  age: 18
+  boss: false
+  birth: 2017/12/12
+  maps: {k1: v1, k2: v2}
+  lists: [Jack, Rose]
+  dog:
+    name: 小狗
+    age: 3
+```
+
+javaBean：
+
+```java
+package cn.clog.bean;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+/**
+ * Person 实体
+ * 
+ * <pre>
+ * 将配置文件中配置的每一个属性的值，映射到这个组件中
+ *  `@ConfigurationProperties`：  告诉SpringBoot将本类中的所有属性和配置文件中相关的配置进行绑定
+ *      `(prefix = "person")`：  配置文件中哪个与下面的所有属性进行一一映射
+ *      
+ *  只有这个组件是容器中的组件，才能使用容器提供的`@ConfigurationProperties`组件
+ * </pre>
+ *
+ * @author colg
+ */
+@ConfigurationProperties(prefix = "person")
+@Component
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Accessors(chain = true)
+public class Person implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    private String lastName;
+    private Integer age;
+    private Boolean boss;
+    private Date birth;
+
+    private Map<String, Object> maps;
+    private List<Object> lists;
+
+    private Dog dog;
+}
+```
+
+spring-boot-configuration-processor依赖：
+
+```xml
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+```
 
 ### 4、配置文件占位符
 
