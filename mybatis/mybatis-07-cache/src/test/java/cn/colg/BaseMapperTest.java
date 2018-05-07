@@ -52,5 +52,6 @@ public abstract class BaseMapperTest {
         // 销毁sqlSession
         sqlSession.close();
         log.info("tearDown() : {}", "----------------------------------------------------------------------------------------------------\n");
+        // TODO colg [mybatis-07-cache :: 缓存机制 未完成]
     }
 }

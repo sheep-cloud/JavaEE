@@ -31,4 +31,5 @@ public class Employee implements Serializable {
 
     /** 部门；多对一 */
     private Department dept;
+
 }
