@@ -7,7 +7,7 @@ import cn.clog.SpringBoot03ConfigApplicationTest;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Person 实体 测试类
+ * Person 实体 '@ConfigurationProperties' 获取值 测试
  *
  * @author colg
  */

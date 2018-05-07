@@ -6,7 +6,16 @@
 
 - 简化Spring应用开发的一个框架；
 - 整个Spring技术站的一个打集合；
-- J2EE的一站式解决方案。
+- SpringBoot是J2EE的一站式解决方案；
+- SpringCloud是分布式整体解决方法。
+- 优点
+  - 快速创建独立运行的Spirng项目以及与主流框架集成
+  - 使用嵌入式的Servlet容器，应用无需打成WAR包
+  - starters自动依赖与版本控制
+  - 大量的自动配置，简化开发，也可以修改默认值
+  - 无需配置XML，无代码生成，开箱即用
+  - 准生产环境的运行时应用监控
+  - 与云计算的天然集成
 
 ### 2、微服务
 
@@ -163,6 +172,16 @@ public class HelloController {
   - spring-boot-starter：spring-boot场景启动器；帮我们导入了web模块正常运行所依赖的组件；
 - Spring Boot将所有功能场景都抽取出来，做成一个个的starters（启动器），只要在项目里面引入这些starter相关场景的所有依赖都会导入进来，要用什么功能就导入什么场景的启动器
 
+#### 2、入口类和@SpringBootApplication
+
+- 程序从main方法开始运行
+- 使用SpringApplicaiton.run()加载主程序类
+- 主程序类需要标注@SpringBootApplicaiton
+- @EnableAutoConfiguration是核心注解
+- @Import导入所有的自动配置场景
+- @AutoConfigurationPackage定义默认的包扫描规则
+- 程序启动扫描加载主程序类所在的包以及下面所有子包的组件。
+
 ### 6、使用Spring Initialzer快速创建Spring Boot项目
 
 #### 1、STS使用Spring Starter Project快速创建项目
@@ -271,6 +290,8 @@ pets: [cat, dog, pig]
 
 ### 3、配置文件注入
 
+#### 1、@ConfigurationProperties获取值
+
 配置文件：
 
 ​	普通写法：
@@ -280,8 +301,7 @@ person:
   last-name: hello
   age: 18
   boss: false
-  birth:
-    2017/12/12
+  birth: 2017/12/12
   maps:
     k1: v1
     k2: v2
@@ -374,15 +394,305 @@ spring-boot-configuration-processor依赖：
         </dependency>
 ```
 
+```json
+testPerson() >> person : Person(lastName=hello, age=18, boss=false, birth=Tue Dec 12 00:00:00 CST 2017, maps={k1=v1, k2=v2}, lists=[Jack, Rose], dog=Dog(name=小狗, age=3))
+```
+
+#### 2、@Value获取值
+
+```yaml
+cat:
+  lastName: black
+  age: 3
+  birth: 2018/03/15
+#  maps:
+#    k1: k1
+#    k2: k2
+#  lists:
+#    - Jack
+#    - Rose
+#  dog:
+#    name: 小狗
+#    age: 3
+```
+
+```java
+package cn.clog.bean;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+/**
+ * Cat 实体
+ *
+ * @author colg
+ */
+@Component
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Accessors(chain = true)
+public class Cat implements Serializable {
+    
+    /*
+     * colg  xml配置
+     * <bean>
+     *  <property name="lastName" value="?" />
+     * </bean>
+     */
+
+    private static final long serialVersionUID = 1L;
+
+    @Value("${cat.lastName}")
+    private String lastName;
+    @Value("${cat.age}")
+    private Integer age;
+    @Value("${cat.birth}")
+    private Date birth;
+}
+```
+
+```java
+testCat() >> cat : Cat(lastName=black, age=3, birth=Thu Mar 15 00:00:00 CST 2018)
+```
+
+#### 3、@ConfigurationProperties获取值和@Value获取值比较
+
+|                      | @ConfigurationProperties | @Value     |
+| -------------------- | ------------------------ | ---------- |
+| 功能                 | 批量注入配置文件中的属性 | 一个个指定 |
+| 松散绑定（松散语法） | 支持                     | 不支持     |
+| SpEL（#{}）          | 不支持                   | 支持       |
+| JSR303数据校验       | 支持                     | 不支持     |
+| 复杂数据类型         | 支持                     | 不支持     |
+
+#### 4、@PropertySource&@ImportResource
+
+##### 1、@PropertySource：加载指定的配置文件
+
+```yaml
+color.red: 红色
+color.blue: 蓝色
+color.createDate: 2018/01/01
+color.maps.k1: v1
+color.maps.k2: v2
+color.lists: Jack, Rose
+```
+
+```java
+package cn.clog.bean;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+
+import lombok.Data;
+
+/**
+ * Color 实体 '@PropertySource' 加载指定的配置文件
+ *
+ * @author colg
+ */
+@ConfigurationProperties(prefix = "color")
+@PropertySource(value = {"classpath:color.properties"})
+@Component
+@Data
+public class Color implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    private String red;
+    private String blue;
+    private Date createDate;
+
+    private Map<String, Object> maps;
+    private List<String> lists;
+}
+```
+
+```java
+testColor() >> color : Color(red=红色, blue=蓝色, createDate=Mon Jan 01 00:00:00 CST 2018, maps={k2=v2, k1=v1}, lists=[Jack, Rose])
+```
+
+##### 2、@ImportResource
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="phone" class="cn.clog.bean.Phone">
+        <property name="name" value="oppo" />
+        <property name="color" value="green" />
+        <property name="age" value="2" />
+        <property name="maps">
+            <map>
+                <entry key="k1" value="v1" />
+                <entry key="k2" value="v2" />
+            </map>
+        </property>
+        <property name="lists">
+            <list>
+                <value>Jack</value>
+                <value>Rose</value>
+            </list>
+        </property>
+    </bean>
+    
+</beans>
+```
+
+```java
+package cn.clog.bean;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.context.annotation.ImportResource;
+import org.springframework.stereotype.Component;
+
+import lombok.Data;
+
+/**
+ * Phone 实体 '@ImportResource' 导入Spring的配置文件
+ *
+ * @author colg
+ */
+@ImportResource(locations = {"classpath:beans.xml"})
+@Component
+@Data
+public class Phone implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    private String name;
+    private String color;
+    private Integer age;
+    
+    private Map<String, Object> maps;
+    private List<String> lists;
+}
+```
+
+```java
+testPhone() >> phone : Phone(name=oppo, color=green, age=2, maps={k1=v1, k2=v2}, lists=[Jack, Rose])
+```
+
+#### 5、SpringBoot推荐方式
+
+```java
+package cn.clog.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import cn.clog.bean.Cat;
+import cn.clog.bean.Color;
+import cn.clog.bean.Person;
+import cn.clog.bean.Phone;
+
+/**
+ * 配置类；'@Configuration'： 指定当前类是一个配置类；就是来替代之前的Spring配置文件
+ *
+ * @author colg
+ */
+@Configuration
+public class AppConfig {
+
+    /**
+     * 将方法的返回值添加到容器中，容器中这个组件默认的id就是方法名
+     *
+     * @return
+     */
+    @Bean
+    public Person person() {
+        return new Person();
+    }
+
+    @Bean
+    public Cat cat() {
+        return new Cat();
+    }
+
+    @Bean
+    public Color color() {
+        return new Color();
+    }
+
+    @Bean
+    public Phone phone() {
+        return new Phone();
+    }
+}
+```
+
+```java
+testPerson() >> person : Person(lastName=hello, age=18, boss=false, birth=Tue Dec 12 00:00:00 CST 2017, maps={k1=v1, k2=v2}, lists=[Jack, Rose], dog=Dog(name=小狗, age=3))
+testPerson() >> cat : Cat(lastName=black, age=3, birth=Thu Mar 15 00:00:00 CST 2018)
+testPerson() >> color : Color(red=红色, blue=蓝色, createDate=Mon Jan 01 00:00:00 CST 2018, maps={k2=v2, k1=v1}, lists=[Jack, Rose])
+testPerson() >> phone : Phone(name=oppo, color=green, age=2, maps={k1=v1, k2=v2}, lists=[Jack, Rose])
+```
+
 ### 4、配置文件占位符
 
-#### 5、注册环境Profile
+#### 1、随机数
 
-#### 6、配置文件加载位置
+```yaml
+taxi:
+  name: 大众${random.uuid}
+  plate-number: 粤A12345
+  age: ${random.int}
+  dog:
+    name: 小狗
+    age: ${taxi.age}
+```
 
-#### 7、外部配置加载顺序
+#### 2、占位符获取之前配置的值，如果没有可以用:指定默认值
 
-#### 8、自动配置原理
+```yaml
+taxi:
+  name: 大众${random.uuid}
+  plate-number: 粤A12345
+  age: ${random.int}
+  dog:
+    name: ${taxi.hello:小狗}
+    age: ${taxi.age}
+```
+
+```java
+testTaxi() >> taxi : Taxi(name=大众c9551712-a341-4ec8-809d-3c35df9e13cd, plateNumber=粤A12345, age=1451258729, dog=Dog(name=小狗, age=1400721001))
+```
+
+### 5、多环境Profile
+
+#### 1、多Profile文件
+
+- application-{profile}.yml/properties	主配置文件名
+
+#### 2、yml支持多文档块方式
+
+#### 3、激活指定Profile
+
+### 6、配置文件加载位置
+
+### 7、外部配置加载顺序
+
+### 8、自动配置原理
 
 ## 三、日志
 

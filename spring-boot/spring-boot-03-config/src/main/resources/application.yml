@@ -5,8 +5,7 @@ person:
   last-name: hello
   age: 18
   boss: false
-  birth:
-    2017/12/12
+  birth: 2017/12/12
   maps:
     k1: v1
     k2: v2
@@ -16,3 +15,25 @@ person:
   dog:
     name: 小狗
     age: 3
+    
+cat:
+  lastName: black
+  age: 3
+  birth: 2018/03/15
+#  maps:
+#    k1: k1
+#    k2: k2
+#  lists:
+#    - Jack
+#    - Rose
+#  dog:
+#    name: 小狗
+#    age: 3
+
+taxi:
+  name: 大众${random.uuid}
+  plate-number: 粤A12345
+  age: ${random.int}
+  dog:
+    name: ${taxi.hello:小狗}
+    age: ${taxi.age}
