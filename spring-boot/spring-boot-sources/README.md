@@ -733,6 +733,29 @@ spring:
 
 ### 7、自动配置原理
 
+- [配置文件属性参考](https://docs.spring.io/spring-boot/docs/1.5.12.RELEASE/reference/htmlsingle/#common-application-properties)
+
+#### 1、自动配置原理
+
+##### 1、SpirngBoot启动的时候加载主配置类，开启了自动配置功能`@EnableAutoConfiguration`
+
+##### 2、'@EnableAutoConfiguration'
+
+- 利用EnableAutoConfigurationImportSelector给容器中导入一些组件；
+
+- 可以查看AutoConfigurationImportSelector.selectImports(AnnotationMetadata) 方法中的内容；
+
+- List<String> configurations = getCandidateConfigurations(annotationMetadata, attributes);获取候选的位置；
+
+  - ```java
+    SpringFactoriesLoader.loadFactoryNames();
+    扫描所有jar包类路径下 "META-INF/spring.factories"
+    把扫描到的这些文件的内容包装成properties对象
+    从properties中获取到EnableAutoConfiguration.class类对应的值，然后把他们添加到容器中
+    ```
+
+  - 将类路径下 META-INF/spring.factories 里面配置的所有EnableAutoConfiguration的值加入到了容器中。
+
 ## 三、日志
 
 ## 四、Web开发
