@@ -1,0 +1,20 @@
+server:
+  port: 8001
+spring:
+  config:
+    location: F:/application.yml
+  profiles:
+    active:
+      - dev                     # 激活dev环境
+
+---
+server:
+  port: 8002
+spring:
+  profiles: dev
+
+---
+server:
+  port: 8003
+spring:
+  profiles: prod

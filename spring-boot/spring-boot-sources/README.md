@@ -682,17 +682,56 @@ testTaxi() >> taxi : Taxi(name=大众c9551712-a341-4ec8-809d-3c35df9e13cd, plate
 
 #### 1、多Profile文件
 
-- application-{profile}.yml/properties	主配置文件名
+- application-{profile}.yml/properties	主配置文件名；默认使用application.yml配置
 
-#### 2、yml支持多文档块方式
+![](http://ww1.sinaimg.cn/large/005PjuVtgy1fr36l684vsj304h01q0sh.jpg)
 
-#### 3、激活指定Profile
+#### 2、激活指定Profile
+
+```yaml
+spring:
+  profiles:
+    active:
+    - dev
+```
+
+- 虚拟机参数：-Dspring.profiles.active=dev
+
+#### 3、yml支持多文档块方式
+
+```yaml
+server:
+  port: 8001
+spring:
+  profiles:
+    active:
+      - dev                     # 激活dev环境
+
+---
+server:
+  port: 8002
+spring:
+  profiles: dev
+
+---
+server:
+  port: 8003
+spring:
+  profiles: prod
+```
 
 ### 6、配置文件加载位置
 
-### 7、外部配置加载顺序
+- Spring Boot 启动会扫描一下位置的application.yml/properties作为Sprng Boot的默认配置文件
+  - file:/config/
+  - file:./
+  - **classpath:/config/**
+  - **classpath:/**
+- 优先级由高到低，高优先级的配置会覆盖第优先级的配置；
+- Spring Boot会从这4个位置全部加载主配置文件；互补配置；
+- **spring.config.location**: F:/application.yml  手动指定配置文件位置。
 
-### 8、自动配置原理
+### 7、自动配置原理
 
 ## 三、日志
 
