@@ -17,11 +17,14 @@ import org.mybatis.generator.internal.DefaultShellCallback;
  */
 public class GeneratorTest {
 
+    /** 配置文件路径 */
+    private static final String GENERATOR_XML_PATH = "src/main/resources/generator.xml";
+
     @Test
     public void testGenerator() throws Exception {
         List<String> warnings = new ArrayList<String>();
         boolean overwrite = true;
-        File configFile = new File("src/main/resources/generator.xml");
+        File configFile = new File(GENERATOR_XML_PATH);
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(configFile);
         DefaultShellCallback callback = new DefaultShellCallback(overwrite);
