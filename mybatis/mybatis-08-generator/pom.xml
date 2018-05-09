@@ -73,5 +73,7 @@
 
     <modules>
         <module>mybatis-01-generator-xml</module>
+        <module>mybatis-02-generator-javaconfig</module>
+        <module>mybatis-03-generator-blank-note</module>
     </modules>
 </project>
