@@ -27,7 +27,7 @@
 	<select id="findByMap" resultType="cn.colg.entity.Employee">
 		SELECT te.id, te.last_name lastName, te.gender, te.email
 		FROM ${map.tableName} te
-		WHERE te.id = #{map.id} AND te.last_name LIKE '${map.lastName}'
+		WHERE te.id = #{map.id} AND te.last_name LIKE '%${map.lastName}%'
 	</select>
 	
 	<select id="findByIdAndLastName" resultType="cn.colg.entity.Employee">

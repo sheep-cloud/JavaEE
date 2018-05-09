@@ -25,7 +25,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testQueryByLastNameResultMap() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         Map<Integer, Employee> map = employeeMapper.queryByLastNameResultMap("jack");
-        log.info("testQueryByLastNameResultMap() >> map : {}", map);
+        log.info("EmployeeMapperTest.testQueryByLastNameResultMap() >> map : {}", map);
     }
 
     /**
@@ -35,7 +35,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testFindByIdResultMap() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         Map<String, Object> map = employeeMapper.findByIdResultMap(1);
-        log.info("testFindByIdResultMap() >> map : {}", map);
+        log.info("EmployeeMapperTest.testFindByIdResultMap() >> map : {}", map);
     }
 
     /**
@@ -45,7 +45,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testQueryByLastName() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         List<Employee> list = employeeMapper.queryByLastName("jack");
-        log.info("testQueryByLastName() >> list : {}", list);
+        log.info("EmployeeMapperTest.testQueryByLastName() >> list : {}", list);
     }
 
     /**
@@ -54,12 +54,12 @@ public class EmployeeMapperTest extends BaseMapperTest {
     @Test
     public void testFindByMap() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
-        Dict map = new Dict(3);
+        Dict map = new Dict(4);
         map.set("tableName", "tbl_employee")
            .set("lastName", "jack")
            .set("id", 1);
         Employee employee = employeeMapper.findByMap(map);
-        log.info("testFindByMap() >> employee : {}", employee);
+        log.info("EmployeeMapperTest.testFindByMap() >> employee : {}", employee);
     }
 
     /**
@@ -69,7 +69,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testFindByIdAndLastName() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         Employee employee = employeeMapper.findByIdAndLastName(1, "jack");
-        log.info("testFindByIdAndLastName() >> employee : {}", employee);
+        log.info("EmployeeMapperTest.testFindByIdAndLastName() >> employee : {}", employee);
     }
 
     /**
@@ -79,7 +79,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testFindById() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         Employee employee = employeeMapper.findById(1);
-        log.info("testFindById() >> employee : {}", employee);
+        log.info("EmployeeMapperTest.testFindById() >> employee : {}", employee);
     }
     
     /**
@@ -89,7 +89,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testFindLastNameById() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         String lastName = employeeMapper.findLastNameById(1);
-        log.info("testFindLastNameById() >> lastName : {}", lastName);
+        log.info("EmployeeMapperTest.testFindLastNameById() >> lastName : {}", lastName);
     }
 
     /**
@@ -102,7 +102,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
         employeeMapper.addEmployee(employee);
         
         // 不是直接得到返回的主键id，而是通过之前的对象get出来
-        log.info("testAddEmployee() >> employee.getId() : {}", employee.getId());
+        log.info("EmployeeMapperTest.testAddEmployee() >> employee.getId() : {}", employee.getId());
     }
 
     /**
@@ -116,7 +116,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
         
         if (employee != null) {
             Integer integer = employeeMapper.updateEmployee(employee.setLastName("Junit-rose"));
-            log.info("testUpdateEmployee() >> integer : {}", integer);
+            log.info("EmployeeMapperTest.testUpdateEmployee() >> integer : {}", integer);
         }
     }
 
@@ -131,7 +131,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
         
         if (employee != null) {
             Boolean boolean1 = employeeMapper.deleteById(employee.getId());
-            log.info("testDeleteById() >> boolean1 : {}", boolean1);
+            log.info("EmployeeMapperTest.testDeleteById() >> boolean1 : {}", boolean1);
         }
     }
 
