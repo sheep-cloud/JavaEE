@@ -21,7 +21,7 @@ public class DepartmentMapperTest extends BaseMapperTest {
     public void testFindById() {
         DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
         Department department = departmentMapper.findById(1);
-        log.info("testFindById() >> department : {}", department);
+        log.info("DepartmentMapperTest.testFindById() >> department : {}", department);
     }
     
     /**
@@ -31,8 +31,8 @@ public class DepartmentMapperTest extends BaseMapperTest {
     public void testFindByIdPlus() {
         DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
         Department department = departmentMapper.findByIdPlus(1);
-        log.info("testFindById() >> department : {}", department);
-        log.info("testFindByIdPlus() >> department.getEmps() : {}", department.getEmps());
+        log.info("DepartmentMapperTest.testFindByIdPlus() >> department : {}", department);
+        log.info("DepartmentMapperTest.testFindByIdPlus() >> department.getEmps() : {}", department.getEmps());
     }
     
     /**
@@ -42,8 +42,8 @@ public class DepartmentMapperTest extends BaseMapperTest {
     public void testFindByIdStep() {
         DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
         Department department = departmentMapper.findByIdStep(1);
-        log.info("testFindById() >> department : {}", department);
-        log.info("testFindByIdPlus() >> department.getEmps() : {}", department.getEmps());
+        log.info("DepartmentMapperTest.testFindByIdStep() >> department : {}", department);
+        log.info("DepartmentMapperTest.testFindByIdStep() >> department.getEmps() : {}", department.getEmps());
     }
     
 }

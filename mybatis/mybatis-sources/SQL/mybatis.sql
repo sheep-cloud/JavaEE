@@ -12,7 +12,7 @@ CREATE TABLE tbl_employee(
 
 INSERT INTO tbl_employee(last_name, gender, email) VALUES('jack', '0', 'jack@colg.com');
 
-# 新建部门表，修改员工表结构
+-- 新建部门表，修改员工表结构
 DROP TABLE IF EXISTS tbl_dept;
 CREATE TABLE tbl_dept(
 	id INT(11) PRIMARY KEY AUTO_INCREMENT COMMENT '主键',
@@ -23,10 +23,10 @@ INSERT INTO tbl_dept(dept_name) VALUE('开发部');
 INSERT INTO tbl_dept(dept_name) VALUE('测试部');
 
 ALTER TABLE tbl_employee ADD COLUMN dept_id INT(11);
-# 建立外键关系
+-- 建立外键关系
 ALTER TABLE tbl_employee ADD CONSTRAINT fk_emp_dept FOREIGN KEY(dept_id) REFERENCES tbl_dept(id);
 
-# /// ----------------------------------------------------------------------------------------------------
+-- /// ----------------------------------------------------------------------------------------------------
 
 SELECT te.id, te.last_name, te.gender, te.email, te.dept_id
 FROM tbl_employee te

@@ -1,3 +1,5 @@
+[TOC]
+
 # MyBatis 3.4.x
 
 ## 1、MyBatis 简介
@@ -169,10 +171,157 @@ public class EmployeeMapperTest extends BaseMapperTest {
 
 ## 3、MyBatis 全局配置文件
 
+### 1、MyBatis configuration配置
+
 - MyBatis 的配置文件包含了影响 MyBatis 行为甚深的 设置（settings）和属性（properties）信息。文档的 顶层结构如下：
-- 
+
+- configuration 配置
+
+  - [properties 属性](http://www.mybatis.org/mybatis-3/zh/configuration.html#properties)
+  - [settings 设置](http://www.mybatis.org/mybatis-3/zh/configuration.html#settings)
+  - [typeAliases 类型别名](http://www.mybatis.org/mybatis-3/zh/configuration.html#typeAliases)
+  - [typeHandlers 类型处理器](http://www.mybatis.org/mybatis-3/zh/configuration.html#typeHandlers)
+  - [objectFactory 对象工厂](http://www.mybatis.org/mybatis-3/zh/configuration.html#objectFactory)
+  - [plugins 插件](http://www.mybatis.org/mybatis-3/zh/configuration.html#plugins)
+  - [environment 环境变量](http://www.mybatis.org/mybatis-3/zh/configuration.html#environments)
+    - environment 环境变量
+      - transactionManager 事务管理器
+      - dataSource 数据源
+  - [databaseIdProvider 数据库厂商标识](http://www.mybatis.org/mybatis-3/zh/configuration.html#databaseIdProvider)
+  - [mappers 映射器](http://www.mybatis.org/mybatis-3/zh/configuration.html#mappers)
+
+### 2、Mybatis 内置类型别名
+
+- mybatis 已经为许多常见的Java类型内建了相应的类型别名。它们都是==大小写不敏感==的，在起别名的时候不要占用已有的别名。
+
+| 别名     | 映射的类型 |
+| -------- | ---------- |
+| _byte    | byte       |
+| _long    | long       |
+| _short   | short      |
+| _int     | int        |
+| _integer | int        |
+| _double  | double     |
+| _float   | float      |
+| _boolean | boolean    |
+| string  | String  |
+| byte    | Byte    |
+| long    | Long    |
+| short   | Short   |
+| int     | Integer |
+| integer | Integer |
+| double  | Double  |
+| float   | Float   |
+| boolean | Boolean |
+| date       | Date       |
+| decimal    | BigDecimal |
+| bigdecimal | BigDecimal |
+| object     | Object     |
+| map        | Map        |
+| hashmap    | HashMap    |
+| list       | List       |
+| arraylist  | ArrayList  |
+| collection | Collection |
+| iterator   | Iterator   |
+
+### 3、mappers
+
+- mapper逐个注册SQL映射文件
+
+```xml
+	<mappers>
+        <!-- mapper：不能使用通配符 -->
+		<mapper resource="mapper/EmployeeMapper.xml" />
+		<mapper resource="mapper/DepartmentMapper.xml" />
+	</mappers>
+```
+
+- mapper批量注册SQL映射文件
+  - 这种方式要求SQL映射文件必须和接口名相同并且在同一目录下
+
+```xml
+	<mappers>
+		<!-- 
+			mapper: 注册一个sql映射
+				注册配置文件：
+					resource：	引用类路径下的sql映射文件				<mapper resource="org/mybatis/builder/PostMapper.xml"/>
+					url：		引用网络路径下或者磁盘路径下的sql映射文件	<mapper url="file:///var/mappers/PostMapper.xml"/>
+				注册接口：
+				class:		引用（注册）接口
+					1、有sql映射文件，映射文件名必须和接口同名，并且放在与接口同一目录下；
+					2、没有sql映射文件，所有的sql都是利用注解写在接口上
+					推荐：比较重要的，复杂的Dao接口写sql映射文件
+						不重要，简单的Dao接口为了开发快速可以使用注解；
+		 -->
+		<!-- <mapper resource="mybatis/mapper/EmployeeMapper.xml" /> -->
+		<!-- <mapper class="com.atguigu.mybatis.dao.EmployeeMapperAnnotation"/> -->
+		
+		<!-- package：	批量注册：同包名、同命名 -->
+		<package name="cn.colg.dao" />
+	</mappers>
+```
 
 ## 4、MyBatis 映射文件
+
+### 1、映射文件
+
+- 映射文件指导着MyBatis如何进行数据库增删改查，有着非常重要的意义。
+
+- cache - 命名空间的二级缓存配置；
+
+- cache-ref - 其他命名空间缓存配置的引用；
+
+- ==resultMap== - 自定义结果集映射
+
+- ==sql== - 抽取可重用语句块
+
+- ==insert== - 映射插入语句
+
+- ==update== - 映射更新语句
+
+- ==delete== - 映射删除语句
+
+- ==select== - 映射查询语句
+
+- 主键生成方式
+
+  - 数据库支持自动生成主键
+
+  ```xml
+  	<!-- 
+  		parameterType：参数类型，可以省略
+  		
+  		获取自增主键的值：
+  			Mysql支持自增主键，自增主键值的获取，Mybatis也是利用statement.getGenreatedKeys();
+  			useGeneratedKeys="true"	使用自增主键获取主键值策略
+  			keyProperty				指定对应的主键属性，也就是Mybatis获取到主键值以后，将这个值封装给javaBean的哪个属性
+  	 -->
+  	<insert id="addEmployee" useGeneratedKeys="true" keyProperty="employee.id">
+  		INSERT INTO tbl_employee (last_name, email, gender)
+  		VALUES (#{employee.lastName}, #{employee.email}, #{employee.gender})
+  	</insert>
+  ```
+
+  - 数据库不支持自动生成主键 - 使用selectKey子元素
+
+### 2、参数传递
+
+- 单个参数
+  - 可以接受基本类型、对象类型、集合类型的只。这种情况Mybatis可直接使用这个参数，不需要经过任何处理。
+- 多个参数
+  - 任意多个参数，都会被MyBatis重新包装成一个Map传入。Map的key是param1，param2...只就是参数的值。
+- 命名参数
+  - 为参数使用@Param起一个名字，MyBatis就会将这些参数封装进map中，key就是指定的名字。
+
+- POJO
+  - 当这些参数属于业务pojo时，直接传递pojo
+- Map
+  - 可以封装多个参数为map。直接传递
+
+### 3、参数处理
+
+- #{key}：获取参数的值，预编译到SQL中，安全；
+- ${key}：获取参数的值，拼接到SQL中。有SQL注入问题。
 
 ## 5、MyBatis 动态SQL
 
@@ -183,5 +332,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
 ## 8、MyBatis 逆向工程
 
 ## 9、Mybaits 工作原理
+
+![](http://ww1.sinaimg.cn/large/005PjuVtgy1fr6jgoequuj30ls0cg0y5.jpg)
 
 ## 10、MyBatis 插件开发

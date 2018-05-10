@@ -27,6 +27,7 @@
 	</environments>
 
 	<mappers>
+        <!-- mapper：不能使用通配符 -->
 		<mapper resource="mapper/EmployeeMapper.xml" />
 		<mapper resource="mapper/DepartmentMapper.xml" />
 	</mappers>
