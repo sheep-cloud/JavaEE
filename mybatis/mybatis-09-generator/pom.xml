@@ -1,0 +1,79 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>cn.colg</groupId>
+    <artifactId>mybatis-09-generator</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>mybatis-09-generator :: mybatis 逆向工程</name>
+  
+	<!-- 
+		! Centralized definition of dependent versions
+	 -->
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
+        <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
+        <skipTests>true</skipTests>
+        <colg.version>0.0.1</colg.version>
+        <mysql.version>5.1.46</mysql.version>
+        <mybatis.version>3.4.6</mybatis.version>
+    </properties>
+
+	<!-- 
+		! Centralized management dependence	
+	 -->
+    <dependencyManagement>
+        <dependencies>
+	    <!-- colg-dependencies 依赖 -->
+            <dependency>
+                <groupId>cn.colg</groupId>
+                <artifactId>colg-dependencies</artifactId>
+                <version>${colg.version}</version>
+            </dependency>
+			
+		<!-- mysql 依赖 -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+		<!-- mybatis 依赖 -->
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <modules>
+        <module>mybatis-01-generator-xml</module>
+        <module>mybatis-02-generator-javaconfig</module>
+        <module>mybatis-03-generator-blank-note</module>
+    </modules>
+</project>
