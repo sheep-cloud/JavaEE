@@ -6,10 +6,10 @@
 <generatorConfiguration>
 	<context id="Mysql" targetRuntime="MyBatis3">
 		<!-- 实现Serializable接口 -->
-		<!-- <plugin type="org.mybatis.generator.plugins.SerializablePlugin" /> -->
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
 		
 		<!-- 使用装饰模式重写生成规则 -->
-		<commentGenerator type="cn.colg.plugins.MyCommentGenerator">
+		<commentGenerator type="cn.colg.plugins.LombokGenerator">
 			<!-- 是否去除自动生成的注释 @Date -->
 			<property name="suppressDate" value="false" />
 			<!-- 是否去除自动生成的注释 true：是 ： false:否 -->
@@ -30,9 +30,7 @@
 		<!-- targetProject: 生成实体类的位置 -->
 		<javaModelGenerator targetProject="src/main/java" targetPackage="opsteel.oupuzw.api.blank.note.entity">
 			<!-- 从数据库返回的值被清理前后的空格 -->
-			<property name="trimStrings" value="true" />
-			<!-- 设置所有实体类的基类 -->
-			<property name="rootClass" value="opsteel.oupuzw.common.entity.BaseEntity" />
+<!-- 			<property name="trimStrings" value="true" /> -->
 		</javaModelGenerator>
 		
         <!-- targetProject: mapper映射文件生成的位置 -->
@@ -42,6 +40,7 @@
 		<javaClientGenerator type="XMLMAPPER" targetProject="src/main/java" targetPackage="opsteel.oupuzw.service.blank.note.dao" />
 		
 		<!-- 指定数据库表以及对应的[实体类] -->
+<!-- 
 		<table tableName="bn_bill_item" mapperName="BnBillItemDao" domainObjectName="BnBillItemEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
 		<table tableName="bn_bill_pay_item" mapperName="BnBillPayItemDao" domainObjectName="BnBillPayItemEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
 		<table tableName="bn_bill_sum" mapperName="BnBillSumDao" domainObjectName="BnBillSumEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
@@ -61,6 +60,7 @@
 		<table tableName="bn_sys_setting" mapperName="BnSysSettingDao" domainObjectName="BnSysSettingEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
 		<table tableName="bn_sys_user" mapperName="BnSysUserDao" domainObjectName="BnSysUserEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
 		<table tableName="bn_user_group" mapperName="BnUserGroupDao" domainObjectName="BnUserGroupEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+ -->
 		<table tableName="bn_user_group_user" mapperName="BnUserGroupUserDao" domainObjectName="BnUserGroupUserEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
 	</context>
 </generatorConfiguration>

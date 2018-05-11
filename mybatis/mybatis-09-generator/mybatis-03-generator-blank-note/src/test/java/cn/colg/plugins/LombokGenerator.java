@@ -22,16 +22,15 @@ import cn.hutool.core.lang.Console;
  * 扩展生成实体类的规则
  *
  * @author colg
- * @date 2018-05-05 14:03:38
  */
-public class MyCommentGenerator extends DefaultCommentGenerator {
+public class LombokGenerator extends DefaultCommentGenerator {
 
     /** 是否生成注释 */
     private boolean suppressAllComments;
     /** 是否生成时间戳 */
     private boolean suppressDate;
 
-    public MyCommentGenerator() {
+    public LombokGenerator() {
         suppressAllComments = false;
         suppressDate = false;
     }
@@ -56,42 +55,6 @@ public class MyCommentGenerator extends DefaultCommentGenerator {
         field.addJavaDocLine("/**");
         field.addJavaDocLine(" * " + remarks);
         field.addJavaDocLine(" */");
-
-        // ============================= @id, @Column BEGIN
-        /*
-        String columnName = introspectedColumn.getActualColumnName();
-        int length = introspectedColumn.getLength();
-        boolean nullable = introspectedColumn.isNullable();
-        String fieldType = field.getType().toString();
-        StringBuffer sb = new StringBuffer();
-        
-        List<IntrospectedColumn> pklist = introspectedTable.getPrimaryKeyColumns();
-        boolean columnIsPkCol = false;
-        if (pklist != null && pklist.size() > 0) {
-            for (IntrospectedColumn col : pklist) {
-                if (col.getActualColumnName().equalsIgnoreCase(columnName)) {
-                    columnIsPkCol = true;
-                    break;
-                }
-            }
-        }
-        
-        if (columnIsPkCol) {
-            field.addAnnotation("@Id");
-        }
-        
-        sb.append("@Column(name = \"" + columnName + "\"");
-        if (fieldType.endsWith("String")) {
-            sb.append(", length = " + length + "");
-        }
-        if (!nullable) {
-            sb.append(", nullable = " + nullable + "");
-        }
-        sb.append(")");
-        field.addAnnotation(sb.toString());
-        */
-        // ============================= @id, @Column END
-
     }
 
     @Override
