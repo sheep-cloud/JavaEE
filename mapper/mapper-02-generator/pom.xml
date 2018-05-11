@@ -3,5 +3,10 @@
   <groupId>cn.colg</groupId>
   <artifactId>mapper-02-generator</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>mapper-02-generator :: 逆向工程</name>
+  <packaging>pom</packaging>
+  <name>mapper-02-generator :: 通用Mapper 逆向工程</name>
+  <modules>
+      <module>mapper-01-generator-xml</module>
+      <module>mapper-02-generator-javaconfig</module>
+  </modules>
 </project>

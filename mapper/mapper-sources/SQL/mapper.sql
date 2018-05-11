@@ -5,12 +5,12 @@ USE mapper;
 DROP TABLE IF EXISTS `tabple_emp`;
 
 CREATE TABLE `tabple_emp` (
-	`emp_id` INT NOT NULL AUTO_INCREMENT ,
-	`emp_name` VARCHAR(500) NULL ,
-	`emp_salary` DOUBLE(15,5) NULL ,
-	`emp_age` INT NULL ,
+	`emp_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键',
+	`emp_name` VARCHAR(500) NULL COMMENT '员工姓名',
+	`emp_salary` DOUBLE(15,5) NULL COMMENT '员工工资',
+	`emp_age` INT NULL COMMENT '员工年龄',
 	PRIMARY KEY (`emp_id`)
-);
+) COMMENT '员工表';
 
 INSERT INTO `tabple_emp` (`emp_name`, `emp_salary`, `emp_age`) VALUES ('tom', '1254.37', '27');
 INSERT INTO `tabple_emp` (`emp_name`, `emp_salary`, `emp_age`) VALUES ('jerry', '6635.42', '38');
