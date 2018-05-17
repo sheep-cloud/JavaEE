@@ -37,11 +37,11 @@ public class CodeGeneratorTest {
     public void testGenerator() throws Exception {
         // genCode("表名");
         // genCodeByCustomModelName("表名", "实体名");
-        genCode("tabple_emp");
+        genCode("product_info");
     }
 
     /** JDBC 配置 */
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/mapper?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/sell?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false";
     private static final String JDBC_USERNAME = "root";
     private static final String JDBC_PASSWORD = "root";
     private static final String JDBC_DIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
@@ -50,6 +50,7 @@ public class CodeGeneratorTest {
     public static final String BASE_PACKAGE = "cn.colg";
     public static final String MODEL_PACKAGE = BASE_PACKAGE + ".entity";
     public static final String MAPPER_PACKAGE = BASE_PACKAGE + ".mapper";
+    public static final String ROOT_CLASS = "cn.colg.core.BaseEntity";
 
     /** 项目的基础路径 */
     private static final String JAVA_PATH = "src/main/java";
@@ -126,6 +127,7 @@ public class CodeGeneratorTest {
         JavaModelGeneratorConfiguration javaModelGenerator = new JavaModelGeneratorConfiguration();
         javaModelGenerator.setTargetProject(JAVA_PATH);
         javaModelGenerator.setTargetPackage(MODEL_PACKAGE);
+        javaModelGenerator.addProperty(PropertyRegistry.ANY_ROOT_CLASS, ROOT_CLASS);
         context.setJavaModelGeneratorConfiguration(javaModelGenerator);
 
         // mapper映射生成器的属性 - mapper.xml

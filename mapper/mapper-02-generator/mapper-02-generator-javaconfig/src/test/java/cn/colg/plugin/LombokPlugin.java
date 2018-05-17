@@ -17,19 +17,19 @@ import tk.mybatis.mapper.generator.FalseMethodPlugin;
 import tk.mybatis.mapper.generator.MapperCommentGenerator;
 
 public class LombokPlugin extends FalseMethodPlugin {
-    private Set<String> mappers                   = new HashSet<String>();
-    private boolean     caseSensitive             = false;
-    private boolean     useMapperCommentGenerator = true;
-    //开始的分隔符，例如mysql为`，sqlserver为[
-    private String      beginningDelimiter        = "";
-    //结束的分隔符，例如mysql为`，sqlserver为]
-    private String      endingDelimiter           = "";
-    //数据库模式
-    private String                        schema;
-    //注释生成器
+    private Set<String> mappers = new HashSet<String>();
+    private boolean caseSensitive = false;
+    private boolean useMapperCommentGenerator = true;
+    // 开始的分隔符，例如mysql为`，sqlserver为[
+    private String beginningDelimiter = "";
+    // 结束的分隔符，例如mysql为`，sqlserver为]
+    private String endingDelimiter = "";
+    // 数据库模式
+    private String schema;
+    // 注释生成器
     private CommentGeneratorConfiguration commentCfg;
-    //强制生成注解
-    private boolean                       forceAnnotation;
+    // 强制生成注解
+    private boolean forceAnnotation;
 
     public String getDelimiterName(String name) {
         StringBuilder nameBuilder = new StringBuilder();
@@ -53,13 +53,13 @@ public class LombokPlugin extends FalseMethodPlugin {
      */
     @Override
     public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        //获取实体类
+        // 获取实体类
         FullyQualifiedJavaType entityType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
-        //import接口
+        // import接口
         mappers.forEach(mapper -> interfaze.addSuperInterface(new FullyQualifiedJavaType(mapper + "<" + entityType.getShortName() + ">")));
-        //import实体类
+        // import实体类
         interfaze.addImportedType(entityType);
-        
+
         interfaze.addJavaDocLine("/**");
         interfaze.addJavaDocLine(" * - @mbg.generated");
         interfaze.addJavaDocLine(" *");
@@ -80,34 +80,30 @@ public class LombokPlugin extends FalseMethodPlugin {
         topLevelClass.addJavaDocLine(" *");
         topLevelClass.addJavaDocLine(" * @author colg");
         topLevelClass.addJavaDocLine(" */");
-        
-        //引入JPA注解
+
+        // 引入JPA注解
         topLevelClass.addImportedType("javax.persistence.*");
-        
-        topLevelClass.addImportedType("lombok.AllArgsConstructor");
-        topLevelClass.addImportedType("lombok.Data");
-        topLevelClass.addImportedType("lombok.NoArgsConstructor");
+
+        topLevelClass.addImportedType("lombok.*");
         topLevelClass.addImportedType("lombok.experimental.Accessors");
 
         topLevelClass.addAnnotation("@NoArgsConstructor");
         topLevelClass.addAnnotation("@AllArgsConstructor");
-        topLevelClass.addAnnotation("@Data");
+        topLevelClass.addAnnotation("@Getter");
+        topLevelClass.addAnnotation("@Setter");
         topLevelClass.addAnnotation("@Accessors(chain = true)");
-        
-        
+
         String tableName = introspectedTable.getFullyQualifiedTableNameAtRuntime();
-        //如果包含空格，或者需要分隔符，需要完善
+        // 如果包含空格，或者需要分隔符，需要完善
         if (StrUtil.containsBlank(tableName)) {
             tableName = context.getBeginningDelimiter() + tableName + context.getEndingDelimiter();
         }
-        //是否忽略大小写，对于区分大小写的数据库，会有用
+        // 是否忽略大小写，对于区分大小写的数据库，会有用
         if (caseSensitive && !topLevelClass.getType().getShortName().equals(tableName)) {
             topLevelClass.addAnnotation("@Table(name = \"" + getDelimiterName(tableName) + "\")");
         } else if (!topLevelClass.getType().getShortName().equalsIgnoreCase(tableName)) {
             topLevelClass.addAnnotation("@Table(name = \"" + getDelimiterName(tableName) + "\")");
-        } else if (StringUtility.stringHasValue(schema)
-                || StringUtility.stringHasValue(beginningDelimiter)
-                || StringUtility.stringHasValue(endingDelimiter)) {
+        } else if (StringUtility.stringHasValue(schema) || StringUtility.stringHasValue(beginningDelimiter) || StringUtility.stringHasValue(endingDelimiter)) {
             topLevelClass.addAnnotation("@Table(name = \"" + getDelimiterName(tableName) + "\")");
         } else if (forceAnnotation) {
             topLevelClass.addAnnotation("@Table(name = \"" + getDelimiterName(tableName) + "\")");
@@ -153,18 +149,17 @@ public class LombokPlugin extends FalseMethodPlugin {
         return false;
     }
 
-
     @Override
     public void setContext(Context context) {
         super.setContext(context);
-        //设置默认的注释生成器
+        // 设置默认的注释生成器
         useMapperCommentGenerator = !"FALSE".equalsIgnoreCase(context.getProperty("useMapperCommentGenerator"));
         if (useMapperCommentGenerator) {
             commentCfg = new CommentGeneratorConfiguration();
             commentCfg.setConfigurationType(MapperCommentGenerator.class.getCanonicalName());
             context.setCommentGeneratorConfiguration(commentCfg);
         }
-        //支持oracle获取注释#114
+        // 支持oracle获取注释#114
         context.getJdbcConnectionConfiguration().addProperty("remarksReporting", "true");
     }
 

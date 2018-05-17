@@ -5,6 +5,7 @@
 
 <generatorConfiguration>
 	<context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="javaFileEncoding" value="UTF-8"/>
         <!-- Mapper插件 -->
         <plugin type="cn.colg.plugin.LombokPlugin">
             <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
@@ -25,7 +26,9 @@
 		</javaTypeResolver>
 
 		<!-- targetProject: 生成实体类的位置 -->
-		<javaModelGenerator targetProject="src/main/java" targetPackage="cn.colg.entity" />
+		<javaModelGenerator targetProject="src/main/java" targetPackage="cn.colg.entity" >
+            <property name="rootClass" value="cn.colg.core.BaseEntity"/>
+        </javaModelGenerator>
         
         <!-- targetProject: mapper映射文件生成的位置 -->
         <sqlMapGenerator targetProject="src/main/resources" targetPackage="/mybatis/mapper" />
@@ -34,30 +37,6 @@
         <javaClientGenerator targetProject="src/main/java" targetPackage="cn.colg.mapper" type="XMLMAPPER" />
 		
 		<!-- 指定数据库表以及对应的[实体类] -->
-        <table tableName="%">
-            <generatedKey column="id" sqlStatement="JDBC" identity="true" />
-        </table>
-<!--         
-		<table tableName="bn_bill_item" mapperName="BnBillItemDao" domainObjectName="BnBillItemEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="bn_bill_pay_item" mapperName="BnBillPayItemDao" domainObjectName="BnBillPayItemEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="bn_bill_sum" mapperName="BnBillSumDao" domainObjectName="BnBillSumEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="bn_bill_user_sum" mapperName="BnBillUserSumDao" domainObjectName="BnBillUserSumEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="bn_bro_setting" mapperName="BnBroSettingDao" domainObjectName="BnBroSettingEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="bn_ins_capital_item" mapperName="BnInsCapitalItemDao" domainObjectName="BnInsCapitalItemEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="bn_ins_capital_sum" mapperName="BnInsCapitalSumDao" domainObjectName="BnInsCapitalSumEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="bn_ins_info" mapperName="BnInsInfoDao" domainObjectName="BnInsInfoEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="bn_ins_profit_item" mapperName="BnInsProfitDao" domainObjectName="BnInsProfitEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="bn_ins_profit_sum" mapperName="BnInsProfitSumDao" domainObjectName="BnInsProfitSumEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="bn_interest_item" mapperName="BnInterestItemDao" domainObjectName="BnInterestItemEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="bn_interest_pay_item" mapperName="BnIntetestPayItemDao" domainObjectName="BnIntetestPayItemEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="bn_interest_sum" mapperName="BnInterestSumDao" domainObjectName="BnInterestSumEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="bn_setting_oper_log" mapperName="BnSettingOperLogDao" domainObjectName="BnSettingOperLogEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="bn_sys_pay_item" mapperName="BnSysPayItemDao" domainObjectName="BnSysPayItemEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="bn_sys_pay_sum" mapperName="BnSysPaySumDao" domainObjectName="BnSysPaySumEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="bn_sys_setting" mapperName="BnSysSettingDao" domainObjectName="BnSysSettingEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="bn_sys_user" mapperName="BnSysUserDao" domainObjectName="BnSysUserEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="bn_user_group" mapperName="BnUserGroupDao" domainObjectName="BnUserGroupEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="bn_user_group_user" mapperName="BnUserGroupUserDao" domainObjectName="BnUserGroupUserEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-         -->
+        <table tableName="%" />
 	</context>
 </generatorConfiguration>
