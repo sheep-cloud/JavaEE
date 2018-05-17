@@ -42,7 +42,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
         // 1. 唯一标识符。
         // 2. 传递给语句的参数对象。
         Employee employee = sqlSession.selectOne("cn.colg.dao.EmployeeMapper.findById", 1);
-        log.info("testFindById01() >> employee : {}", employee);
+        log.info("EmployeeMapperTest.testFindById01() >> employee : {}", employee);
     }
 
     /**
@@ -53,10 +53,10 @@ public class EmployeeMapperTest extends BaseMapperTest {
         // mybatis会为接口自动创建一个代理对象，代理对象去执行增删改查方法
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         // class com.sun.proxy.$Proxy11
-        log.info("testFindById02() >> employeeMapper.getClass() : {}", employeeMapper.getClass());
+        log.info("EmployeeMapperTest.testFindById02() >> employeeMapper.getClass() : {}", employeeMapper.getClass());
 
         Employee employee = employeeMapper.findById(1);
-        log.info("testFindById02() >> employee : {}", employee);
+        log.info("EmployeeMapperTest.testFindById02() >> employee : {}", employee);
     }
 
 }

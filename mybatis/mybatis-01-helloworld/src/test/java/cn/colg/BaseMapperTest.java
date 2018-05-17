@@ -25,23 +25,35 @@ public abstract class BaseMapperTest {
     /** 获取sqlSession实例，提供给子类 */
     protected SqlSession sqlSession;
 
+    /**
+     * 从 XML 中构建SqlSessionFactory
+     *
+     * @throws Exception
+     */
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        // 从 XML 中构建SqlSessionFactory
         InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
     }
 
+    /**
+     * 从SqlsessionFactory 中获取 sqlSession
+     *
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
-        // 从SqlsessionFactory 中获取 sqlSession
         sqlSession = sqlSessionFactory.openSession();
     }
 
+    /**
+     * 销毁sqlSession
+     *
+     * @throws Exception
+     */
     @After
     public void tearDown() throws Exception {
-        // 销毁sqlSession
         sqlSession.close();
-        log.info("tearDown() : {}", "----------------------------------------------------------------------------------------------------\n");
+        log.info("BaseMapperTest.tearDown() : {}", "----------------------------------------------------------------------------------------------------\n");
     }
 }

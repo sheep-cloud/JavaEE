@@ -2,9 +2,11 @@ package cn.colg.entity;
 
 import java.io.Serializable;
 
+import cn.colg.core.BaseEntity;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
@@ -14,9 +16,10 @@ import lombok.experimental.Accessors;
  */
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Accessors(chain = true)
-public class Employee implements Serializable {
+public class Employee extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,7 +27,7 @@ public class Employee implements Serializable {
     private Integer id;
     /** 姓名 */
     private String lastName;
-    /** 性别（0：男，1：女）*/
+    /** 性别（0：男，1：女） */
     private String gender;
     /** 邮箱 */
     private String email;
