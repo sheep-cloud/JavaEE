@@ -1,159 +1,160 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>cn.colg</groupId>
-	<artifactId>spring-cloud-parent</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
-	<name>spring-cloud-parent :: 父工程，主要是定义POM文件，将后续各个子模块共用的jar包等统一提取出来，类似一个抽象父类</name>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>cn.colg</groupId>
+    <artifactId>spring-cloud-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>spring-cloud-parent :: 父工程，主要是定义POM文件，将后续各个子模块共用的jar包等统一提取出来，类似一个抽象父类</name>
 
-	<!-- 
-		! Centralized definition of dependent versions
-	 -->
-	<properties>
-		<java.version>1.8</java.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
-		<maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
-		<skipTests>true</skipTests>
-		<junit.version>4.12</junit.version>
-		<hutool.version>4.0.10</hutool.version>
-		<fastjson.version>1.2.47</fastjson.version>
-		<sprign-boot.version>1.5.12.RELEASE</sprign-boot.version>
-		<spring-cloud.version>Dalston.SR5</spring-cloud.version>
-		<swagger2.version>2.8.0</swagger2.version>
-		<mysql.version>5.1.46</mysql.version>
-		<druid.version>1.1.9</druid.version>
-		<mybatis.version>1.3.2</mybatis.version>
-	</properties>
+     <!-- 
+        ! Centralized definition of dependent versions
+      -->
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
+        <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
+        <skipTests>true</skipTests>
+        <junit.version>4.12</junit.version>
+        <hutool.version>4.0.10</hutool.version>
+        <fastjson.version>1.2.47</fastjson.version>
+        <sprign-boot.version>1.5.12.RELEASE</sprign-boot.version>
+        <spring-cloud.version>Dalston.SR5</spring-cloud.version>
+        <swagger2.version>2.8.0</swagger2.version>
+        <mysql.version>5.1.46</mysql.version>
+        <druid.version>1.1.9</druid.version>
+        <mybatis.version>1.3.2</mybatis.version>
+    </properties>
 
-	<!-- 
-		! Centralized management dependence	
-	 -->
-	<dependencyManagement>
-		<dependencies>
-			<!-- junit 依赖 -->
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>${junit.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<!-- hutool 依赖 -->
-			<dependency>
-				<groupId>cn.hutool</groupId>
-				<artifactId>hutool-all</artifactId>
-				<version>${hutool.version}</version>
-			</dependency>
-			<!-- fastjson 依赖 -->
-			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>fastjson</artifactId>
-				<version>${fastjson.version}</version>
-			</dependency>
+     <!-- 
+        ! Centralized management dependence 
+      -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- junit 依赖 -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- hutool 依赖 -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <!-- fastjson 依赖 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
 
-			<!-- spirng-boot 依赖 -->
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-dependencies</artifactId>
-				<version>${sprign-boot.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<!-- spring-cloud 依赖 -->
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-        	<!-- swagger2 依赖-->
-			<dependency>
-				<groupId>io.springfox</groupId>
-				<artifactId>springfox-swagger2</artifactId>
-				<version>${swagger2.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>io.springfox</groupId>
-				<artifactId>springfox-swagger-ui</artifactId>
-				<version>${swagger2.version}</version>
-			</dependency>
+            <!-- spirng-boot 依赖 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${sprign-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- spring-cloud 依赖 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- swagger2 依赖-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
 
-			<!-- mysql 依赖 -->
-			<dependency>
-				<groupId>mysql</groupId>
-				<artifactId>mysql-connector-java</artifactId>
-				<version>${mysql.version}</version>
-			</dependency>
-			<!-- druid 依赖 -->
-			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>druid</artifactId>
-				<version>${druid.version}</version>
-			</dependency>
-			<!-- mybatis 依赖 -->
-			<dependency>
-				<groupId>org.mybatis.spring.boot</groupId>
-				<artifactId>mybatis-spring-boot-starter</artifactId>
-				<version>${mybatis.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+            <!-- mysql 依赖 -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+            <!-- druid 依赖 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <!-- mybatis 依赖 -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-	<build>
-		<finalName>${project.artifactId}</finalName>
-		<!-- 获取构建信息（用于修改cloud，服务info信息） -->
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven-compiler-plugin.version}</version>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>${maven-resources-plugin.version}</version>
-				<configuration>
-					<delimiters>
-						<delimit>$</delimit>
-					</delimiters>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>${maven-surefire-plugin.version}</version>
-			</plugin>
-		</plugins>
-	</build>
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <!-- 获取构建信息（用于修改cloud，服务info信息） -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin.version}</version>
+                <configuration>
+                    <delimiters>
+                        <delimit>$</delimit>
+                    </delimiters>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+            </plugin>
+        </plugins>
+    </build>
 
-	<!-- 子模块 -->
-	<modules>
-		<module>spring-cloud-api</module>
-		<module>spring-cloud-provider-dept-8001</module>
-		<module>spring-cloud-consumer-dept-80</module>
-		<module>spring-cloud-eureka-7001</module>
-		<module>spring-cloud-eureka-7002</module>
-		<module>spring-cloud-eureka-7003</module>
-		<module>spring-cloud-provider-dept-8002</module>
-		<module>spring-cloud-provider-dept-8003</module>
-		<module>spring-cloud-consumer-dept-feign</module>
-		<module>spring-cloud-consumer-dept-80-feign</module>
-		<module>spring-cloud-consumer-dept-feign-80</module>
-		<module>spring-cloud-provider-dept-hystrix-8001</module>
-		<module>spring-cloud-hystrix-dashboard-9001</module>
-		<module>spring-cloud-consumer-hystrix-dashboard-9001</module>
-		<module>spring-cloud-zuul-gateway-9527</module>
-		<module>spring-cloud-config-3344</module>
-		<module>spring-cloud-config-client-3355</module>
-	</modules>
+    <!-- 子模块 -->
+    <modules>
+        <module>spring-cloud-api</module>
+        <module>spring-cloud-provider-dept-8001</module>
+        <module>spring-cloud-consumer-dept-80</module>
+        <module>spring-cloud-eureka-7001</module>
+        <module>spring-cloud-eureka-7002</module>
+        <module>spring-cloud-eureka-7003</module>
+        <module>spring-cloud-provider-dept-8002</module>
+        <module>spring-cloud-provider-dept-8003</module>
+        <module>spring-cloud-consumer-dept-feign</module>
+        <module>spring-cloud-consumer-dept-80-feign</module>
+        <module>spring-cloud-consumer-dept-feign-80</module>
+        <module>spring-cloud-provider-dept-hystrix-8001</module>
+        <module>spring-cloud-hystrix-dashboard-9001</module>
+        <module>spring-cloud-consumer-hystrix-dashboard-9001</module>
+        <module>spring-cloud-zuul-gateway-9527</module>
+        <module>spring-cloud-config-3344</module>
+        <module>spring-cloud-config-client-3355</module>
+    </modules>
+
 </project>
