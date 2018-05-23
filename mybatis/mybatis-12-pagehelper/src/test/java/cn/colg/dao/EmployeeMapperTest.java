@@ -40,9 +40,10 @@ public class EmployeeMapperTest extends BaseMapperTest {
 
         /// ----------------------------------------------------------------------------------------------------
 
-        PageInfo<Object> pageInfo = PageHelper.startPage(1, 2)
+        PageInfo<Object> pageInfo = PageHelper.startPage(1, 2, "te.last_nam ASC")
                                               .doSelectPageInfo(() -> employeeMapper.selectAll());
         
         log.info("EmployeeMapperTest.testSelectAll() >> pageInfo : {}", pageInfo);
+        
     }
 }
