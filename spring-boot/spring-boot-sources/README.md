@@ -7,7 +7,7 @@
 ### 1、Sping Boot简介
 
 - 简化Spring应用开发的一个框架；
-- 整个Spring技术站的一个打集合；
+- 整个Spring技术站的一个大集合；
 - SpringBoot是J2EE的一站式解决方案；
 - SpringCloud是分布式整体解决方法。
 - 优点
