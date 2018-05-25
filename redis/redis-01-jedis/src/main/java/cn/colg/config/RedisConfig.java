@@ -4,6 +4,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
@@ -26,7 +27,7 @@ import redis.clients.jedis.JedisPool;
  *
  * @author colg
  */
-@PropertySource(value = {"classpath:/redis.properties"})
+@PropertySource(value = {"classpath:redis.properties"})
 @Configuration
 public class RedisConfig {
 
@@ -49,12 +50,13 @@ public class RedisConfig {
     private int clusterPort5;
     @Value("${redis.cluster.port6}")
     private int clusterPort6;
-
+    
     /**
      * redis，单机版配置
      *
      * @return
      */
+    @Conditional(PoolCacheConditional.class)
     @Bean
     public JedisPoolCache jedisClientPool() {
         JedisPoolCache jedisClientPool = new JedisPoolCache();
@@ -68,20 +70,23 @@ public class RedisConfig {
      *
      * @return
      */
+    @Conditional(ClusterCacheConditional.class)
     @Bean
     public JedicClusterCache jedisClientCluster() {
         JedicClusterCache jedisClientCluster = new JedicClusterCache();
         Set<HostAndPort> nodes = CollUtil.newHashSet(
-                new HostAndPort(clusterHost, clusterPort1),
-                new HostAndPort(clusterHost, clusterPort2),
-                new HostAndPort(clusterHost, clusterPort3),
-                new HostAndPort(clusterHost, clusterPort4),
-                new HostAndPort(clusterHost, clusterPort5),
-                new HostAndPort(clusterHost, clusterPort6)
-            );
+            new HostAndPort(clusterHost, clusterPort1),
+            new HostAndPort(clusterHost, clusterPort2),
+            new HostAndPort(clusterHost, clusterPort3),
+            new HostAndPort(clusterHost, clusterPort4),
+            new HostAndPort(clusterHost, clusterPort5),
+            new HostAndPort(clusterHost, clusterPort6)
+        );
         JedisCluster jedisCluster = new JedisCluster(nodes);
         jedisClientCluster.setJedisCluster(jedisCluster);
         return jedisClientCluster;
     }
 
+    
 }
+

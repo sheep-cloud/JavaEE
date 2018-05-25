@@ -1,15 +1,12 @@
 package cn.colg.jedis;
 
-import static org.junit.Assert.fail;
+import java.util.List;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import cn.colg.BaseTest;
 import cn.colg.cache.JedisClient;
-import cn.colg.config.RedisConfig;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -18,9 +15,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author colg
  */
 @Slf4j
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {RedisConfig.class})
-public class JedisClientTest {
+public class JedisClientTest extends BaseTest {
 
     @Autowired
     private JedisClient jedisClient;
@@ -30,7 +25,9 @@ public class JedisClientTest {
      */
     @Test
     public void testSet() {
-        String result = jedisClient.set("hello", "world");
+        String key = "hello";
+        String value = "world";
+        String result = jedisClient.set(key, value);
         log.info("testSet() >> result : {}", result);
     }
 
@@ -39,8 +36,8 @@ public class JedisClientTest {
      */
     @Test
     public void testGet() {
-        log.info("testGet() >> jedisClient : {}", jedisClient);
-        String result = jedisClient.get("aaa");
+        String key = "hello";
+        String result = jedisClient.get(key);
         log.info("testGet() >> result : {}", result);
     }
 
@@ -49,7 +46,9 @@ public class JedisClientTest {
      */
     @Test
     public void testDel() {
-        fail("Not yet implemented"); // TODO
+        String key = "hello";
+        Long del = jedisClient.del(key);
+        log.info("JedisClientTest.testDel() >> del : {}", del);
     }
 
     /**
@@ -57,7 +56,9 @@ public class JedisClientTest {
      */
     @Test
     public void testExists() {
-        fail("Not yet implemented"); // TODO
+        String key = "hello";
+        Boolean exists = jedisClient.exists(key);
+        log.info("JedisClientTest.testExists() >> exists : {}", exists);
     }
 
     /**
@@ -65,7 +66,10 @@ public class JedisClientTest {
      */
     @Test
     public void testExpire() {
-        fail("Not yet implemented"); // TODO
+        String key = "hello";
+        int seconds = 3600;
+        Long expire = jedisClient.expire(key, seconds);
+        log.info("JedisClientTest.testExpire() >> expire : {}", expire);
     }
 
     /**
@@ -73,7 +77,9 @@ public class JedisClientTest {
      */
     @Test
     public void testTtl() {
-        fail("Not yet implemented"); // TODO
+        String key = "hello";
+        Long ttl = jedisClient.ttl(key);
+        log.info("JedisClientTest.testTtl() >> ttl : {}", ttl);
     }
 
     /**
@@ -81,7 +87,9 @@ public class JedisClientTest {
      */
     @Test
     public void testIncr() {
-        fail("Not yet implemented"); // TODO
+        String key = "hello_id";
+        Long incr = jedisClient.incr(key);
+        log.info("JedisClientTest.testIncr() >> incr : {}", incr);
     }
 
     /**
@@ -89,7 +97,11 @@ public class JedisClientTest {
      */
     @Test
     public void testHset() {
-        fail("Not yet implemented"); // TODO
+        String key = "employee";
+        String field = "empName";
+        String value = "Jack";
+        Long hset = jedisClient.hset(key, field, value);
+        log.info("JedisClientTest.testHset() >> hset : {}", hset);
     }
 
     /**
@@ -97,7 +109,10 @@ public class JedisClientTest {
      */
     @Test
     public void testHget() {
-        fail("Not yet implemented"); // TODO
+        String key = "employee";
+        String field = "empName";
+        String hget = jedisClient.hget(key, field);
+        log.info("JedisClientTest.testHget() >> hget : {}", hget);
     }
 
     /**
@@ -105,7 +120,10 @@ public class JedisClientTest {
      */
     @Test
     public void testHdel() {
-        fail("Not yet implemented"); // TODO
+        String key = "employee";
+        String field = "empName";
+        Long hdel = jedisClient.hdel(key, field);
+        log.info("JedisClientTest.testHdel() >> hdel : {}", hdel);
     }
 
     /**
@@ -113,7 +131,10 @@ public class JedisClientTest {
      */
     @Test
     public void testHexists() {
-        fail("Not yet implemented"); // TODO
+        String key = "employee";
+        String field = "empName";
+        Boolean hexists = jedisClient.hexists(key, field);
+        log.info("JedisClientTest.testHexists() >> hexists : {}", hexists);
     }
 
     /**
@@ -121,7 +142,9 @@ public class JedisClientTest {
      */
     @Test
     public void testHvals() {
-        fail("Not yet implemented"); // TODO
+        String key = "employee";
+        List<String> hvals = jedisClient.hvals(key);
+        log.info("JedisClientTest.testHvals() >> hvals : {}", hvals);
     }
 
 }

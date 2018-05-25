@@ -27,6 +27,7 @@ public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /*@GeneratedValue(strategy = GenerationType.IDENTITY)*/
+    
     @Id
     @KeySql(dialect = IdentityDialect.MYSQL)
     private Integer empId;

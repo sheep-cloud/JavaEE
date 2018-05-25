@@ -16,6 +16,11 @@ import cn.hutool.core.util.StrUtil;
 import tk.mybatis.mapper.generator.FalseMethodPlugin;
 import tk.mybatis.mapper.generator.MapperCommentGenerator;
 
+/**
+ * 自定义代码生成规则
+ *
+ * @author colg
+ */
 public class LombokPlugin extends FalseMethodPlugin {
     private Set<String> mappers = new HashSet<String>();
     private boolean caseSensitive = false;

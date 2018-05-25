@@ -16,10 +16,10 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class EmployeeServiceTest extends BaseMapperTest {
-    
+
     @Autowired
     private EmployeeService employeeService;
-    
+
     /**
      * Test method for {@link tk.mybatis.mapper.common.base.select.SelectOneMapper#selectOne(java.lang.Object)}.
      */
