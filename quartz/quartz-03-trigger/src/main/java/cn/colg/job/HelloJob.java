@@ -66,7 +66,7 @@ public class HelloJob implements Job {
 
         // 通过getter/setter获取jobDataMap的key的值
         log.info("HelloJob.execute(context) message : {}, floatJobValue : {}, doubleTriggerValue : {}", message, floatJobValue, doubleTriggerValue);
-        
+
         // 获取触发器信息
         Trigger trigger = context.getTrigger();
         log.info("execute() >> trigger : {}", JSON.toJSONString(trigger, SerializerFeature.WriteDateUseDateFormat));

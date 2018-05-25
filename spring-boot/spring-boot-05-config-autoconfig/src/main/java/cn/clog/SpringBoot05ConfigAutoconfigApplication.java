@@ -13,6 +13,6 @@ public class SpringBoot05ConfigAutoconfigApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringBoot05ConfigAutoconfigApplication.class, args);
-        // TODO colg [未完成]
+        // TODO colg [Spring Boot 自动配置 未完成]
     }
 }
