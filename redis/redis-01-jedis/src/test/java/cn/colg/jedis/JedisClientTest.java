@@ -1,12 +1,22 @@
 package cn.colg.jedis;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.alibaba.fastjson.JSON;
+
 import cn.colg.BaseTest;
+import cn.colg.bean.User;
 import cn.colg.cache.JedisClient;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.lang.Console;
+import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.crypto.SecureUtil;
+import cn.hutool.http.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -25,8 +35,8 @@ public class JedisClientTest extends BaseTest {
      */
     @Test
     public void testSet() {
-        String key = "hello";
-        String value = "world";
+        String key = DateUtil.today() + ":" + DateUtil.hour(new Date(), true);
+        String value = HttpUtil.get("https://api.thinkpage.cn/v2/weather/all.json?city=" + 101190408 + "&language=zh-chs&unit=c&aqi=city&key=VQZU1H5TOT");
         String result = jedisClient.set(key, value);
         log.info("testSet() >> result : {}", result);
     }
@@ -46,7 +56,7 @@ public class JedisClientTest extends BaseTest {
      */
     @Test
     public void testDel() {
-        String key = "hello";
+        String key = "USER";
         Long del = jedisClient.del(key);
         log.info("JedisClientTest.testDel() >> del : {}", del);
     }
@@ -97,11 +107,27 @@ public class JedisClientTest extends BaseTest {
      */
     @Test
     public void testHset() {
-        String key = "employee";
-        String field = "empName";
-        String value = "Jack";
-        Long hset = jedisClient.hset(key, field, value);
-        log.info("JedisClientTest.testHset() >> hset : {}", hset);
+
+        List<User> list = CollUtil.newArrayList(
+            new User(System.currentTimeMillis() + "", "Jack", SecureUtil.md5("123456"), new Date()),
+            new User(System.currentTimeMillis() + "", "Jack", SecureUtil.md5("123456"), new Date()),
+            new User(System.currentTimeMillis() + "", "Jack", SecureUtil.md5("123456"), new Date()),
+            new User(System.currentTimeMillis() + "", "Jack", SecureUtil.md5("123456"), new Date()),
+            new User(System.currentTimeMillis() + "", "Jack", SecureUtil.md5("123456"), new Date()),
+            new User(System.currentTimeMillis() + "", "Jack", SecureUtil.md5("123456"), new Date()),
+            new User(System.currentTimeMillis() + "", "Jack", SecureUtil.md5("123456"), new Date()),
+            new User(System.currentTimeMillis() + "", "Jack", SecureUtil.md5("123456"), new Date()),
+            new User(System.currentTimeMillis() + "", "Jack", SecureUtil.md5("123456"), new Date()),
+            new User(System.currentTimeMillis() + "", "Jack", SecureUtil.md5("123456"), new Date())
+        );
+        String key = "weather:forecast";
+        for (User user : list) {
+            String field = user.getId();
+            String value = JSON.toJSONString(user);
+            Long hset = jedisClient.hset(key, field, value);
+            log.info("JedisClientTest.testHset() >> hset : {}", hset);
+        }
+
     }
 
     /**
@@ -109,8 +135,8 @@ public class JedisClientTest extends BaseTest {
      */
     @Test
     public void testHget() {
-        String key = "employee";
-        String field = "empName";
+        String key = "weather:forecast";
+        String field = "1527492172197";
         String hget = jedisClient.hget(key, field);
         log.info("JedisClientTest.testHget() >> hget : {}", hget);
     }
@@ -147,4 +173,10 @@ public class JedisClientTest extends BaseTest {
         log.info("JedisClientTest.testHvals() >> hvals : {}", hvals);
     }
 
+    @Test
+    public void testName() throws Exception {
+        String[] strs = new String[] {"abc", "def", "ghj"};
+        String join = ArrayUtil.join(strs, ",");
+        Console.log(join);
+    }
 }

@@ -21,7 +21,7 @@ public class PoolCacheConditional implements Condition {
         Environment environment = context.getEnvironment();
         String model = environment.getProperty("redis.model");
         if ("S".equalsIgnoreCase(model)) {
-            log.info("redis 单机启动成功... {}", DateUtil.now());
+            log.info("redis 单机启动... {}", DateUtil.now());
             return true;
         }
         return false;

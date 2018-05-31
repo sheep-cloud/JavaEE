@@ -19,7 +19,7 @@ public class ClusterCacheConditional implements Condition {
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
         String model = context.getEnvironment().getProperty("redis.model");
         if ("C".equalsIgnoreCase(model)) {
-            log.info("redis 集群启动成功... {}", DateUtil.now());
+            log.info("redis 集群启动... {}", DateUtil.now());
             return true;
         }
         return false;

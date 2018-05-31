@@ -7,7 +7,7 @@ import lombok.Setter;
 import redis.clients.jedis.JedisCluster;
 
 /**
- * JedisClient集群
+ * JedisClient集群版
  *
  * @author colg
  */
