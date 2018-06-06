@@ -43,6 +43,6 @@ public class Config01 {
      */
     @Bean
     public Person person() {
-        return new Person("Rose", 20);
+        return new Person().setName("Rose").setAge(20);
     }
 }

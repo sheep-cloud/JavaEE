@@ -33,7 +33,7 @@ public class Config02 {
     @Bean
     public Person person() {
         log.info("person() >> : {}", "给容器中添加Person...");
-        return new Person("Tom", 29);
+        return new Person().setName("Tom").setAge(29);
     }
     
 }
