@@ -1,6 +1,7 @@
 package cn.colg.job;
 
 import org.quartz.Job;
+import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
@@ -21,6 +22,13 @@ public class HelloJob implements Job {
 
         // 编写具体的业务逻辑
         log.info("execute() >> Hello World : {}", "Quartz");
+        
+        
+        JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
+        String did = (String)jobDataMap.get("did");
+        String air = (String)jobDataMap.get("air");
+        log.info("HelloJob.execute() >> did : {}", did);
+        log.info("HelloJob.execute() >> air : {}", air);
     }
 
 }

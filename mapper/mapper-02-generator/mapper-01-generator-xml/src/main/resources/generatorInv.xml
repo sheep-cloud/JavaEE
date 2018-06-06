@@ -16,7 +16,7 @@
         
 		<!-- 数据库连接的信息：驱动类、连接地址、用户名、密码 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-						connectionURL="jdbc:mysql://127.0.0.1:3306/sell?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;useSSL=false"
+						connectionURL="jdbc:mysql://127.0.0.1:3306/rbac?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;useSSL=false"
 						userId="root"
 						password="root" />
 		
@@ -34,7 +34,7 @@
         <sqlMapGenerator targetProject="src/main/resources" targetPackage="/mybatis/mapper" />
         
         <!-- targetPackage：mapper接口生成的位置 -->
-        <javaClientGenerator targetProject="src/main/java" targetPackage="cn.colg.mapper" type="XMLMAPPER" />
+        <javaClientGenerator targetProject="src/main/java" targetPackage="cn.colg.dao" type="XMLMAPPER" />
 		
 		<!-- 指定数据库表以及对应的[实体类] -->
         <table tableName="%" />

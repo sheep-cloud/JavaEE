@@ -9,6 +9,7 @@
 
     <!-- 组件扫描 扫描所有标记@Controller类 -->
     <context:component-scan base-package="cn.colg.rbac.controller" />
+    <context:component-scan base-package="cn.colg.rbac.config" />
     
     <!-- 静态资源不被SpringMVC框架进行拦截 -->
     <mvc:default-servlet-handler/>

@@ -18,6 +18,6 @@ public class HelloController {
     @RequestMapping("/json")
     @ResponseBody
     public Dict json() {
-        return new Dict().set("hello", "Json");
+        return new Dict(2).set("hello", "Json");
     }
 }

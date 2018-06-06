@@ -34,7 +34,7 @@ public class LoginController {
          *      2). 在方法参数列表中增加表单对应的参数，名称相同
          *      3). 将表单数据封装为实体类对象
          *  2. 查询用户信息
-         *  3. 判断用户信息是否存在8
+         *  3. 判断用户信息是否存在
          */
         User dbUser = userService.findUser(user);
         if (dbUser != null) {

@@ -10,7 +10,8 @@ import org.quartz.TriggerKey;
 import com.alibaba.fastjson.JSON;
 
 import cn.hutool.core.date.DateUtil;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -30,7 +31,8 @@ import lombok.extern.slf4j.Slf4j;
  * @author colg
  */
 @Slf4j
-@Data
+@Getter
+@Setter
 public class HelloJob implements Job {
 
     private String message;

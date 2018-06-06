@@ -2,6 +2,7 @@ package cn.colg.job;
 
 import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
+import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
@@ -13,6 +14,7 @@ import org.quartz.impl.StdSchedulerFactory;
 import com.alibaba.fastjson.JSON;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -34,9 +36,13 @@ public class HelloScheduler {
                                         .withIdentity("myJob", "group1")
                                         .build();
         
+        JobDataMap jobDataMap = jobDetail.getJobDataMap();
+        jobDataMap.put("did", RandomUtil.simpleUUID());
+        jobDataMap.put("air", RandomUtil.randomUUID());
+        
         log.info("HelloScheduler.startHelloJob() : {}", JSON.toJSONString(jobDetail));
         
-        // 创建一个Trigger实例，定义该job立即执行，并且每个两秒钟重复执行一次，直到永远
+        // 创建一个Trigger实例，定义该job立即执行，并且每隔两秒钟重复执行一次，直到永远
         Trigger trigger = TriggerBuilder.newTrigger()
                                         .withIdentity("myTrigger")
                                         .startNow()
