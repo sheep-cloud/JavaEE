@@ -2,6 +2,7 @@ package cn.colg.entity;
 
 import java.io.Serializable;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,8 +25,29 @@ public class Employee implements Serializable {
     private Integer id;
     /** 姓名 */
     private String lastName;
-    /** 性别（0：男，1：女）*/
+    /** 性别（0：男，1：女） */
     private String gender;
     /** 邮箱 */
     private String email;
+
+    /**
+     * 重写get方法
+     *
+     * @return
+     */
+    public String getGender() {
+        return this.gender.equals("0") ? "男" : "女";
+    }
+    
+    public String getDisplayName() {
+        String displayName = this.lastName;
+        if (StrUtil.isBlank(displayName)) {
+            displayName = this.getGender();
+        }
+        if (StrUtil.isBlank(displayName)) {
+            displayName = this.email;
+        }
+        return displayName;
+    }
+
 }

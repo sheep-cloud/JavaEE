@@ -40,10 +40,39 @@ public class EmployeeMapperTest extends BaseMapperTest {
 
         /// ----------------------------------------------------------------------------------------------------
 
-        PageInfo<Object> pageInfo = PageHelper.startPage(1, 2, "te.last_nam ASC")
+        PageInfo<Object> pageInfo = PageHelper.startPage(1, 2, "te.last_name ASC")
                                               .doSelectPageInfo(() -> employeeMapper.selectAll());
         
         log.info("EmployeeMapperTest.testSelectAll() >> pageInfo : {}", pageInfo);
-        
     }
+    
+
+    /**
+     * 使用PageHelper时，pageSize=0时返回全部结果
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testPageHelper() throws Exception {
+        EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
+        
+        // 使用PageHelper时，pageSize=0时返回全部结果
+        PageHelper.startPage(1, 0);
+        List<Employee> list = employeeMapper.selectAll();
+        log.info("EmployeeMapperTest.testPageHelper() >> list.size() : {}", list.size());
+    }
+    
+    /**
+     * 自定义get方法
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testGetSex() throws Exception {
+        EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
+        PageHelper.startPage(1, 0);
+        List<Employee> list = employeeMapper.selectAll();
+        log.info("EmployeeMapperTest.testGetSex() >> list : {}", list);
+    }
+    
 }
