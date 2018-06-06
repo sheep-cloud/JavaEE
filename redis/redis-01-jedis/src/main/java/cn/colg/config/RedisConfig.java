@@ -18,13 +18,13 @@ import redis.clients.jedis.JedisPool;
 /**
  * redis 配置，使用策略模式，方便调用；
  *
- * <p>
- *  <strong>注意：单机版本与集群版本不能共存；</strong>
- * </p>
+ * <pre>
+ * <strong>注意：单机版本与集群版本不能共存。</strong>
+ * </pre>
  *
  * @author colg
  */
-@PropertySource(value = {"classpath:redis.properties"})
+@PropertySource("classpath:redis.properties")
 @Configuration
 public class RedisConfig {
 
@@ -52,25 +52,23 @@ public class RedisConfig {
      * redis，单机版配置
      *
      * @return
+     * @author colg
      */
     @Conditional(PoolCacheConditional.class)
     @Bean
     public JedisPoolCache jedisClientPool() {
-        JedisPoolCache jedisClientPool = new JedisPoolCache();
-        JedisPool jedisPool = new JedisPool(host, port);
-        jedisClientPool.setJedisPool(jedisPool);
-        return jedisClientPool;
+        return new JedisPoolCache().setJedisPool(new JedisPool(host, port));
     }
 
     /**
      * redis，集群版配置
      *
      * @return
+     * @author colg
      */
     @Conditional(ClusterCacheConditional.class)
     @Bean
     public JedicClusterCache jedisClientCluster() {
-        JedicClusterCache jedisClientCluster = new JedicClusterCache();
         Set<HostAndPort> nodes = CollUtil.newHashSet(
             new HostAndPort(clusterHost, clusterPort1),
             new HostAndPort(clusterHost, clusterPort2),
@@ -79,11 +77,8 @@ public class RedisConfig {
             new HostAndPort(clusterHost, clusterPort5),
             new HostAndPort(clusterHost, clusterPort6)
         );
-        JedisCluster jedisCluster = new JedisCluster(nodes);
-        jedisClientCluster.setJedisCluster(jedisCluster);
-        return jedisClientCluster;
+        return new JedicClusterCache().setJedisCluster(new JedisCluster(nodes));
     }
-
     
 }
 

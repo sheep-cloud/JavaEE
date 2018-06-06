@@ -1,9 +1,11 @@
 package cn.colg.cache;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
- * resid 客户端；</br>
+ * resid 客户端：</br>
  * 
  * 采用策略模式，封装了redis的两种配置方式（单机，集群），可以更方便的切换。
  *
@@ -11,120 +13,149 @@ import java.util.List;
  */
 public interface JedisClient {
 
-    /**
-     * 将字符串值设置为键的值。 字符串不能超过1073741824字节（1 GB）。
-     * 
-     * @param key
-     * @param value
-     * @return
-     */
-    String set(String key, String value);
+    /// ----------------------------------------------------------------------------------------------------
 
-    /**
-     * 获取指定键的值。 如果该键不存在，则返回null。 如果存储在键上的值不是字符串，则返回错误，因为GET只能处理字符串值。
-     * 
-     * @param key
-     * @return
-     */
-    String get(String key);
-
-    /**
-     * 删除指定的键。 如果给定的键不存在，则不对该键执行操作。 该命令返回删除的键数。 时间复杂度：O（1）
-     * 
-     * @param key
-     * @return 整数回复，具体为：如果删除一个或多个键，则为大于0的整数如果指定的键均不存在，则返回0
-     */
-    Long del(String... key);
+    /// Redis 键(key) 操作
 
     /**
      * 
-     * 测试指定的密钥是否存在。 如果密钥存在，则该命令返回“1”，否则返回“0”。 请注意，即使键值设置为空字符串，也会返回“1”。 时间复杂度：O（1）
+     * 检查给定 key 是否存在。
      * 
      * @param key
-     * @return 如果密钥存在，则返回true，否则返回false
+     * @return 如果 key 存在返回 true ，否则返回 false 。
+     * @author colg
      */
     Boolean exists(String key);
 
     /**
-     * 
-     * 在指定的键上设置超时。超时后，服务器将自动删除密钥。据说Redis术语中有一个关联超时的关键字是不稳定的。
-     * 
-     * 灵活键与其他键一样存储在磁盘上，超时也像数据集的所有其他方面一样持久。保存包含expires和停止服务器的数据集不会阻止时间流，因为Redis在磁盘上存储的密钥将不再以Unix时间可用，而不是剩余的秒数。
-     * 
-     * 从Redis 2.1.3开始，您可以更新已经过期的密钥的超时值。使用PERSIST命令将密钥转换为普通密钥也是可能的。
+     * 删除已存在的 key 。不存在的 key 会被忽略。
      * 
      * @param key
-     * @param seconds
-     * @return
+     * @return 被删除 key 的数量。
+     * @author colg
+     */
+    Long del(String... keys);
+
+    /**
+     * 设置 key 的过期时间。key 过期后将不再可用。服务器自动删除 key 。
+     * 
+     * @param key
+     * @param seconds 单位：秒
+     * @return 设置成功返回 1 。 当 key 不存在或者不能为 key 设置过期时间时返回 0 。
+     * @author colg
      */
     Long expire(String key, int seconds);
 
     /**
-     * TTL命令返回剩余时间，以秒为单位设置EXPIRE。 这种内省功能允许Redis客户端检查给定密钥将继续成为数据集的一部分的秒数。
+     * 以秒为单位返回 key 的剩余过期时间。
      * 
      * @param key
-     * @return
+     * @return 当 key 不存在时，返回 -2 。 当 key 存在但没有设置剩余生存时间时，返回 -1 。 否则，以毫秒为单位，返回 key 的剩余生存时间。
+     * @author colg
      */
     Long ttl(String key);
 
+    /// ----------------------------------------------------------------------------------------------------
+
+    /// Redis 字符串(String) 操作
+
     /**
-     * 将存储在密钥中的数字加1。 如果键不存在或包含错误类型的值，则在执行递增操作之前将键设置为值“0”。
-     * 
-     * INCR命令限于64位有符号整数。
-     * 
-     * 注意：这实际上是一个字符串操作，也就是说，在Redis中不存在“整数”类型。 只需将存储在密钥中的字符串解析为基本10位64位有符号整数，然后将其作为字符串转换回来。
+     * 获取指定 key 的值。
      * 
      * @param key
-     * @return
+     * @return 如果 key 不存在，返回 null 。如果key 储存的值不是字符串类型，返回一个错误。
+     * @author colg
+     */
+    String get(String key);
+
+    /**
+     * 设置给定 key 的值。如果 key 已经存储其他值， SET 就覆写旧值，且无视类型。
+     * 
+     * @param key
+     * @param value
+     * @return 在设置操作成功完成时，返回 "OK" 。
+     * @author colg
+     */
+    String set(String key, String value);
+
+    /**
+     * 将 key 中储存的数字值增一。本操作的值限制在 64 位(bit)有符号数字表示之内。
+     * 
+     * @param key
+     * @return 如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 INCR 操作。如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。
+     * @author colg
      */
     Long incr(String key);
 
-    /**
-     * 将指定的散列字段设置为指定的值。
-     * 
-     * 如果密钥不存在，则会创建一个保存散列的新密钥。
-     * 
-     * @param key
-     * @param field
-     * @param value
-     * @return
-     */
-    Long hset(String key, String field, String value);
+    /// ----------------------------------------------------------------------------------------------------
+
+    /// Redis 哈希(Hash) 操作
 
     /**
-     * 如果密钥包含散列，则检索与指定字段关联的值。
-     * 
-     * 如果未找到该字段或者该键不存在，则返回一个特殊的'nil'值。
+     * 查看哈希表的指定字段是否存在。
      * 
      * @param key
      * @param field
-     * @return
-     */
-    String hget(String key, String field);
-
-    /**
-     * 从密钥中存储的散列中删除指定的字段。
-     * 
-     * @param key
-     * @param field
-     * @return
-     */
-    Long hdel(String key, String... field);
-
-    /**
-     * 测试散列中是否存在指定的字段。 时间复杂度：O（1） 如果存储在密钥中的散列包含指定的字段，则返回1。 如果没有找到该键或该字段不存在，则返回0。
-     * 
-     * @param key
-     * @param field
-     * @return 如果改键与字段同时存在，则返回true，否则返回false
+     * @return 如果哈希表含有给定字段，返回 1 。 如果哈希表不含有给定字段，或 key 不存在，返回 0 。
+     * @author colg
      */
     Boolean hexists(String key, String field);
 
     /**
-     * 返回散列中的所有值。 时间复杂度：O（N），其中N是条目的总数
+     * 删除哈希表 key 中的一个或多个指定字段，不存在的字段将被忽略。
      * 
      * @param key
-     * @return 所有字段值都包含在一个散列中。
+     * @param field
+     * @return 被成功删除字段的数量，不包括被忽略的字段。
+     * @author colg
+     */
+    Long hdel(String key, String... fields);
+
+    /**
+     * 获取哈希表中指定字段的值。
+     * 
+     * @param key
+     * @param field
+     * @return 返回给定字段的值。如果给定的字段或 key 不存在时，返回 null 。
+     * @author colg
+     */
+    String hget(String key, String field);
+
+    /**
+     * 将哈希表 key 中的字段 field 的值设为 value 。如果哈希表不存在，一个新的哈希表被创建并进行 HSET 操作。如果字段已经存在于哈希表中，旧值将被覆盖。
+     * 
+     * @param key
+     * @param field
+     * @param value
+     * @return 如果字段是哈希表中的一个新建字段，并且值设置成功，返回 1 。 如果哈希表中域字段已经存在且旧值已被新值覆盖，返回 0 。
+     * @author colg
+     */
+    Long hset(String key, String field, String value);
+
+    /**
+     * 获取在哈希表中指定 key 的所有字段和值
+     *
+     * @param key
+     * @return 以Map形式返回哈希表的字段及字段值。 若 key 不存在，返回空列表。
+     * @author colg
+     */
+    Map<String, String> hgetAll(String key);
+
+    /**
+     * 获取在哈希表中指定 key 的所有字段
+     *
+     * @param key
+     * @return
+     * @author colg
+     */
+    Set<String> hkeys(String key);
+
+    /**
+     * 获取在哈希表中指定 key 的所有值
+     * 
+     * @param key
+     * @return 一个包含哈希表中所有值的表。 当 key 不存在时，返回一个空集合。
+     * @author colg
      */
     List<String> hvals(String key);
 }

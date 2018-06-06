@@ -2,7 +2,6 @@ package cn.colg.config;
 
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
-import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
 import cn.hutool.core.date.DateUtil;
@@ -18,9 +17,9 @@ public class PoolCacheConditional implements Condition {
 
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-        Environment environment = context.getEnvironment();
-        String model = environment.getProperty("redis.model");
-        if ("S".equalsIgnoreCase(model)) {
+        String resisModel = "S";
+        String model = context.getEnvironment().getProperty("redis.model");
+        if (resisModel.equalsIgnoreCase(model)) {
             log.info("redis 单机启动... {}", DateUtil.now());
             return true;
         }

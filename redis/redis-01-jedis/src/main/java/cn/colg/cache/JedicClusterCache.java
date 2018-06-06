@@ -1,9 +1,12 @@
 package cn.colg.cache;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import redis.clients.jedis.JedisCluster;
 
 /**
@@ -13,28 +16,19 @@ import redis.clients.jedis.JedisCluster;
  */
 @Getter
 @Setter
+@Accessors(chain = true)
 public class JedicClusterCache implements JedisClient {
 
     private JedisCluster jedisCluster;
 
     @Override
-    public String set(String key, String value) {
-        return jedisCluster.set(key, value);
-    }
-
-    @Override
-    public String get(String key) {
-        return jedisCluster.get(key);
-    }
-
-    @Override
-    public Long del(String... key) {
-        return jedisCluster.del(key);
-    }
-
-    @Override
     public Boolean exists(String key) {
         return jedisCluster.exists(key);
+    }
+
+    @Override
+    public Long del(String... keys) {
+        return jedisCluster.del(keys);
     }
 
     @Override
@@ -48,23 +42,18 @@ public class JedicClusterCache implements JedisClient {
     }
 
     @Override
+    public String get(String key) {
+        return jedisCluster.get(key);
+    }
+
+    @Override
+    public String set(String key, String value) {
+        return jedisCluster.set(key, value);
+    }
+
+    @Override
     public Long incr(String key) {
         return jedisCluster.incr(key);
-    }
-
-    @Override
-    public Long hset(String key, String field, String value) {
-        return jedisCluster.hset(key, field, value);
-    }
-
-    @Override
-    public String hget(String key, String field) {
-        return jedisCluster.hget(key, field);
-    }
-
-    @Override
-    public Long hdel(String key, String... field) {
-        return jedisCluster.hdel(key, field);
     }
 
     @Override
@@ -73,7 +62,33 @@ public class JedicClusterCache implements JedisClient {
     }
 
     @Override
+    public Long hdel(String key, String... fields) {
+        return jedisCluster.hdel(key, fields);
+    }
+
+    @Override
+    public String hget(String key, String field) {
+        return jedisCluster.hget(key, field);
+    }
+
+    @Override
+    public Long hset(String key, String field, String value) {
+        return jedisCluster.hset(key, field, value);
+    }
+
+    @Override
+    public Map<String, String> hgetAll(String key) {
+        return jedisCluster.hgetAll(key);
+    }
+
+    @Override
+    public Set<String> hkeys(String key) {
+        return jedisCluster.hkeys(key);
+    }
+
+    @Override
     public List<String> hvals(String key) {
         return jedisCluster.hvals(key);
     }
+
 }
