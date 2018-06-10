@@ -18,7 +18,6 @@
         <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
         <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
         <skipTests>true</skipTests>
-        <colg.version>0.0.1</colg.version>
         <mysql.version>5.1.46</mysql.version>
         <mybatis.version>3.4.6</mybatis.version>
     </properties>
@@ -32,7 +31,7 @@
             <dependency>
                 <groupId>cn.colg</groupId>
                 <artifactId>colg-dependencies</artifactId>
-                <version>${colg.version}</version>
+                <version>${project.version}</version>
             </dependency>
 			
 		<!-- mysql 依赖 -->

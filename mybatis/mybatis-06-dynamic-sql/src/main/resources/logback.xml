@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration scan="false" scanPeriod="60 seconds" debug="true">
-    <!-- ch.qos.logback.core.ConsoleAppender 表示控制台输出 -->
-	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-		<layout class="ch.qos.logback.classic.PatternLayout">
-			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} -%5p [%15.15t] %-40.40logger{39} : %m%n</pattern>
-		</layout>
-	</appender>
-	
-	<root level="debug">
-		<appender-ref ref="CONSOLE" />
-	</root>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <!-- ch.qos.logback.core.ConsoleAppender 表示控制台输出 -->
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} -%5p [%15.15t] %-40.40logger{39} : %m%n</pattern>
+            </layout>
+        </encoder>
+    </appender>
+
+    <root level="debug">
+        <appender-ref ref="CONSOLE" />
+    </root>
 </configuration> 

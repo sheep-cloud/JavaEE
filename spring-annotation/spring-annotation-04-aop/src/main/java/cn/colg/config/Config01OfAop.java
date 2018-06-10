@@ -53,6 +53,8 @@ import cn.colg.aop.MathCalculator;
 @EnableAspectJAutoProxy
 @Configuration
 public class Config01OfAop {
+    
+    // TODO colg [aop 原理]
 
     /**
      * 把业务逻辑类加入到容器中

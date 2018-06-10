@@ -9,7 +9,7 @@
         <dependency>
             <groupId>cn.colg</groupId>
             <artifactId>colg-dependencies</artifactId>
-            <version>0.0.1</version>
+            <version>${project.version}</version>
         </dependency>
         
         <!-- mysql 依赖 -->
