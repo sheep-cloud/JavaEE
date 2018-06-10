@@ -19,13 +19,14 @@
         <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
         <skipTests>true</skipTests>
         <junit.version>4.12</junit.version>
-        <hutool.version>4.0.10</hutool.version>
+        <hutool.version>4.0.12</hutool.version>
+        <commons-lang3.version>3.7</commons-lang3.version>
         <fastjson.version>1.2.47</fastjson.version>
-        <sprign-boot.version>1.5.12.RELEASE</sprign-boot.version>
+        <sprign-boot.version>1.5.13.RELEASE</sprign-boot.version>
         <spring-cloud.version>Dalston.SR5</spring-cloud.version>
         <swagger2.version>2.8.0</swagger2.version>
         <mysql.version>5.1.46</mysql.version>
-        <druid.version>1.1.9</druid.version>
+        <druid.version>1.1.10</druid.version>
         <mybatis.version>1.3.2</mybatis.version>
     </properties>
 
@@ -46,6 +47,12 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+            <!-- commons-lang3 依赖 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
             </dependency>
             <!-- fastjson 依赖 -->
             <dependency>
