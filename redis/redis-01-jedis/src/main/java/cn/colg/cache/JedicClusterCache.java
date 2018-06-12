@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 import redis.clients.jedis.JedisCluster;
 
 /**
- * JedisClient集群版
+ * JedisClient 集群
  *
  * @author colg
  */

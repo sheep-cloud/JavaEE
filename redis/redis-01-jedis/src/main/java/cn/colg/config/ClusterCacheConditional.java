@@ -8,7 +8,7 @@ import cn.hutool.core.date.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 注入redis集群版 条件
+ * 注入 redis 集群（条件）
  *
  * @author colg
  */
@@ -18,7 +18,7 @@ public class ClusterCacheConditional implements Condition {
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
         String resisModel = "C";
-        String model = context.getEnvironment().getProperty("redis.model");
+        String model = context.getEnvironment().getProperty("spring.redis.model");
         if (resisModel.equalsIgnoreCase(model)) {
             log.info("redis 集群启动... {}", DateUtil.now());
             return true;

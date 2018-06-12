@@ -30,7 +30,7 @@ public interface JedisClient {
     /**
      * 删除已存在的 key 。不存在的 key 会被忽略。
      * 
-     * @param key
+     * @param keys
      * @return 被删除 key 的数量。
      * @author colg
      */
@@ -105,7 +105,7 @@ public interface JedisClient {
      * 删除哈希表 key 中的一个或多个指定字段，不存在的字段将被忽略。
      * 
      * @param key
-     * @param field
+     * @param fields
      * @return 被成功删除字段的数量，不包括被忽略的字段。
      * @author colg
      */

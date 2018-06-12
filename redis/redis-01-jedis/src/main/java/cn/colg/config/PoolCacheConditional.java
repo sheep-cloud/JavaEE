@@ -8,7 +8,7 @@ import cn.hutool.core.date.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 注入redis单机版 条件
+ * 注入 redis 单机（条件）
  *
  * @author colg
  */
@@ -18,7 +18,7 @@ public class PoolCacheConditional implements Condition {
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
         String resisModel = "S";
-        String model = context.getEnvironment().getProperty("redis.model");
+        String model = context.getEnvironment().getProperty("spring.redis.model");
         if (resisModel.equalsIgnoreCase(model)) {
             log.info("redis 单机启动... {}", DateUtil.now());
             return true;

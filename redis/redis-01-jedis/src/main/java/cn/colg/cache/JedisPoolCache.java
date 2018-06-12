@@ -11,7 +11,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 /**
- * JedisClient单机版
+ * JedisClient 单机
  *
  * @author colg
  */

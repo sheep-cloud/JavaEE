@@ -34,8 +34,7 @@ public class JedisClientTest extends BaseTest {
      */
     @Test
     public final void testExists() {
-        String string = jedisClient.get("2018-05-28:14");
-        Console.log(string);
+
     }
 
     /**
@@ -43,7 +42,8 @@ public class JedisClientTest extends BaseTest {
      */
     @Test
     public final void testDel() {
-        fail("Not yet implemented"); // TODO
+        Long result = jedisClient.del(KEY_PRE);
+        Console.log(result);
     }
 
     /**
@@ -68,7 +68,8 @@ public class JedisClientTest extends BaseTest {
      */
     @Test
     public final void testGet() {
-        fail("Not yet implemented"); // TODO
+        String result = jedisClient.get(KEY_PRE);
+        Console.log(result);
     }
 
     /**
