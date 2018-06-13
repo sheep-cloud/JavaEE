@@ -133,7 +133,7 @@ public interface JedisClient {
     Long hset(String key, String field, String value);
 
     /**
-     * 获取在哈希表中指定 key 的所有字段和值
+     * 获取在哈希表中指定 key 的所有字段和值。
      *
      * @param key
      * @return 以Map形式返回哈希表的字段及字段值。 若 key 不存在，返回空列表。
@@ -142,7 +142,7 @@ public interface JedisClient {
     Map<String, String> hgetAll(String key);
 
     /**
-     * 获取在哈希表中指定 key 的所有字段
+     * 获取在哈希表中指定 key 的所有字段。
      *
      * @param key
      * @return
@@ -151,7 +151,7 @@ public interface JedisClient {
     Set<String> hkeys(String key);
 
     /**
-     * 获取在哈希表中指定 key 的所有值
+     * 获取在哈希表中指定 key 的所有值。
      * 
      * @param key
      * @return 一个包含哈希表中所有值的表。 当 key 不存在时，返回一个空集合。

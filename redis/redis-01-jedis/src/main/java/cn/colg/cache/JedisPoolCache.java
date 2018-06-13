@@ -89,8 +89,9 @@ public class JedisPoolCache implements JedisClient {
     @Override
     public Long hdel(String key, String... fields) {
         Jedis jedis = jedisPool.getResource();
+        Long result = jedis.hdel(key, fields);
         jedis.close();
-        return null;
+        return result;
     }
 
     @Override

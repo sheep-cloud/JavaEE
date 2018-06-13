@@ -33,21 +33,21 @@ public class RedisConfig {
 
     // TODO colg [redis 使用 yml 注入属性，接收 int 异常，原因不明]
 
-    @Value("${spring.redis.host}")
+    @Value("${redis.host}")
     private String host;
-    @Value("${spring.redis.port}")
+    @Value("${redis.port}")
     private int port;
 
-    @Value("${spring.redis.cluster.nodes}")
+    @Value("${redis.cluster.nodes}")
     private String clusterNodes;
 
-    @Value("${spring.redis.pool.max-wait}")
+    @Value("${redis.pool.max-wait}")
     private long maxWait;
-    @Value("${spring.redis.pool.min-idle}")
+    @Value("${redis.pool.min-idle}")
     private int minIdle;
-    @Value("${spring.redis.pool.max-idle}")
+    @Value("${redis.pool.max-idle}")
     private int maxIdle;
-    @Value("${spring.redis.pool.max-active}")
+    @Value("${redis.pool.max-active}")
     private int maxActive;
 
     /**

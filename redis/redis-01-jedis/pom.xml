@@ -4,9 +4,10 @@
     <artifactId>redis-01-jedis</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>redis-01-jedis :: jedis API</name>
+    <description>使用 java 代码调用 redis</description>
 
     <properties>
-        <spring.version>4.3.16.RELEASE</spring.version>
+        <spring.version>4.3.17.RELEASE</spring.version>
     </properties>
 
     <dependencies>
@@ -20,11 +21,6 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>2.9.0</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-pool</groupId>
-            <artifactId>commons-pool</artifactId>
-            <version>1.6</version>
         </dependency>
 
         <dependency>

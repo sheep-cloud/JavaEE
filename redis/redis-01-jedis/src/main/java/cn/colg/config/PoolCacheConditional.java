@@ -18,7 +18,7 @@ public class PoolCacheConditional implements Condition {
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
         String resisModel = "S";
-        String model = context.getEnvironment().getProperty("spring.redis.model");
+        String model = context.getEnvironment().getProperty("redis.model");
         if (resisModel.equalsIgnoreCase(model)) {
             log.info("redis 单机启动... {}", DateUtil.now());
             return true;
