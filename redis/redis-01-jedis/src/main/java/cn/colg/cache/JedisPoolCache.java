@@ -55,6 +55,14 @@ public class JedisPoolCache implements JedisClient {
     }
 
     @Override
+    public Set<String> keys(String pattern) {
+        Jedis jedis = jedisPool.getResource();
+        Set<String> result = jedis.keys(pattern);
+        jedis.close();
+        return result;
+    }
+
+    @Override
     public String get(String key) {
         Jedis jedis = jedisPool.getResource();
         String result = jedis.get(key);

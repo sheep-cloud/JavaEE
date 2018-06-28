@@ -1,5 +1,6 @@
 package cn.colg.cache;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -7,7 +8,9 @@ import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
+import redis.clients.jedis.JedisPool;
 
 /**
  * JedisClient 集群
@@ -39,6 +42,20 @@ public class JedicClusterCache implements JedisClient {
     @Override
     public Long ttl(String key) {
         return jedisCluster.ttl(key);
+    }
+
+    @Override
+    public Set<String> keys(String pattern) {
+        // JedisCluster 没有提供对 keys 命令的封装
+        Set<String> result = new HashSet<>();
+        Map<String, JedisPool> clusterNodes = jedisCluster.getClusterNodes();
+        for (String key : clusterNodes.keySet()) {
+            JedisPool jedisPool = clusterNodes.get(key);
+            Jedis jedis = jedisPool.getResource();
+            result.addAll(jedis.keys(pattern));
+            jedis.close();
+        }
+        return result;
     }
 
     @Override

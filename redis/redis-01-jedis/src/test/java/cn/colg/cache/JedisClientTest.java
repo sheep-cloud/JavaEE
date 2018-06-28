@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSON;
 
 import cn.colg.BaseTest;
 import cn.colg.bean.Users;
+import cn.hutool.core.lang.Console;
 import cn.hutool.http.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,7 +36,8 @@ public class JedisClientTest extends BaseTest {
      */
     @Test
     public final void testExists() {
-        Boolean exists = jedisClient.exists(KEY_PRE);
+        // Boolean exists = jedisClient.exists(KEY_PRE);
+        Boolean exists = jedisClient.exists("weather:forecast");
         log.info("JedisClientTest.testExists() >> 检查给定 key 是否存在 : {}", exists);
     }
 
@@ -44,7 +46,7 @@ public class JedisClientTest extends BaseTest {
      */
     @Test
     public final void testDel() {
-        Long del = jedisClient.del(KEY_PRE + "-users");
+        Long del = jedisClient.del("weather:forecast");
         log.info("JedisClientTest.testDel() >> 删除已存在的 key 。不存在的 key 会被忽略 : {}", del);
     }
 
@@ -64,6 +66,16 @@ public class JedisClientTest extends BaseTest {
     public final void testTtl() {
         Long ttl = jedisClient.ttl(KEY_PRE);
         log.info("JedisClientTest.testTtl() >> 以秒为单位返回 key 的剩余过期时间 : {}", ttl);
+    }
+
+    /**
+     * Test method for {@link cn.colg.cache.JedisClient#keys(java.lang.String)}.
+     */
+    @Test
+    public final void testKeys() {
+        Set<String> result = jedisClient.keys("1OkjGRU5TuGTUdvFOJmEUg*");
+        log.info("JedisClientTest.testKeys() >> 查找所有符合给定模式( pattern )的 key  : {}", result);
+        Console.log(result);
     }
 
     /**
@@ -139,9 +151,14 @@ public class JedisClientTest extends BaseTest {
      */
     @Test
     public final void testHgetAll() {
-        Map<String, String> map = jedisClient.hgetAll(KEY_PRE + "-items");
+/*        Map<String, String> map = jedisClient.hgetAll(KEY_PRE + "-items");
         map.forEach((key, value) -> {
             log.info("JedisClientTest.testHgetAll() >> 获取在哈希表中指定 key 的所有字段和值 : [{}: {}]", key, value);
+        });*/
+        Map<String, String> map = jedisClient.hgetAll("weather:forecast");
+        Console.log(map.size());
+        map.forEach((key, value) -> {
+            Console.log(key + " : " + value);
         });
     }
 

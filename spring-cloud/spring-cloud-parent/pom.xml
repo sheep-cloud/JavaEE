@@ -111,7 +111,7 @@
     </dependencyManagement>
 
     <build>
-        <finalName>${project.artifactId}</finalName>
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <!-- 获取构建信息（用于修改cloud，服务info信息） -->
         <resources>
             <resource>

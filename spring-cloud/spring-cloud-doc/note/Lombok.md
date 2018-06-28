@@ -22,11 +22,35 @@
 ## 2、Lombok 基本用法
 - entity
 
-  ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fqs7fgrptvj30fh0asmx7.jpg)
+  ```java
+  /**
+   * 部门Entity </br>
+   * 
+   * <pre>
+   * Dept(Entity) orm     mysql -> Dept(table)    类表关系映射
+   * 
+   * lombok：
+   *  '@NoArgsConstructor'：       无参构造
+   *  '@AllArgsConstructor':       全参构造
+   *  '@Data':                     getter/setter、重写：toString()、hashCoode()、equals()
+   *  '@Accessors(chain = true)':  链式编程
+   * </pre>
+   * 
+   * @author colg
+   */
+  @ApiModel(description = "部门Entity")
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @Data
+  @Accessors(chain = true)
+  public class Dept implements Serializable {
+  ```
+
+  
 
 - log
 
-```
+```java
 @CommonsLog  
 Creates private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(LogExample.class);  
 @Log  

@@ -36,14 +36,12 @@ public class Swagger2Bean {
      */
     @Bean
     public Docket docket() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                    .enable(true)
-                    .groupName("01. spring-cloud-provider-dept-8001")
-                    .apiInfo(apiInfo())
-                    .select()
-                    .apis(RequestHandlerSelectors.basePackage("cn.colg.web"))
-                    .paths(PathSelectors.any())
-                    .build();
+        return new Docket(DocumentationType.SWAGGER_2).enable(true)
+                                                      .groupName("01. spring-cloud-provider-dept-8001")
+                                                      .apiInfo(apiInfo())
+                                                      .select()
+                                                      .apis(RequestHandlerSelectors.basePackage("cn.colg.web"))
+                                                      .paths(PathSelectors.any()).build();
     }
 
     /**
@@ -62,14 +60,13 @@ public class Swagger2Bean {
      * @return
      */
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                    .title("部门服务 API 提供")
-                    .description("部门相关操作的接口")
-                    .version("1.0.0")
-                    .termsOfServiceUrl("https://github.com/colg-cloud/JavaEE")
-                    .contact(new Contact("colg", "https://github.com/colg-cloud/JavaEE/tree/master/spring-cloud", "121529654@qq.com"))
-                    .license("该文档仅限公司内部传阅")
-                    .licenseUrl("https://springcloud.cc/")
-                    .build();
+        return new ApiInfoBuilder().title("部门服务 API 提供")
+                                   .description("部门相关操作的接口")
+                                   .version("1.0.0")
+                                   .termsOfServiceUrl("https://github.com/colg-cloud/JavaEE")
+                                   .contact(new Contact("colg", "https://github.com/colg-cloud/JavaEE/tree/master/spring-cloud", "121529654@qq.com"))
+                                   .license("该文档仅限公司内部传阅")
+                                   .licenseUrl("https://springcloud.cc/")
+                                   .build();
     }
 }

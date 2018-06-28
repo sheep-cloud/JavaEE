@@ -55,6 +55,15 @@ public interface JedisClient {
      */
     Long ttl(String key);
 
+    /**
+     * 查找所有符合给定模式( pattern )的 key 。
+     *
+     * @param key
+     * @return 符合给定模式的 key 列表 (Array)。
+     * @author colg
+     */
+    Set<String> keys(String pattern);
+
     /// ----------------------------------------------------------------------------------------------------
 
     /// Redis 字符串(String) 操作

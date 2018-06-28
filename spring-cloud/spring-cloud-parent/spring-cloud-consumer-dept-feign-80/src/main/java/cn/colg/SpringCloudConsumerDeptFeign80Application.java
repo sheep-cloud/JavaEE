@@ -9,7 +9,8 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
  * Spirng Boot 启动类
  * 
  * <pre>
- * `@EnableFeignClients`：    开启Feign功能，接口调用
+ * '@EnableEurekaClient'：               启动后自动注册进eureka服务中（就是如果选用的注册中心是eureka，那么就推荐@EnableEurekaClient）
+ * '@EnableFeignClients'：               开启 Feign 功能，rest 通信
  * </pre>
  * 
  * @author colg

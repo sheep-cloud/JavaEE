@@ -16,10 +16,10 @@ import lombok.experimental.Accessors;
  * Dept(Entity) orm     mysql -> Dept(table)    类表关系映射
  * 
  * lombok：
- *  '@NoArgsConstructor'：无参构造
- *  '@AllArgsConstructor'：全参构造
- *  '@Data'：getter/setter方法
- *  '@Accessors(chain = true)'：链式编程
+ *  '@NoArgsConstructor'：                       无参构造
+ *  '@AllArgsConstructor':       全参构造
+ *  '@Data':                     getter/setter、重写：toString()、hashCoode()、equals()；一般使用@Getter,@Setter即可
+ *  '@Accessors(chain = true)':  链式编程
  * </pre>
  * 
  * @author colg
