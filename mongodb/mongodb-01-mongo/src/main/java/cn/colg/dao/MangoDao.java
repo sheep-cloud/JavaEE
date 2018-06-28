@@ -7,5 +7,4 @@ package cn.colg.dao;
  */
 public class MangoDao {
 
-    
 }

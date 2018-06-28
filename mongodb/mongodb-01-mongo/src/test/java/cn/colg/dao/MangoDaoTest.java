@@ -3,14 +3,17 @@ package cn.colg.dao;
 import org.bson.Document;
 import org.junit.Test;
 
+import com.alibaba.fastjson.JSON;
 import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import cn.hutool.core.lang.Console;
 import cn.hutool.core.lang.Dict;
 
 /**
- * 
+ * 使用 java 代码调用MongoDB 测试
  *
  * @author colg
  */
@@ -33,4 +36,11 @@ public class MangoDaoTest {
         collection.insertOne(document );
     }
     
+    @Test
+    public void testFind() throws Exception {
+        FindIterable<Document> iterable = collection.find();
+        for (Document document : iterable) {
+            Console.log(JSON.toJSONString(document));
+        }
+    }
 }

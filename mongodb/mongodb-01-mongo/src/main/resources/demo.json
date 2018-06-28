@@ -1,0 +1,8 @@
+{"_id":{"counter":7152181,"date":1524413134000,"machineIdentifier":9715762,"processIdentifier":1663,"time":1524413134000,"timeSecond":1524413134,"timestamp":1524413134},"name":"孙悟空","age":18.0,"gender":"男"}
+{"_id":{"counter":10397415,"date":1524414142000,"machineIdentifier":12247866,"processIdentifier":-701,"time":1524414142000,"timeSecond":1524414142,"timestamp":1524414142},"name":"猪八戒","age":28.0,"gender":"男"}
+{"_id":{"counter":10397416,"date":1524414208000,"machineIdentifier":12247866,"processIdentifier":-701,"time":1524414208000,"timeSecond":1524414208,"timestamp":1524414208},"name":"沙和尚","age":38.0,"gender":"男"}
+{"_id":{"counter":10397417,"date":1524414250000,"machineIdentifier":12247866,"processIdentifier":-701,"time":1524414250000,"timeSecond":1524414250,"timestamp":1524414250},"name":"白骨精","age":18.0,"gender":"女"}
+{"_id":{"counter":10397418,"date":1524414250000,"machineIdentifier":12247866,"processIdentifier":-701,"time":1524414250000,"timeSecond":1524414250,"timestamp":1524414250},"name":"蜘蛛精","age":16.0,"gender":"女"}
+{"_id":{"counter":16561747,"date":1528802044000,"machineIdentifier":4830503,"processIdentifier":6352,"time":1528802044000,"timeSecond":1528802044,"timestamp":1528802044},"_class":"cn.clog.entity.User","name":"Demo","age":18,"gender":"男"}
+{"_id":{"counter":10816274,"date":1528802622000,"machineIdentifier":4830503,"processIdentifier":16008,"time":1528802622000,"timeSecond":1528802622,"timestamp":1528802622},"_class":"cn.clog.entity.User","name":"ceshi","age":18,"gender":"男"}
+{"_id":{"counter":15078414,"date":1530144823000,"machineIdentifier":4830503,"processIdentifier":10844,"time":1530144823000,"timeSecond":1530144823,"timestamp":1530144823},"User":"Jack"}
