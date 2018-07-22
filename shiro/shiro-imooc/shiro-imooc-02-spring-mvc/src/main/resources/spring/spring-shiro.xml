@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		                   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		                   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager" />
+        <property name="loginUrl" value="login.html" />
+        <property name="unauthorizedUrl" value="403.html" />
+        <!-- 过滤器链 -->
+        <property name="filterChainDefinitions">
+            <value>
+                /login.html = anon
+                /subLogin = anon
+                <!-- 
+                /testRoles = roles["admin"]
+                /testRoles2 = roles["admin", "manager"]
+                /testPerms = perms["user:delete"]
+                /testPerms = perms["user:delete", "user:update"]
+                 -->
+                /testRoles = roles["admin", "manager"]
+                /testRoles2 = rolesOr["admin", "manager"]
+                /* = authc
+            </value>
+        </property>
+        <!-- 注入自定义过滤器 -->
+        <property name="filters">
+            <util:map>
+                <entry key="rolesOr" value-ref="rolesOrFilter"></entry>
+            </util:map>
+        </property>
+    </bean>
+    
+    <bean id="rolesOrFilter" class="cn.colg.filter.RolesOrFilter" />
+    
+    <!-- 构建 SecurityManager 环境 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!-- 注入自定义reaml -->
+        <property name="realm" ref="realm" />
+        <!-- 注入sessionManager -->
+        <property name="sessionManager" ref="sessionManager" />
+        <!-- 注入 cacheManager -->
+        <property name="cacheManager" ref="cacheManager" />
+        <!-- 注入  rememberMeManager -->
+        <property name="rememberMeManager" ref="rememberMeManager" />
+    </bean>
+
+    <!-- 自定义 realm -->
+    <bean id="realm" class="cn.colg.shiro.realm.CustomRealm">
+        <property name="credentialsMatcher" ref="credentialsMatcher" />
+    </bean>
+    <!-- 加密管理器 -->
+    <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <!-- 加密算法 -->
+        <property name="hashAlgorithmName" value="md5" />
+        <!-- 加密次数 -->
+        <property name="hashIterations" value="1" />
+    </bean>
+
+    <!-- 使用注解 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+    <bean id="authorizationAttributeSourceAdvisor" class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager" />
+    </bean>
+    
+    <!-- 使用自定义sessionManager -->
+    <bean id="sessionManager" class="cn.colg.session.CustomSessionManager">
+        <property name="sessionDAO" ref="redisSessionDao" />
+    </bean>
+    <bean id="redisSessionDao" class="cn.colg.session.RedisSessionDao" />
+
+    <!-- 使用自定义cacheManager -->
+    <bean id="cacheManager" class="cn.colg.cache.RedisCacheManager" >
+        <property name="redisCache" ref="redisCache" />
+    </bean>
+    <bean id="redisCache" class="cn.colg.cache.RedisCache" />
+
+    <!-- 自动登录 -->    
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cookie" ref="cookie" />
+    </bean>
+    <bean id="cookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg value="rememberMe" />
+        <property name="maxAge" value="3600" />
+    </bean>
+</beans>

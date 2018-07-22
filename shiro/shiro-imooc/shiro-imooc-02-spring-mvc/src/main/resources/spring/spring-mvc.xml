@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                    	   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                    	   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                    	   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 组件扫描 扫描所有标记@Controller类 -->
+    <context:component-scan base-package="cn.colg.controller" />
+
+    <!-- 使用FastJson解析json -->
+    <mvc:annotation-driven>
+		<!-- 使用FastJson解析json -->
+        <mvc:message-converters>
+            <bean id="fastJsonHttpMessageConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+                <property name="fastJsonConfig" ref="fastJsonConfig" />
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <bean id="fastJsonConfig" class="com.alibaba.fastjson.support.config.FastJsonConfig">
+        <property name="serializerFeatures">
+            <array value-type="com.alibaba.fastjson.serializer.SerializerFeature">
+                <value>WriteDateUseDateFormat</value>
+                <value>WriteMapNullValue</value>
+                <value>WriteNullListAsEmpty</value>
+                <value>WriteNullStringAsEmpty</value>
+                <value>DisableCircularReferenceDetect</value>
+            </array>
+        </property>
+    </bean>
+    
+    <!-- <mvc:resources location="/" mapping="/*" /> -->
+    <!-- 把静态资源的请求转由Web容器默认的Servlet来处理 -->
+    <mvc:default-servlet-handler />
+    
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+
+</beans>
