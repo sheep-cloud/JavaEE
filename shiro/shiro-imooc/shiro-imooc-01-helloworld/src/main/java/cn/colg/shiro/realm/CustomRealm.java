@@ -16,6 +16,7 @@ import org.junit.Test;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Dict;
+import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -70,7 +71,7 @@ public class CustomRealm extends AuthorizingRealm {
         
         // 2. 根据用户名到数据库获取凭证
         String password = this.getPasswordByUserName(username);
-        if (password == null) {
+        if (StrUtil.isBlank(password)) {
             return null;
         }
         log.info("password: {}", password);
@@ -128,4 +129,5 @@ public class CustomRealm extends AuthorizingRealm {
         Md5Hash md5HashSalt = new Md5Hash("123456", "colg");
         log.info("md5HashSalt: {}", md5HashSalt);
     }
+    
 }

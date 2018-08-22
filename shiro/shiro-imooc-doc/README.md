@@ -2,14 +2,14 @@
 
 ## 1. Shiro 简介
 
-### 1.1 什么是Shiro？
+### 1.1. 什么是Shiro？
 
 - Apache的强大灵活的开源安全框架
 - 认证、授权、企业会话管理、安全加密
 
 ## 2. Shiro 整体架构
 
-### 2.1 Shiro与Spring Security比较
+### 2.1. Shiro与Spring Security比较
 
 - Apache Shiro
     - 简单、灵活
@@ -24,13 +24,28 @@
 
 ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fti3l730jtj30on0it4b1.jpg)
 
-## 3. Shiro 认证、授权、自定义Realm
+## 3. Shiro 认证、授权、Realm
 
-#### 3.1 Shiro 认证
+### 3.1. ini 配置文件
 
-![1532201826136](C:\Users\BLACKC~1\AppData\Local\Temp\1532201826136.png)
+```ini
+# 提供了对用户/密码与角色之间的配置，用户名=密码, 角色1, 角色2
+[users]
+jack=123456, admin
+
+# 提供了角色与权限之间的配置，角色=权限1, 权限2
+[roles]
+admin=user:insert, user:delete, user:update
+```
+
+### 3.2. Shiro 认证
 
 ```java
+@Slf4j
+public class IniRealmTest {
+
+    private IniRealm iniRealm = new IniRealm("classpath:user.ini");
+    
     @Test
     public void testAuthentication() throws Exception {
         // 1. 创建 SecurityManager
@@ -47,15 +62,19 @@
         // 登录
         subject.login(token);
         
+        // 校验账号密码
+        log.info("是否登录: {}", subject.isAuthenticated());
+
         // 注销
         subject.logout();
         log.info("是否登录: {}", subject.isAuthenticated());
     }
+
+}
+
 ```
 
-#### 3.2 Shiro 授权
-
-![1532202037700](C:\Users\BLACKC~1\AppData\Local\Temp\1532202037700.png)
+### 3.2 Shiro 授权
 
 ```java
     @Test
@@ -90,9 +109,15 @@
     }
 ```
 
-#### 3.3 自定义 Realm
+### 3.3 自定义 Realm
 
 ```java
+/**
+ * 自定义 realm
+ *
+ * @author colg
+ */
+@Slf4j
 public class CustomRealm extends AuthorizingRealm {
     
     /** 模拟用户数据 */
@@ -139,7 +164,7 @@ public class CustomRealm extends AuthorizingRealm {
         
         // 2. 根据用户名到数据库获取凭证
         String password = this.getPasswordByUserName(username);
-        if (password == null) {
+        if (StrUtil.isBlank(password)) {
             return null;
         }
         log.info("password: {}", password);
@@ -197,41 +222,68 @@ public class CustomRealm extends AuthorizingRealm {
         Md5Hash md5HashSalt = new Md5Hash("123456", "colg");
         log.info("md5HashSalt: {}", md5HashSalt);
     }
+    
 }
 ```
 
 #### 3.4 Shiro 加密
 
 ```java
+/**
+ * 自定义 realm 测试
+ *
+ * @author colg
+ */
+@Slf4j
+public class CustomRealmTest {
+
     @Test
     public void testCustomRealm() throws Exception {
         // 1. 构建 SecurityManager 环境
         CustomRealm customRealm = new CustomRealm();
         DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager(customRealm);
-        
+
         // 加密
         HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
         matcher.setHashAlgorithmName("md5");
         // 加密一次
         matcher.setHashIterations(1);
         customRealm.setCredentialsMatcher(matcher);
-        
+
         // 2. 主体提交认证
         SecurityUtils.setSecurityManager(defaultSecurityManager);
         Subject subject = SecurityUtils.getSubject();
         log.info("subject: {}", JSON.toJSONString(subject));
-        
+
         UsernamePasswordToken token = new UsernamePasswordToken("jack", "123456");
         log.info("token: {}", JSON.toJSONString(token));
-        
+
         // 登录
         subject.login(token);
+
+        // 校验帐号密码
+        log.info("是否登录: {}", subject.isAuthenticated());
+
+        // 校验角色
+        subject.checkRoles("admin");
+
+        // 校验权限列表
+        boolean[] permitted = subject.isPermitted("user:insert", "user:delete", "user:update", "user:select");
+        log.info("权限校验: {}", permitted);
+
+        // 注销
+        subject.logout();
+        log.info("是否登录: {}", subject.isAuthenticated());
     }
+    
+}
 ```
 
-### 4. Shiro 集成 Spring
+## 4. Shiro 集成 Spring
 
-#### 4.1 配置
+### 4.1 配置
+
+- pom.xml
 
 ```xml
         <!-- shiro -->
@@ -246,6 +298,8 @@ public class CustomRealm extends AuthorizingRealm {
             <version>${shiro.version}</version>
         </dependency>
 ```
+
+- spring-shiro.xml
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -321,7 +375,7 @@ public class CustomRealm extends AuthorizingRealm {
     }
 ```
 
-#### 4.2 Shiro 过滤器
+### 4.2 Shiro 过滤器
 
 - Shiro 内置过滤器
   - 认证：anon, authBasic, authc, user, logout

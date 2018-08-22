@@ -35,6 +35,7 @@
         </property>
     </bean>
     
+    <!-- 自定义过滤器 -->
     <bean id="rolesOrFilter" class="cn.colg.filter.RolesOrFilter" />
     
     <!-- 构建 SecurityManager 环境 -->
@@ -71,13 +72,13 @@
     <bean id="sessionManager" class="cn.colg.session.CustomSessionManager">
         <property name="sessionDAO" ref="redisSessionDao" />
     </bean>
-    <bean id="redisSessionDao" class="cn.colg.session.RedisSessionDao" />
+    <bean id="redisSessionDao" class="cn.colg.session.RedisSessionBytesDao" />
 
     <!-- 使用自定义cacheManager -->
     <bean id="cacheManager" class="cn.colg.cache.RedisCacheManager" >
         <property name="redisCache" ref="redisCache" />
     </bean>
-    <bean id="redisCache" class="cn.colg.cache.RedisCache" />
+    <bean id="redisCache" class="cn.colg.cache.RedisBytesCache" />
 
     <!-- 自动登录 -->    
     <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">

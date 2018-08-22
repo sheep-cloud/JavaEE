@@ -16,9 +16,9 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class RedisCacheManager<K, V> implements CacheManager{
-    
-    private RedisCache<K, V> redisCache;
+public class RedisCacheManager<K, V> implements CacheManager {
+
+    private RedisBytesCache<K, V> redisCache;
 
     @SuppressWarnings({"unchecked", "hiding"})
     @Override

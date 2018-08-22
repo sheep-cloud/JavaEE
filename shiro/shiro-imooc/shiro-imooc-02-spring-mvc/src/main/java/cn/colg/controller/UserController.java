@@ -4,7 +4,8 @@ import static cn.colg.util.ResultVoUtil.fail;
 import static cn.colg.util.ResultVoUtil.success;
 
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -25,7 +26,7 @@ import cn.colg.vo.ResultVo;
  */
 @RestController
 public class UserController extends BaseController {
-    
+
     @Autowired
     private JedisClient jedisClient;
 
@@ -41,18 +42,20 @@ public class UserController extends BaseController {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         // 登录
+        token.setRememberMe(rememberMe);
         try {
-            token.setRememberMe(rememberMe);
             subject.login(token);
-        } catch (AuthenticationException e) {
-            return fail(ResultVo.CHECK_FAIL, e.getMessage());
+        } catch (UnknownAccountException e) {
+            return fail(ResultVo.CHECK_FAIL, "帐号不存在");
+        } catch (IncorrectCredentialsException e) {
+            return fail(ResultVo.CHECK_FAIL, "密码错误");
         }
         if (subject.hasRole("admin")) {
             return success("登录成功，有admin权限");
         }
         return success("登录成功");
     }
-    
+
     /**
      * 注销
      *
@@ -105,36 +108,36 @@ public class UserController extends BaseController {
     public ResultVo testPermission() {
         return success();
     }
-    
+
     /// ----------------------------------------------------------------------------------------------------
 
     // 内置过滤器
-    
+
     @GetMapping("/testAnon")
     public ResultVo testAnon() {
         return success();
     }
-    
+
     @GetMapping("/testRoles")
     public ResultVo testRoles() {
         return success();
     }
-    
+
     @GetMapping("/testRoles2")
     public ResultVo testRoles2() {
         return success();
     }
-    
+
     @GetMapping("/testPerms")
     public ResultVo testPerms() {
         return success();
     }
-    
+
     @GetMapping("/testPerms2")
     public ResultVo testPerms2() {
         return success();
     }
-    
+
     @GetMapping("/jedis")
     public ResultVo jedis() {
         String set = jedisClient.set("demo", "001");

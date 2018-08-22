@@ -10,11 +10,14 @@ import org.apache.shiro.session.mgt.SessionKey;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.apache.shiro.web.session.mgt.WebSessionKey;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 自定义 SessionManager
  *
  * @author colg
  */
+@Slf4j
 public class CustomSessionManager extends DefaultWebSessionManager {
 
     @Override
@@ -34,7 +37,12 @@ public class CustomSessionManager extends DefaultWebSessionManager {
         }
 
         // 从 redis 中取
-        Session session = super.retrieveSession(sessionKey);
+        Session session = null;
+        try {
+            session = super.retrieveSession(sessionKey);
+        } catch (UnknownSessionException e) {
+            log.info("CustomSessionManager.retrieveSession() >> redis 中无此session : {}", sessionId);
+        }
         if (session != null && sessionId != null) {
             request.setAttribute(sessionId.toString(), session);
         }

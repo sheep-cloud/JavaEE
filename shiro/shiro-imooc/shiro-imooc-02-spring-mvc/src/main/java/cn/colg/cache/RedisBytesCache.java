@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author colg
  */
 @Slf4j
-public class RedisCache<K, V> implements Cache<K, V> {
+public class RedisBytesCache<K, V> implements Cache<K, V> {
 
     @Autowired
     private JedisClient jedisClient;

@@ -76,10 +76,5 @@
 	<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
 		<!-- 扫描Mapper接口 -->
 		<property name="basePackage" value="cn.colg.mapper" />
-		<property name="properties">
-			<value>
-				mappers=tk.mybatis.mapper.common.Mapper
-			</value>
-		</property>
 	</bean>
 </beans>

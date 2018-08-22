@@ -16,8 +16,7 @@
             u.password
         FROM
             users u
-        WHERE
-            u.username = #{username} AND u.locked = '0'
+        WHERE u.username = #{username} AND u.locked = '0'
     </select>
     
     <select id="selectRolesByUserName" resultType="String">
@@ -25,8 +24,7 @@
             ur.role_name
         FROM
             user_roles ur
-        WHERE
-            ur.username = #{username}
+        WHERE ur.username = #{username}
     </select>
     
     <select id="selectPermissionsRoles" resultType="String">
@@ -34,11 +32,10 @@
             rp.permission
         FROM
             roles_permissions rp
-        WHERE
-            rp.role_name IN (
-                <foreach collection="roles" item="roleName" separator=",">
-                    #{roleName}
-                </foreach>
-            )
+        WHERE rp.role_name IN (
+            <foreach collection="roles" item="roleName" separator=",">
+                #{roleName}
+            </foreach>
+        )
     </select>
 </mapper>

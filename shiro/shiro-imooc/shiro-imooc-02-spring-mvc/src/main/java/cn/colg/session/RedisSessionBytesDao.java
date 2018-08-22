@@ -21,12 +21,12 @@ import lombok.extern.slf4j.Slf4j;
  * @author colg
  */
 @Slf4j
-public class RedisSessionDao extends AbstractSessionDAO {
+public class RedisSessionBytesDao extends AbstractSessionDAO {
 
     @Autowired
     private JedisClient jedisClient;
 
-    private static final String SHIRO_SESSION_PREFIX = "imocck-session";
+    private static final String SHIRO_SESSION_PREFIX = "imocck-session:";
 
     // 使用 byte[] 保存
     private byte[] getKey(String key) {

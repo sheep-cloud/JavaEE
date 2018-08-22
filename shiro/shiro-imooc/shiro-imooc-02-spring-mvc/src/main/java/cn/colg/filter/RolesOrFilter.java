@@ -27,7 +27,7 @@ public class RolesOrFilter extends AuthorizationFilter {
         if (ArrayUtil.isEmpty(roles)) {
             return true;
         }
-
+        
         for (String role : roles) {
             if (subject.hasRole(role)) {
                 return true;

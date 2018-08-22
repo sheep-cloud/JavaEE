@@ -1,4 +1,4 @@
-package cn.colg.test;
+package cn.colg.shiro.realm;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -51,5 +51,5 @@ public class IniRealmTest {
         subject.logout();
         log.info("是否登录: {}", subject.isAuthenticated());
     }
-    
+
 }
