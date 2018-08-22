@@ -37,14 +37,18 @@
 			te.id te_id, te.last_name, te.gender, te.email, te.dept_id
 		FROM tbl_dept td
 		INNER JOIN tbl_employee te ON td.id = te.dept_id
-		WHERE td.id = #{id}
+        <where>
+            <if test="id != null and id != ''">
+                td.id = #{id}
+            </if>
+        </where>
 	 </select>
 	 
 	 <!-- 一对多：分步查询 -->
 	 <resultMap type="cn.colg.entity.Department" id="MyDeptStep">
 		<id property="id" column="id" />
 		<result property="departmentName" column="dept_name" />
-		<collection property="emps" select="cn.colg.dao.EmployeeMapper.queryByDeptId" column="deptId=id"></collection>
+		<collection property="emps" column="deptId=id" select="cn.colg.dao.EmployeeMapper.queryByDeptId"></collection>
 	 </resultMap>
 	 <select id="findByIdStep" resultMap="MyDeptStep">
 		SELECT td.id, td.dept_name
@@ -58,4 +62,32 @@
 	 		单列：	column="id"									查询出来的值
 	 		多列：	column="{key1=column1,key2=column2}"		column="{id=id,lastName=last_name}"  #{id},#{lastName}
 	  -->
+      
+      <select id="findAllId" resultType="Integer">
+        SELECT
+            td.id
+        FROM
+            tbl_dept td
+      </select>
+
+
+    <resultMap type="cn.colg.entity.Department" id="MyGroup">
+        <id property="id" column="id" />
+        <result property="departmentName" column="dept_name" />
+        <collection property="emps" column="deptId=id" select="cn.colg.dao.EmployeeMapper.queryByDeptId" />
+    </resultMap>
+
+    <select id="selectGroup" resultMap="MyGroup">
+        SELECT
+            td.id, td.dept_name
+        FROM
+            tbl_dept td
+    </select>
+
+    <select id="selectAll" resultType="cn.colg.entity.Department">
+        SELECT
+            td.id, td.dept_name as departmentName
+        FROM
+            tbl_dept td
+    </select>
 </mapper>

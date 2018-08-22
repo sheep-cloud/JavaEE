@@ -2,9 +2,11 @@ package cn.colg.entity;
 
 import java.io.Serializable;
 
+import cn.colg.core.BaseEntity;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
@@ -14,9 +16,10 @@ import lombok.experimental.Accessors;
  */
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Accessors(chain = true)
-public class Employee implements Serializable {
+public class Employee extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,5 +33,6 @@ public class Employee implements Serializable {
     private String email;
 
     /** 部门；多对一 */
-    private Department dept;
+//    @JSONField(ordinal = 1)
+//    private Department dept;
 }

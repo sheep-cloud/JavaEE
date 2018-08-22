@@ -1,5 +1,7 @@
 package cn.colg.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import cn.colg.entity.Department;
@@ -10,6 +12,8 @@ import cn.colg.entity.Department;
  * @author colg
  */
 public interface DepartmentMapper {
+    
+    List<Integer> findAllId();
 
     /**
      * 根据id查询部门
@@ -39,4 +43,19 @@ public interface DepartmentMapper {
      */
     Department findByIdStep(@Param("id") Integer id);
     
+    /**
+     * 分组查询员工列表（每个部门）
+     *
+     * @return
+     * @author colg
+     */
+    List<Department> selectGroup();
+
+    /**
+     * 查询所有部门
+     *
+     * @return
+     * @author colg
+     */
+    List<Department> selectAll();
 }

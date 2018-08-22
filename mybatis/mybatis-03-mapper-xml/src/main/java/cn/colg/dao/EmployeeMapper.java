@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 
 import cn.colg.entity.Employee;
+import cn.hutool.core.lang.Dict;
 
 /**
  * 员工Mapper
@@ -100,4 +101,31 @@ public interface EmployeeMapper {
      * @return
      */
     Boolean deleteById(@Param("id") Integer id);
+
+    /**
+     * 获取员工id集合
+     *
+     * @return
+     * @author colg
+     */
+    List<String> selectIds();
+
+    /**
+     * 根据员工id集合查询名称集合
+     *
+     * @param ids
+     * @return
+     * @author colg
+     */
+    List<String> selectLastNamesByIds(@Param("ids") List<String> ids);
+    
+    /**
+     * 根据姓名模糊查询员工列表
+     *
+     * @param lastName
+     * @return
+     * @author colg
+     */
+    List<Dict> queryByLastNameResultDict(@Param("lastName") String lastName);
+    
 }

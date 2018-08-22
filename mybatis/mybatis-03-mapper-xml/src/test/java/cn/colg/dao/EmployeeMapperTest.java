@@ -5,8 +5,11 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import com.alibaba.fastjson.JSON;
+
 import cn.colg.BaseMapperTest;
 import cn.colg.entity.Employee;
+import cn.hutool.core.lang.Console;
 import cn.hutool.core.lang.Dict;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,8 +27,8 @@ public class EmployeeMapperTest extends BaseMapperTest {
     @Test
     public void testQueryByLastNameResultMap() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
-        Map<Integer, Employee> map = employeeMapper.queryByLastNameResultMap("jack");
-        log.info("EmployeeMapperTest.testQueryByLastNameResultMap() >> map : {}", map);
+        Map<Integer, Employee> map = employeeMapper.queryByLastNameResultMap("a");
+        Console.log(JSON.toJSONString(map, true));
     }
 
     /**
@@ -35,7 +38,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testFindByIdResultMap() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         Map<String, Object> map = employeeMapper.findByIdResultMap(1);
-        log.info("EmployeeMapperTest.testFindByIdResultMap() >> map : {}", map);
+        Console.log(JSON.toJSONString(map, true));
     }
 
     /**
@@ -135,4 +138,20 @@ public class EmployeeMapperTest extends BaseMapperTest {
         }
     }
 
+    @Test
+    public void testList() throws Exception {
+        EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
+        List<String> ids = employeeMapper.selectIds();
+        log.info("EmployeeMapperTest.testList() >> ids : {}", ids);
+        
+        List<String> lastNames = employeeMapper.selectLastNamesByIds(ids);
+        log.info("EmployeeMapperTest.testList() >> lastNames : {}", lastNames);
+    }
+    
+    @Test
+    public void testQueryByLastNameResultDict() throws Exception {
+        EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
+        List<Dict> list = employeeMapper.queryByLastNameResultDict("a");
+        Console.log(JSON.toJSONString(list, true));
+    }
 }

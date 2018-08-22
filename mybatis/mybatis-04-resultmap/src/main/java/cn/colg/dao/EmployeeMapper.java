@@ -77,4 +77,5 @@ public interface EmployeeMapper {
      * @return
      */
     List<Employee> queryByDeptIdAndLastName(@Param("deptId") Integer deptId, @Param("lastName") String lastName);
+
 }

@@ -1,9 +1,12 @@
 package cn.colg.dao;
 
+import java.util.List;
+
 import org.junit.Test;
 
 import cn.colg.BaseMapperTest;
 import cn.colg.entity.Department;
+import cn.hutool.core.lang.Console;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -13,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class DepartmentMapperTest extends BaseMapperTest {
-    
+
     /**
      * Test method for {@link cn.colg.dao.DepartmentMapper#findById(java.lang.Integer)}.
      */
@@ -23,7 +26,7 @@ public class DepartmentMapperTest extends BaseMapperTest {
         Department department = departmentMapper.findById(1);
         log.info("DepartmentMapperTest.testFindById() >> department : {}", department);
     }
-    
+
     /**
      * Test method for {@link cn.colg.dao.DepartmentMapper#findByIdPlus(java.lang.Integer)}.
      */
@@ -31,10 +34,9 @@ public class DepartmentMapperTest extends BaseMapperTest {
     public void testFindByIdPlus() {
         DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
         Department department = departmentMapper.findByIdPlus(1);
-        log.info("DepartmentMapperTest.testFindByIdPlus() >> department : {}", department);
-        log.info("DepartmentMapperTest.testFindByIdPlus() >> department.getEmps() : {}", department.getEmps());
+        Console.log(department);
     }
-    
+
     /**
      * Test method for {@link cn.colg.dao.DepartmentMapper#findByIdStep(java.lang.Integer)}.
      */
@@ -42,8 +44,13 @@ public class DepartmentMapperTest extends BaseMapperTest {
     public void testFindByIdStep() {
         DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
         Department department = departmentMapper.findByIdStep(1);
-        log.info("DepartmentMapperTest.testFindByIdStep() >> department : {}", department);
-        log.info("DepartmentMapperTest.testFindByIdStep() >> department.getEmps() : {}", department.getEmps());
+        Console.log(department);
     }
-    
+
+    @Test
+    public void testSelectGroup() throws Exception {
+        DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
+        List<Department> list = departmentMapper.selectGroup();
+        Console.log(list);
+    }
 }

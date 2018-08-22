@@ -56,5 +56,4 @@ FROM
     tbl_employee te
 WHERE te.id IN (1, 22, 23);
 
-
 INSERT INTO tbl_employee(last_name, gender, email) VALUES ('smith', '0', 'smith@colg.com') , ('allen', '1', 'allen@colg.com');
