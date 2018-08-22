@@ -20,7 +20,7 @@ import redis.clients.jedis.JedisPool;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class JedicClusterCache implements JedisClient {
+public class JedisClusterCache implements JedisClient {
 
     private JedisCluster jedisCluster;
 
@@ -31,7 +31,11 @@ public class JedicClusterCache implements JedisClient {
 
     @Override
     public Long del(String... keys) {
-        return jedisCluster.del(keys);
+        Long delCount = 0L;
+        for (String key : keys) {
+            delCount += jedisCluster.del(key);
+        }
+        return delCount;
     }
 
     @Override

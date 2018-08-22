@@ -1,5 +1,6 @@
 package cn.colg.bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import cn.colg.core.BaseEntity;
@@ -15,7 +16,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class Items extends BaseEntity {
+public class Items extends BaseEntity implements Serializable{
 
     private static final long serialVersionUID = 1L;
 

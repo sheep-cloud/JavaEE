@@ -1,5 +1,6 @@
 package cn.colg.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.alibaba.fastjson.annotation.JSONField;
@@ -17,7 +18,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class Users extends BaseEntity {
+public class Users extends BaseEntity implements Serializable{
 
     private static final long serialVersionUID = 1L;
 

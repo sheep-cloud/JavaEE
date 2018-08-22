@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import cn.colg.cache.JedicClusterCache;
+import cn.colg.cache.JedisClusterCache;
 import cn.colg.cache.JedisPoolCache;
 import cn.hutool.core.util.StrUtil;
 import redis.clients.jedis.HostAndPort;
@@ -70,13 +70,13 @@ public class RedisConfig {
      */
     @Conditional(ClusterCacheConditional.class)
     @Bean
-    public JedicClusterCache jedisClientCluster() {
+    public JedisClusterCache jedisClientCluster() {
         Set<HostAndPort> nodes = new HashSet<>(9);
         StrUtil.split(clusterNodes, ',').forEach(clusterNode -> {
             List<String> node = StrUtil.split(clusterNode, ':');
             nodes.add(new HostAndPort(node.get(0), Integer.parseInt(node.get(1))));
         });
-        return new JedicClusterCache().setJedisCluster(new JedisCluster(nodes, poolConfig()));
+        return new JedisClusterCache().setJedisCluster(new JedisCluster(nodes, poolConfig()));
     }
 
     /**
