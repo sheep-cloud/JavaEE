@@ -18,8 +18,16 @@
 		<property name="username" value="${jdbc.username}"/>
 		<property name="password" value="${jdbc.password}"/>
 	</bean>
+    
+    <!-- Spring 事务管理 -->
+    <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <!-- 基于注解的事务管理 -->
+    <tx:annotation-driven transaction-manager="dataSourceTransactionManager"/>
 
-	<!-- 整合MyBatis -->
+	<!-- Spring 整合 Mybatis -->
 	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
 		<property name="dataSource" ref="dataSource"/>
@@ -30,14 +38,4 @@
 		<property name="basePackage" value="cn.colg.mapper"/>
 	</bean>
 
-	<!-- 配置Service自动扫描的包 -->
-	<context:component-scan base-package="cn.colg.service"/>
-
-	<!-- 配置声明式事务 -->
-	<bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource"/>
-	</bean>
-    
-    <!-- 基于注解的事务管理 -->
-    <tx:annotation-driven transaction-manager="dataSourceTransactionManager"/>
 </beans>

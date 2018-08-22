@@ -12,11 +12,14 @@ CREATE TABLE `table_emp` (
 	PRIMARY KEY (`emp_id`)
 ) COMMENT '员工表';
 
-INSERT INTO `table_emp` (`emp_id`, `emp_name`, `emp_salary`, `emp_age`) VALUES (REPLACE(UUID(), '-', ''), 'tom', '1254.37', '27');
-INSERT INTO `table_emp` (`emp_id`, `emp_name`, `emp_salary`, `emp_age`) VALUES (REPLACE(UUID(), '-', ''), 'jerry', '6635.42', '38');
-INSERT INTO `table_emp` (`emp_id`, `emp_name`, `emp_salary`, `emp_age`) VALUES (REPLACE(UUID(), '-', ''), 'bob', '5560.11', '40');
-INSERT INTO `table_emp` (`emp_id`, `emp_name`, `emp_salary`, `emp_age`) VALUES (REPLACE(UUID(), '-', ''), 'kate', '2209.11', '22');
-INSERT INTO `table_emp` (`emp_id`, `emp_name`, `emp_salary`, `emp_age`) VALUES (REPLACE(UUID(), '-', ''), 'justin', '4203.15', '30');
+INSERT INTO
+    table_emp(emp_id, emp_name, emp_salary, emp_age)
+VALUES
+    (REPLACE(UUID(), '-', ''), 'tom', '1254.37', '27'),
+    (REPLACE(UUID(), '-', ''), 'jerry', '6635.42', '38'),
+    (REPLACE(UUID(), '-', ''), 'bob', '5560.11', '40'),
+    (REPLACE(UUID(), '-', ''), 'kate', '2209.11', '22'),
+    (REPLACE(UUID(), '-', ''), 'justin', '4203.15', '30');
 
 -- /// ----------------------------------------------------------------------------------------------------
 
