@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.Context;
-import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.JDBCConnectionConfiguration;
 import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
 import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
@@ -37,18 +36,17 @@ public class CodeGeneratorTest {
     public void testGenerator() throws Exception {
         // genCode("表名");
         // genCodeByCustomModelName("表名", "实体名");
-        genCode("product_info");
     }
 
     /** JDBC 配置 */
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/sell?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/rbac?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false";
     private static final String JDBC_USERNAME = "root";
     private static final String JDBC_PASSWORD = "root";
     private static final String JDBC_DIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
 
     /** 项目基础包名称 */
     public static final String BASE_PACKAGE = "cn.colg";
-    public static final String MODEL_PACKAGE = BASE_PACKAGE + ".entity";
+    public static final String MODEL_PACKAGE = BASE_PACKAGE + ".model";
     public static final String MAPPER_PACKAGE = BASE_PACKAGE + ".mapper";
     public static final String ROOT_CLASS = "cn.colg.core.BaseEntity";
 
@@ -77,9 +75,7 @@ public class CodeGeneratorTest {
      * @param modelName 自定义的 Model 名称
      */
     public static void genCodeByCustomModelName(String tableName, String modelName) {
-        tableName = StrUtil.trim(tableName);
-        modelName = StrUtil.trim(modelName);
-        genModelAndMapper(tableName, modelName);
+        genModelAndMapper(StrUtil.trim(tableName), StrUtil.trim(modelName));
     }
 
     /**
@@ -98,11 +94,11 @@ public class CodeGeneratorTest {
 
         // Mapper插件
         PluginConfiguration mapperPlugin = new PluginConfiguration();
-        mapperPlugin.setConfigurationType("cn.colg.plugin.LombokPlugin");
+        mapperPlugin.setConfigurationType("cn.colg.plugin.ColgLombokPlugin");
         // 指定mapper接口父类
         mapperPlugin.addProperty("mappers", "tk.mybatis.mapper.common.Mapper");
         // 强制生成注解
-        mapperPlugin.addProperty("forceAnnotation", "false");
+        mapperPlugin.addProperty("forceAnnotation", "true");
         context.addPluginConfiguration(mapperPlugin);
 
         // 实现Serializable接口
@@ -151,7 +147,7 @@ public class CodeGeneratorTest {
             modelName = tableNameConvertUpperCamel(tableName);
         }
         // 主键策略
-        table.setGeneratedKey(new GeneratedKey("id", "JDBC", true, null));
+        // table.setGeneratedKey(new GeneratedKey("id", "JDBC", true, null));
         context.addTableConfiguration(table);
 
         List<String> warnings;

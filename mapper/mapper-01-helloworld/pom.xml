@@ -5,6 +5,10 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>mapper-01-helloworld :: 通用mapper 初识</name>
 
+    <properties>
+        <spring.version>4.3.18.RELEASE</spring.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>cn.colg</groupId>
@@ -28,7 +32,7 @@
         <dependency>
             <groupId>tk.mybatis</groupId>
             <artifactId>mapper</artifactId>
-            <version>4.0.2</version>
+            <version>4.0.3</version>
         </dependency>
         <!-- mybatis-spring 依赖 -->
         <dependency>
@@ -46,25 +50,25 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>4.3.16.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>4.3.16.RELEASE</version>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
         <!-- spring-orm 依赖-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>4.3.16.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
 		<!-- spring-aspects 依赖） -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aspects</artifactId>
-            <version>4.3.16.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
     </dependencies>
 

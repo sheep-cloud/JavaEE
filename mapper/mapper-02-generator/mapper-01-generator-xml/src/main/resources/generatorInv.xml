@@ -7,7 +7,7 @@
 	<context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
         <property name="javaFileEncoding" value="UTF-8"/>
         <!-- Mapper插件 -->
-        <plugin type="cn.colg.plugin.LombokPlugin">
+        <plugin type="cn.colg.plugin.ColgLombokPlugin">
             <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
             <property name="forceAnnotation" value="true"/>
         </plugin>
@@ -16,7 +16,7 @@
         
 		<!-- 数据库连接的信息：驱动类、连接地址、用户名、密码 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-						connectionURL="jdbc:mysql://127.0.0.1:3306/mapper?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;useSSL=false"
+						connectionURL="jdbc:mysql://127.0.0.1:3306/rbac?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;useSSL=false"
 						userId="root"
 						password="root" />
 		
@@ -26,7 +26,9 @@
 		</javaTypeResolver>
 
 		<!-- targetProject: 生成实体类的位置 -->
-		<javaModelGenerator targetProject="src/main/java" targetPackage="cn.colg.entity" >
+		<!-- <javaModelGenerator targetProject="src/main/java" targetPackage="cn.colg.entity" > -->
+            <!-- <property name="rootClass" value="cn.colg.core.BaseEntity"/> -->
+		<javaModelGenerator targetProject="src/main/java" targetPackage="cn.colg.model" >
             <property name="rootClass" value="cn.colg.core.BaseEntity"/>
         </javaModelGenerator>
         
@@ -34,10 +36,11 @@
         <sqlMapGenerator targetProject="src/main/resources" targetPackage="/mybatis/mapper" />
         
         <!-- targetPackage：mapper接口生成的位置 -->
-        <javaClientGenerator targetProject="src/main/java" targetPackage="cn.colg.dao" type="XMLMAPPER" />
+        <!-- <javaClientGenerator targetProject="src/main/java" targetPackage="cn.colg.dao" type="XMLMAPPER" /> -->
+        <javaClientGenerator targetProject="src/main/java" targetPackage="cn.colg.mapper" type="XMLMAPPER" />
 		
 		<!-- 指定数据库表以及对应的[实体类] -->
-        <!-- <table tableName="%" /> -->
-        <table tableName="table_emp" domainObjectName="Employee"></table>
+        <table tableName="%" />
+        <!-- <table tableName="table_emp" domainObjectName="Employee"></table> -->
 	</context>
 </generatorConfiguration>

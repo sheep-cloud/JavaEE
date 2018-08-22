@@ -21,7 +21,7 @@ import tk.mybatis.mapper.generator.MapperCommentGenerator;
  *
  * @author colg
  */
-public class LombokPlugin extends FalseMethodPlugin {
+public class ColgLombokPlugin extends FalseMethodPlugin {
     private Set<String> mappers = new HashSet<String>();
     private boolean caseSensitive = false;
     private boolean useMapperCommentGenerator = true;
@@ -49,7 +49,7 @@ public class LombokPlugin extends FalseMethodPlugin {
     }
 
     /**
-     * 生成的Mapper接口
+     * 生成Mapper接口
      *
      * @param interfaze
      * @param topLevelClass
@@ -58,18 +58,19 @@ public class LombokPlugin extends FalseMethodPlugin {
      */
     @Override
     public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        // doc
+        interfaze.addJavaDocLine("/**");
+        interfaze.addJavaDocLine(" * - @mbg.generated");
+        interfaze.addJavaDocLine(" *");
+        interfaze.addJavaDocLine(" * @author colg");
+        interfaze.addJavaDocLine(" */");
+        
         // 获取实体类
         FullyQualifiedJavaType entityType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
         // import接口
         mappers.forEach(mapper -> interfaze.addSuperInterface(new FullyQualifiedJavaType(mapper + "<" + entityType.getShortName() + ">")));
         // import实体类
         interfaze.addImportedType(entityType);
-
-        interfaze.addJavaDocLine("/**");
-        interfaze.addJavaDocLine(" * - @mbg.generated");
-        interfaze.addJavaDocLine(" *");
-        interfaze.addJavaDocLine(" * @author colg");
-        interfaze.addJavaDocLine(" */");
         return true;
     }
 
@@ -80,6 +81,7 @@ public class LombokPlugin extends FalseMethodPlugin {
      * @param introspectedTable
      */
     private void processEntityClass(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        // doc
         topLevelClass.addJavaDocLine("/**");
         topLevelClass.addJavaDocLine(" * - @mbg.generated");
         topLevelClass.addJavaDocLine(" *");
@@ -92,6 +94,7 @@ public class LombokPlugin extends FalseMethodPlugin {
         topLevelClass.addImportedType("lombok.*");
         topLevelClass.addImportedType("lombok.experimental.Accessors");
 
+        // 类注解
         topLevelClass.addAnnotation("@NoArgsConstructor");
         topLevelClass.addAnnotation("@AllArgsConstructor");
         topLevelClass.addAnnotation("@Getter");

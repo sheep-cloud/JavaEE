@@ -18,11 +18,21 @@
 		<property name="username" value="${jdbc.username}"/>
 		<property name="password" value="${jdbc.password}"/>
 	</bean>
+    
+    <!-- Spring 事务管理 -->
+    <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <!-- 开启基于注解的事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
-	<!-- 整合MyBatis -->
+	<!-- Spring 整合 Mybatis -->
 	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+        <!-- 加载数据源 -->
 		<property name="dataSource" ref="dataSource"/>
+        <!-- 加载mybatis的全局配置文件 -->
+		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
 	</bean>
 	
 	<!-- 整合通用Mapper所需要做的配置修改： -->
@@ -32,24 +42,4 @@
 		<property name="basePackage" value="cn.colg.mapper"/>
 	</bean>
 
-	<!-- 配置Service自动扫描的包 -->
-	<context:component-scan base-package="cn.colg.service"/>
-
-	<!-- 配置声明式事务 -->
-	<bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource"/>
-	</bean>
-
-	<aop:config>
-		<aop:advisor advice-ref="txAdvice" pointcut="execution(* *..*Service.*(..))"/>
-	</aop:config>
-
-	<tx:advice id="txAdvice" transaction-manager="dataSourceTransactionManager">
-		<tx:attributes>
-			<tx:method name="get*" read-only="true"/>
-			<tx:method name="save*" rollback-for="java.lang.Exception" propagation="REQUIRES_NEW"/>
-			<tx:method name="remove*" rollback-for="java.lang.Exception" propagation="REQUIRES_NEW"/>
-			<tx:method name="update*" rollback-for="java.lang.Exception" propagation="REQUIRES_NEW"/>
-		</tx:attributes>
-	</tx:advice>
 </beans>
