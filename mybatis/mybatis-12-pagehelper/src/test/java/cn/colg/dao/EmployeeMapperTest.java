@@ -73,7 +73,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         PageHelper.startPage(1, 0);
         List<Employee> list = employeeMapper.selectAll();
-        log.info("EmployeeMapperTest.testGetSex() >> list : {}", list);
+        list.forEach(Console::log);
     }
     
     @Test
@@ -81,7 +81,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         PageHelper.startPage(1, 10, "last_name desc");
         List<Employee> list = employeeMapper.selectAll();
-        list.forEach(e -> Console.log(e));
+        list.forEach(Console::log);
     }
     
 }
