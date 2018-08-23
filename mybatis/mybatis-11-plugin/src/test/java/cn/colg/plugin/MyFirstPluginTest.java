@@ -42,7 +42,6 @@ public class MyFirstPluginTest {
      *  2、使用@Intercepts注解完成插件签名；
      *  3、将写好的插件注册到全局配置文件中
      */
-    ///
 
     /**
      * Test method for {@link cn.colg.plugin.MyFirstPlugin#intercept(org.apache.ibatis.plugin.Invocation)}.
