@@ -13,6 +13,12 @@ import cn.colg.entity.Department;
  */
 public interface DepartmentMapper {
     
+    /**
+     * 获取所有的id
+     *
+     * @return id列表
+     * @author colg
+     */
     List<Integer> findAllId();
 
     /**

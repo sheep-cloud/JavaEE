@@ -36,7 +36,7 @@ public class Employee implements Serializable {
      * @return
      */
     public String getGender() {
-        return this.gender.equals("0") ? "男" : "女";
+        return "0".equals(this.gender) ? "男" : "女";
     }
     
     public String getDisplayName() {

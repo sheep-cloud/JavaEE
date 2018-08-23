@@ -38,7 +38,8 @@ public class StudentEntityTest extends BaseTest {
     @Test
     public void test01() throws Exception {
         List<StudentEntity> list = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
+        int size = 100;
+        for (int i = 0; i < size; i++) {
             StudentEntity studentEntity = new StudentEntity().setId(RandomUtil.simpleUUID())
                                                              .setName("Jack-" + i)
                                                              .setSex(i % 2 == 0 ? 1 : 2)

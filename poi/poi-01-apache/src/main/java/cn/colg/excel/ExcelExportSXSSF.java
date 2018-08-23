@@ -130,7 +130,8 @@ public class ExcelExportSXSSF {
     public <T> void writeDatasByObject(List<T> datalist) {
         List<String> fieldCodes = new ArrayList<>(fieldMap.keySet());
         for (int j = 0; j < datalist.size(); j++) {
-            rowNum = rowNum + 1;// 第一行，内容
+         // 第一行，内容
+            rowNum = rowNum + 1;
             Row row = sheet.createRow(rowNum);
             for (int cellNum = 0; cellNum < fieldCodes.size(); cellNum++) {
                 T owner = datalist.get(j);
@@ -165,10 +166,10 @@ public class ExcelExportSXSSF {
     public void writeDatasByString(List<String> datalist) {
         rowNum = rowNum + 1;
         Row row = sheet.createRow(rowNum);
-        int datalist_size = datalist.size();
+        int datalistSize = datalist.size();
         for (int cellnum = 0; cellnum < colNum; cellnum++) {
             Cell cell = row.createCell(cellnum);
-            if (datalist_size > cellnum) {
+            if (datalistSize > cellnum) {
                 cell.setCellValue(datalist.get(cellnum));
             } else {
                 cell.setCellValue("");

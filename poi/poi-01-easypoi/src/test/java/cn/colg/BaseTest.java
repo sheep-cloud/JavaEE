@@ -16,7 +16,7 @@ public abstract class BaseTest {
     private long time;
 
     @Before
-    public void Before() throws Exception {
+    public void before() throws Exception {
         time = System.currentTimeMillis();
     }
 

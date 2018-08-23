@@ -37,7 +37,8 @@ public class CourseEntityTest {
     @Test
     public void test01() throws Exception {
         List<StudentEntity> studentlist1 = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        int size = 10;
+        for (int i = 0; i < size; i++) {
             StudentEntity studentEntity = new StudentEntity().setId(RandomUtil.simpleUUID())
                                                              .setName("Jack-" + i)
                                                              .setSex(i % 2 == 0 ? 1 : 2)
@@ -46,7 +47,7 @@ public class CourseEntityTest {
             studentlist1.add(studentEntity);
         }
         List<StudentEntity> studentlist2 = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < size; i++) {
             StudentEntity studentEntity = new StudentEntity().setId(RandomUtil.simpleUUID())
                                                              .setName("Rose-" + i)
                                                              .setSex(i % 2 == 0 ? 1 : 2)

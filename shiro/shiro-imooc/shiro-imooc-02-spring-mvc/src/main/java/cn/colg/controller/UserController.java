@@ -50,7 +50,8 @@ public class UserController extends BaseController {
         } catch (IncorrectCredentialsException e) {
             return fail(ResultVo.CHECK_FAIL, "密码错误");
         }
-        if (subject.hasRole("admin")) {
+        String admin = "admin";
+        if (subject.hasRole(admin)) {
             return success("登录成功，有admin权限");
         }
         return success("登录成功");

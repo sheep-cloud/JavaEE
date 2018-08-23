@@ -36,7 +36,8 @@ public class CompanyHasImgModelTest extends BaseTest{
     @Test
     public void test01() throws Exception {
         List<CompanyHasImgModel> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        int size = 10;
+        for (int i = 0; i < size; i++) {
             CompanyHasImgModel companyHasImgModel = new CompanyHasImgModel().setCompanyId(RandomUtil.simpleUUID())
                                                                             .setCompanyName("百度-" + i)
                                                                             .setCompanyLogo("E:\\upload\\file\\vue.jpg")

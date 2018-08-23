@@ -28,7 +28,13 @@ public class RedisSessionBytesDao extends AbstractSessionDAO {
 
     private static final String SHIRO_SESSION_PREFIX = "imocck-session:";
 
-    // 使用 byte[] 保存
+    /**
+     * 使用 byte[] 保存
+     *
+     * @param key
+     * @return
+     * @author colg
+     */
     private byte[] getKey(String key) {
         return (SHIRO_SESSION_PREFIX + key).getBytes();
     }

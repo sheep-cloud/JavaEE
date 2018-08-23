@@ -25,15 +25,15 @@ public class ColgLombokPlugin extends FalseMethodPlugin {
     private Set<String> mappers = new HashSet<String>();
     private boolean caseSensitive = false;
     private boolean useMapperCommentGenerator = true;
-    // 开始的分隔符，例如mysql为`，sqlserver为[
+    /** 开始的分隔符，例如mysql为`，sqlserver为[ */
     private String beginningDelimiter = "";
-    // 结束的分隔符，例如mysql为`，sqlserver为]
+    /** 结束的分隔符，例如mysql为`，sqlserver为] */
     private String endingDelimiter = "";
-    // 数据库模式
+    /** 数据库模式 */
     private String schema;
-    // 注释生成器
+    /** 注释生成器 */
     private CommentGeneratorConfiguration commentCfg;
-    // 强制生成注解
+    /** 强制生成注解 */
     private boolean forceAnnotation;
 
     public String getDelimiterName(String name) {

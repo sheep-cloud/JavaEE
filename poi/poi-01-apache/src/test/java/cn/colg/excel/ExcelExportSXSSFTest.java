@@ -13,6 +13,11 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.NumberUtil;
 
+/**
+ * poi测试
+ *
+ * @author colg
+ */
 public class ExcelExportSXSSFTest extends BaseTest{
     
     @Test
@@ -36,7 +41,8 @@ public class ExcelExportSXSSFTest extends BaseTest{
 
         // 准备导出的数据，将数据存入list，且list中对象的字段名称必须是刚才传入ExcelExportSXXSSF的名称
         List<Ypxx> list = new ArrayList<Ypxx>();
-        for (int i = 0; i < 1000; i++) {
+        int size = 1000;
+        for (int i = 0; i < size; i++) {
             Ypxx ypxx = new Ypxx().setBm(NumberUtil.decimalFormat("0000", i))
                                   .setMc("青霉素-" + i)
                                   .setPrice(NumberUtil.roundStr(2.5f + i, 2))

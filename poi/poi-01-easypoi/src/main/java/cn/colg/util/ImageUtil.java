@@ -10,6 +10,11 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 
+/**
+ * 图片处理
+ *
+ * @author colg
+ */
 public class ImageUtil {
 
     public static String saveImg(MultipartFile multipartFile, String originalFilename) throws IOException {
