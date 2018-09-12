@@ -30,30 +30,15 @@ GRANT ALL ON mapper.* TO 'mapper';
 -- 刷新权限
 FLUSH PRIVILEGES;
 
--- 删除用户
+-- 删除用户及权限
 DROP USER 'mapper';
 
+-- 修改密码
+UPDATE mysql.user SET authentication_string = PASSWORD('123456') WHERE USER = 'mapper';
+
+-- 查看host、用户、密码
+SELECT `host`, `user`, authentication_string FROM mysql.user;
+
 -- /// ----------------------------------------------------------------------------------------------------
-
-SELECT * FROM table_emp;
-
-SELECT
-    emp_id, emp_name, emp_salary, emp_age
-FROM table_emp
-WHERE emp_name = 'bob' AND emp_salary = 5560.11;
-
-SELECT
-    emp_id, emp_name, emp_salary, emp_age
-FROM table_emp
-WHERE emp_id = 3;
-
-SELECT
-    CASE
-        WHEN COUNT(emp_id) > 0
-        THEN 1
-        ELSE 0
-    END AS result
-FROM table_emp
-WHERE emp_id = 3;
 
 SELECT REPLACE(UUID(), '-', '')

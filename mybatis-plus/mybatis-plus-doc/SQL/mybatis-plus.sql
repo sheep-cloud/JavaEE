@@ -20,6 +20,12 @@ VALUES
     (REPLACE(UUID(), '-', ''), 'bob', '5560.11', '40'),
     (REPLACE(UUID(), '-', ''), 'kate', '2209.11', '22'),
     (REPLACE(UUID(), '-', ''), 'justin', '4203.15', '30');
+    
+    
+CREATE USER 'mybatis-plus' IDENTIFIED BY '123456';
+GRANT ALL ON `mybatis-plus`.* TO 'mybatis-plus';
+FLUSH PRIVILEGES;
+SELECT `host`, `user`, authentication_string FROM mysql.user;
 
 -- /// ----------------------------------------------------------------------------------------------------
 
