@@ -38,7 +38,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class ExcelExportSXSSF {
+public class ExcelExportSxssf {
 
     /** 定义工作表 */
     private SXSSFWorkbook workbook;
@@ -72,8 +72,8 @@ public class ExcelExportSXSSF {
      * @return
      * @author colg
      */
-    public static ExcelExportSXSSF start(String filePath, String fileWebPath, String fileName, LinkedHashMap<String, String> fieldMap, int flushRows) {
-        ExcelExportSXSSF excelExportSXXSSF = new ExcelExportSXSSF().setFilePath(filePath)
+    public static ExcelExportSxssf start(String filePath, String fileWebPath, String fileName, LinkedHashMap<String, String> fieldMap, int flushRows) {
+        ExcelExportSxssf excelExportSXXSSF = new ExcelExportSxssf().setFilePath(filePath)
                                                                    .setFileWebPath(fileWebPath)
                                                                    .setFileName(fileName)
                                                                    .setFieldMap(fieldMap);

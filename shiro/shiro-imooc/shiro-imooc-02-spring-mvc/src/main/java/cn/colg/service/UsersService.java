@@ -12,6 +12,12 @@ import cn.colg.model.Users;
  */
 public interface UsersService {
 
+    /**
+     * 查询所有用户
+     *
+     * @return
+     * @author colg
+     */
     List<Users> selectAll();
 
     /**

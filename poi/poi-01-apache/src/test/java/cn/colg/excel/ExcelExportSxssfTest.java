@@ -18,7 +18,7 @@ import cn.hutool.core.util.NumberUtil;
  *
  * @author colg
  */
-public class ExcelExportSXSSFTest extends BaseTest{
+public class ExcelExportSxssfTest extends BaseTest{
     
     @Test
     public void testExportFile() throws Exception {
@@ -37,7 +37,7 @@ public class ExcelExportSXSSFTest extends BaseTest{
         fieldMap.put("ypjybgyxq", "药品检验报告有效期");
 
         // 开始导出，执行一些workbook及sheet等对象的初始创建
-        ExcelExportSXSSF excelExportSXXSSF = ExcelExportSXSSF.start(filePath, "http://127.0.0.1/file/", fileName, fieldMap, flushRows);
+        ExcelExportSxssf excelExportSXXSSF = ExcelExportSxssf.start(filePath, "http://127.0.0.1/file/", fileName, fieldMap, flushRows);
 
         // 准备导出的数据，将数据存入list，且list中对象的字段名称必须是刚才传入ExcelExportSXXSSF的名称
         List<Ypxx> list = new ArrayList<Ypxx>();

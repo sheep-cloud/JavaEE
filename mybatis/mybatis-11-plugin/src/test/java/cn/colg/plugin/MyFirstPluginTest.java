@@ -10,6 +10,8 @@ import org.junit.Test;
  * @author colg
  */
 public class MyFirstPluginTest {
+    
+    /// ----------------------------------------------------------------------------------------------------
 
     /*
      * MyBatis 插件开发原理

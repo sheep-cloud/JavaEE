@@ -86,7 +86,14 @@ public interface JedisClient {
      * @author colg
      */
     Long incr(String key);
-    
+
+    /**
+     * 查找所有符合给定模式( pattern )的 key 。
+     *
+     * @param pattern 给定模式
+     * @return 符合给定模式的 key 列表 (Array)。
+     * @author colg
+     */
     Set<String> keys(String pattern);
 
     /// ----------------------------------------------------------------------------------------------------

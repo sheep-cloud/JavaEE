@@ -29,8 +29,8 @@ public interface JedisClient {
 
     /**
      * 删除已存在的 key 。不存在的 key 会被忽略。
-     * 
-     * @param key 键s
+     *
+     * @param keys 键
      * @return 被删除 key 的数量。
      * @author colg
      */
@@ -58,7 +58,7 @@ public interface JedisClient {
     /**
      * 查找所有符合给定模式( pattern )的 key 。
      *
-     * @param key 键
+     * @param pattern 给定模式
      * @return 符合给定模式的 key 列表 (Array)。
      * @author colg
      */
