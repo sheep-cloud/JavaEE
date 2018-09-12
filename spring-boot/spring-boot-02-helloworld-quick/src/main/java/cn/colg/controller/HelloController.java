@@ -1,9 +1,7 @@
-package cn.clog.controller;
+package cn.colg.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import cn.hutool.core.lang.Dict;
 
 /**
  * HelloController
@@ -14,7 +12,7 @@ import cn.hutool.core.lang.Dict;
 public class HelloController {
 
     @GetMapping("/hello")
-    public Dict hello() {
-        return Dict.create().set("Hello", "World!");
+    public String hello() {
+        return "hello world";
     }
 }

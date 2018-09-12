@@ -6,10 +6,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 
 /**
  * Cat 实体 '@Value' 获取值
@@ -17,10 +14,7 @@ import lombok.experimental.Accessors;
  * @author colg
  */
 @Component
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
-@Accessors(chain = true)
 public class Cat implements Serializable {
     
     /*

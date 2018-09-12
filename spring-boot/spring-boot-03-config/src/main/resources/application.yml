@@ -20,20 +20,11 @@ cat:
   lastName: black
   age: 3
   birth: 2018/03/15
-#  maps:
-#    k1: k1
-#    k2: k2
-#  lists:
-#    - Jack
-#    - Rose
-#  dog:
-#    name: 小狗
-#    age: 3
 
 taxi:
-  name: 大众${random.uuid}
-  plate-number: 粤A12345
-  age: ${random.int}
+  name: 丰田卡罗拉${random.uuid}
+  plate-number: 鄂FPN18${random.int[10]}
+  age: ${random.int[1,3]}
   dog:
     name: ${taxi.hello:小狗}
     age: ${taxi.age}

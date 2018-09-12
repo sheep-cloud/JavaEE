@@ -1,8 +1,6 @@
 server:
   port: 8001
 spring:
-  config:
-    location: F:/application.yml
   profiles:
     active:
       - dev                     # 激活dev环境

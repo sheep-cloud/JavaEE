@@ -8,10 +8,7 @@ import java.util.Map;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 
 /**
  * Person 实体 '@ConfigurationProperties' 获取值
@@ -28,10 +25,7 @@ import lombok.experimental.Accessors;
  */
 @ConfigurationProperties(prefix = "person")
 @Component
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
-@Accessors(chain = true)
 public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
