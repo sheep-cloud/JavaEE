@@ -20,6 +20,18 @@ VALUES
     (REPLACE(UUID(), '-', ''), 'bob', '5560.11', '40'),
     (REPLACE(UUID(), '-', ''), 'kate', '2209.11', '22'),
     (REPLACE(UUID(), '-', ''), 'justin', '4203.15', '30');
+    
+-- 创建用户
+CREATE USER 'mapper' IDENTIFIED BY '123456';
+
+-- 为用户授权
+GRANT ALL ON mapper.* TO 'mapper';
+
+-- 刷新权限
+FLUSH PRIVILEGES;
+
+-- 删除用户
+DROP USER 'mapper';
 
 -- /// ----------------------------------------------------------------------------------------------------
 

@@ -8,11 +8,18 @@ CREATE TABLE dept(
 	dbsource VARCHAR(32) COMMENT '来自哪个数据库'
 ) COMMENT '部门表';
 
-INSERT INTO dept(deptname, dbsource) VALUES('开发部', DATABASE());
-INSERT INTO dept(deptname, dbsource) VALUES('人事部', DATABASE());
-INSERT INTO dept(deptname, dbsource) VALUES('财务部', DATABASE());
-INSERT INTO dept(deptname, dbsource) VALUES('市场部', DATABASE());
-INSERT INTO dept(deptname, dbsource) VALUES('运维部', DATABASE());
+INSERT INTO
+	dept(deptname, dbsource)
+VALUES
+	('开发部', DATABASE()),
+	('财务部', DATABASE()),
+	('市场部', DATABASE()),
+	('运维部', DATABASE());
+	
+-- 授权
+GRANT ALL ON spring_cloud_8002.* TO 'spring_cloud';
+FLUSH PRIVILEGES;
 
+-- /// ----------------------------------------------------------------------------------------------------
 
 SELECT d.deptno, d.deptname, d.dbsource FROM dept d;

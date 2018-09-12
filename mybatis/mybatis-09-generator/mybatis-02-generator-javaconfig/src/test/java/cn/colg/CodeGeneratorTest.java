@@ -47,8 +47,8 @@ public class CodeGeneratorTest {
 
     /** JDBC 配置 */
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/spring_cloud_8001?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false";
-    private static final String JDBC_USERNAME = "root";
-    private static final String JDBC_PASSWORD = "root";
+    private static final String JDBC_USERNAME = "spring_cloud";
+    private static final String JDBC_PASSWORD = "123456";
     private static final String JDBC_DIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
 
     /** 项目基础包名称 */
