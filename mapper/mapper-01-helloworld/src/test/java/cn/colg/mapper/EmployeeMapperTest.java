@@ -37,8 +37,8 @@ public class EmployeeMapperTest extends BaseMapperTest {
     @Test
     public final void testSelect() {
         List<Employee> employeeList = mapper.select(new Employee("tom", 1254.37));
-        Console.log(employeeList.size());
-        employeeList.forEach(Console::log);
+        Console.log("员工数量: {}", employeeList.size());
+        Console.log("员工列表： {}", employeeList);
     }
 
     /**
