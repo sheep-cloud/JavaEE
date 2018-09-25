@@ -1,32 +1,32 @@
 [
   {
-  	"empAge": 27,
-  	"empId": "300dbe78a5ff11e8a6d054ee75c6aeb0",
-  	"empName": "tom",
-  	"empSalary": 1254.37
+    "empAge": 27,
+    "empId": "300dbe78a5ff11e8a6d054ee75c6aeb0",
+    "empName": "tom",
+    "empSalary": 1254.37
   },
   {
-  	"empAge": 38,
-  	"empId": "3042e04ca5ff11e8a6d054ee75c6aeb0",
-  	"empName": "jerry",
-  	"empSalary": 6635.42
+    "empAge": 38,
+    "empId": "3042e04ca5ff11e8a6d054ee75c6aeb0",
+    "empName": "jerry",
+    "empSalary": 6635.42
   },
   {
-  	"empAge": 40,
-  	"empId": "3042e695a5ff11e8a6d054ee75c6aeb0",
-  	"empName": "bob",
-  	"empSalary": 5560.11
+    "empAge": 40,
+    "empId": "3042e695a5ff11e8a6d054ee75c6aeb0",
+    "empName": "bob",
+    "empSalary": 5560.11
   },
   {
-  	"empAge": 22,
-  	"empId": "3042e813a5ff11e8a6d054ee75c6aeb0",
-  	"empName": "kate",
-  	"empSalary": 2209.11
+    "empAge": 22,
+    "empId": "3042e813a5ff11e8a6d054ee75c6aeb0",
+    "empName": "kate",
+    "empSalary": 2209.11
   },
   {
-  	"empAge": 30,
-  	"empId": "3042e8d7a5ff11e8a6d054ee75c6aeb0",
-  	"empName": "justin",
-  	"empSalary": 4203.15
+    "empAge": 30,
+    "empId": "3042e8d7a5ff11e8a6d054ee75c6aeb0",
+    "empName": "justin",
+    "empSalary": 4203.15
   }
 ]
