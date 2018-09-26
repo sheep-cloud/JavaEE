@@ -1,0 +1,10 @@
+# 开启SpringBoot的debug，查看详细的自动配置报告
+debug: true
+
+# 能配置的属性都是来源于这个功能的properties类
+spring:
+  http:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true

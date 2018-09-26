@@ -1,10 +1,9 @@
-server:
-  port: 8001
 spring:
   profiles:
     active:
       - dev                     # 激活dev环境
 
+# 三个短横线分隔多个profile区（文档块）
 ---
 server:
   port: 8002
@@ -16,3 +15,10 @@ server:
   port: 8003
 spring:
   profiles: prod
+
+# profiles: default 表示未指定默认配置
+---
+server:
+  port: 8001
+spring:
+  profiles: default

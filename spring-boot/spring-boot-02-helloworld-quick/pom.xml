@@ -29,6 +29,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- Spring Boot 进行单元测试的模块 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -44,6 +45,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>

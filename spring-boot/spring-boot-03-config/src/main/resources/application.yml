@@ -2,7 +2,7 @@ server:
   port: 8001
   
 person:
-  last-name: hello
+  last-name: Jack
   age: 18
   boss: false
   birth: 2017/12/12

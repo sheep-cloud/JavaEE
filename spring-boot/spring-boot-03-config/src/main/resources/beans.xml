@@ -3,7 +3,7 @@
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="phone" class="cn.clog.bean.Phone">
+    <bean id="phone" class="cn.colg.bean.Phone">
         <property name="name" value="oppo" />
         <property name="color" value="green" />
         <property name="age" value="2" />
