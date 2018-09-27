@@ -2,9 +2,9 @@
 
 # spring-boot
 
-## 1. Spring Boot 入门
+## 1. SpringBoot 入门
 
-### 1.1. Sping Boot简介
+### 1.1. SpingBoot简介
 
 - 简化Spring应用开发的一个框架；
 - 整个Spring技术站的一个大集合；
@@ -403,7 +403,7 @@ friedns: {lastName: Jack, age: 20}
     dog: {name: 小狗, age: 3}
   ```
 
-- 	javaBean：
+	 	javaBean：
 
 ```java
 /**
@@ -1100,9 +1100,351 @@ https://docs.spring.io/spring-boot/docs/1.5.16.RELEASE/reference/htmlsingle/#com
 
   - **Spring Boot能自动适配所有的日志，而且底层使用slf4j+logback的方式记录日志，引入其他框架的时候，只需要把这个框架依赖的日志框架排除掉。**
 
-### 3.5. Spring Boot 日志默认配置
+### 3.5. SpringBoot 日志默认配置
 
-## 4. Spring Boot Web开发
+```java
+/**
+ * Spring Boot 日志默认配置 测试
+ *
+ * @author colg
+ */
+public class LoggingTest extends SpringBoot06LoggingApplicationTests {
+
+    /** 日志记录器 */
+    Logger logger = LoggerFactory.getLogger(LoggingTest.class);
+
+    @Test
+    public void loggerTest() {
+        /*
+         * colg  [日志级别]
+         *  由低到高: trace < debug < info < warn < error
+         *  可以调整输出的日志级别；日志就会只在这个级别以后的高级别生效
+         */
+        logger.trace("这是trace日志...");
+        logger.debug("这是debug日志...");
+        // Spring Boot 默认使用的是info级别的
+        logger.info("这是info日志...");
+        logger.warn("这是warn日志...");
+        logger.error("这是error日志...");
+    }
+```
+
+```yaml
+logging:
+  level:
+    cn.colg.logging: trace
+# 日志文件名：当前项目下生成springboot.log日志，也可以指定完整的路径
+#  file: springboot.log
+  file: D:/workspace-all/atguigu/Java-all/JavaEE/spring-boot/spring-boot-doc/springboot.log
+  
+# 日志文件的位置：当前磁盘的根路径下创建spirng文件夹和log文件夹；使用spring.log作为默认文件
+#  path: /spring/log
+  path: D:/workspace-all/atguigu/Java-all/JavaEE/spring-boot/spring-boot-doc/spring/log
+  
+# logging.file和logging.path同时指定时，以logging.file为准
+```
+
+| logging.file | logging.path | Example        | Description                        |
+| ------------ | ------------ | -------------- | ---------------------------------- |
+| (none)       | (none)       | 只在控制台输出 |                                    |
+| 指定文件名   | (none)       | my.log         | 输出日志到my.log文件               |
+| (none)       | 指定目录     | /var/log       | 输出到指定目录的 spring.log 文件中 |
+
+### 3.6. SpringBoot 日志指定配置
+
+给类路径下放上每个日志框架自己的日志文件即可；SpringBoot就不使用默认的配置了。
+
+- 自定义日志规则
+
+| Logging System          | Customization                                                |
+| ----------------------- | ------------------------------------------------------------ |
+| Logback                 | `logback-spring.xml`, `logback-spring.groovy`, `logback.xml` or `logback.groovy` |
+| Log4j2                  | `log4j2-spring.xml` or `log4j2.xml`                          |
+| JDK (Java Util Logging) | `logging.properties`                                         |
+
+		
+
+- Logback使用的日志文件
+
+  - logback.xml：直接就被日志框架识别了
+  - logback-spring.xml：日志框架就不直接加载日志的配置项，由SpringBoot解析日志配置，可以使用SpringBoot的高级Profile功能
+
+  ```xml
+  <!-- 可以指定某段配置只在某个环境下生效 -->
+  <springProfile name="staging">
+      <!-- configuration to be enabled when the "staging" profile is active -->
+  </springProfile>
+  
+  <springProfile name="dev, staging">
+      <!-- configuration to be enabled when the "dev" or "staging" profiles are active -->
+  </springProfile>
+  
+  <springProfile name="!production">
+      <!-- configuration to be enabled when the "production" profile is not active -->
+  </springProfile>
+  ```
+
+## 4. SpringBoot Web开发
+
+### 4.1. 使用SpringBoot
+
+- 创建SpringBoot应用，选中需要的模块
+- SpringBoot已经默认将这些场景配置好了，只需要在配置文件中指定少量配置就可以运行起来
+- 自己编写业务代码
+
+### 4.2. 自动配置原理
+
+- 这个场景SpringBoot帮我们配置了什么？能不能修改？能修改哪些配置？能不能扩展？xxx
+
+```ini
+WebMvcAutoConfiguration: 给容器中自动配置组件；
+WebMvcProperties: 配置类来封装配置文件的内容；
+```
+
+### 4.3. 静态资源映射规则
+
+```java
+@ConfigurationProperties(prefix = "spring.resources", ignoreUnknownFields = false)
+public class ResourceProperties implements ResourceLoaderAware, InitializingBean {
+    // 可以设置和资源有关的参数，缓存时间
+```
+
+```java
+		// 配置静态资源映射
+		@Override
+		public void addResourceHandlers(ResourceHandlerRegistry registry) {
+			if (!this.resourceProperties.isAddMappings()) {
+				logger.debug("Default resource handling disabled");
+				return;
+			}
+            // webjars 资源映射
+			Integer cachePeriod = this.resourceProperties.getCachePeriod();
+			if (!registry.hasMappingForPattern("/webjars/**")) {
+				customizeResourceHandlerRegistration(registry
+						.addResourceHandler("/webjars/**")
+						.addResourceLocations("classpath:/META-INF/resources/webjars/")
+						.setCachePeriod(cachePeriod));
+			}
+            // 自定义资源映射
+			String staticPathPattern = this.mvcProperties.getStaticPathPattern();
+			if (!registry.hasMappingForPattern(staticPathPattern)) {
+				customizeResourceHandlerRegistration(
+						registry.addResourceHandler(staticPathPattern)
+								.addResourceLocations(
+										this.resourceProperties.getStaticLocations())
+								.setCachePeriod(cachePeriod));
+			}
+		}
+
+		// 配置欢迎页映射
+		@Bean
+		public WelcomePageHandlerMapping welcomePageHandlerMapping(
+				ResourceProperties resourceProperties) {
+			return new WelcomePageHandlerMapping(resourceProperties.getWelcomePage(),
+					this.mvcProperties.getStaticPathPattern());
+		}
+
+		// 配置图标
+		@Configuration
+		@ConditionalOnProperty(value = "spring.mvc.favicon.enabled", matchIfMissing = true)
+		public static class FaviconConfiguration {
+
+			private final ResourceProperties resourceProperties;
+
+			public FaviconConfiguration(ResourceProperties resourceProperties) {
+				this.resourceProperties = resourceProperties;
+			}
+
+			@Bean
+			public SimpleUrlHandlerMapping faviconHandlerMapping() {
+				SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
+				mapping.setOrder(Ordered.HIGHEST_PRECEDENCE + 1);
+                // 所有 **/favicon.ico
+				mapping.setUrlMap(Collections.singletonMap("**/favicon.ico",
+						faviconRequestHandler()));
+				return mapping;
+			}
+
+			@Bean
+			public ResourceHttpRequestHandler faviconRequestHandler() {
+				ResourceHttpRequestHandler requestHandler = new ResourceHttpRequestHandler();
+				requestHandler
+						.setLocations(this.resourceProperties.getFaviconLocations());
+				return requestHandler;
+			}
+
+		}
+```
+
+```java
+	private String[] getStaticWelcomePageLocations() {
+		String[] result = new String[this.staticLocations.length];
+		for (int i = 0; i < result.length; i++) {
+			String location = this.staticLocations[i];
+			if (!location.endsWith("/")) {
+				location = location + "/";
+			}
+			result[i] = location + "index.html";
+		}
+		return result;
+	}
+```
+- `/webjars/**`，都去`classpath:/META-INF/resources/webjars/`找资源;
+
+  - webjars：以jar包的方式引入静态资源 https://www.webjars.org/
+
+  ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fvo6dep2wlj30ct06tt8m.jpg)
+
+  ```xml
+          <!-- 引入jquery-webjars -->
+          <dependency>
+              <groupId>org.webjars</groupId>
+              <artifactId>jquery</artifactId>
+              <version>3.3.1-1</version>
+          </dependency>
+  ```
+
+  ```ini
+  # 访问资源
+  http://localhost:8080/webjars/jquery/3.3.1-1/jquery.js
+  ```
+
+- `/**`，访问当前项目的任何资源，（静态资源的文件夹）
+
+  ```ini
+  "classpath:/META-INF/resources/",
+  "classpath:/resources/",
+  "classpath:/static/",
+  "classpath:/public/
+  "/": 当前项目的根路径
+  ```
+
+  ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fvo6tko8lsj30dh0cdgln.jpg)
+
+  ```ini
+  # 访问资源
+  http://localhost:8080/asserts/img/bootstrap-solid.svg
+  http://localhost:8080/asserts/css/bootstrap.min.css
+  http://localhost:8080/asserts/js/jquery-3.2.1.slim.min.js
+  ```
+
+- `index.html，欢迎页，静态资源文件夹下的所有index.html页面；被`/**`映射
+
+  ```ini
+  # 欢迎页，找index.html页面
+  http://localhost:8080/
+  ```
+
+  ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fvo739zs35j308t0300sl.jpg)
+
+- `**/favicon.ico`，图标都是在静态资源换文件下找
+
+  ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fvo7b5swk7j308u03r746.jpg)
+
+### 4.4. Thymeleaf  模版引擎
+
+#### 4.4.1. 整合Thymeleaf
+
+- 引入thymeleaf
+
+  ```xml
+          <!-- 覆盖 thymeleaf 版本号 --> 
+          <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
+          <!-- 布局功能的支持程序，thymeleaf3主程序适配layout2以上版本 -->
+          <thymeleaf-layout-dialect.version>2.3.0</thymeleaf-layout-dialect.version>        
+  		<!-- 引入thymeleaf，默认为2.16版本，推荐修改为3.x版本 -->
+          <dependency>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-starter-thymeleaf</artifactId>
+          </dependency>
+  ```
+
+#### 4.4.2. Thymeleaf使用&语法
+
+##### 4.4.2.1. Thymeleaf使用
+
+```java
+@ConfigurationProperties(prefix = "spring.thymeleaf")
+public class ThymeleafProperties {
+
+	private static final Charset DEFAULT_ENCODING = Charset.forName("UTF-8");
+
+	private static final MimeType DEFAULT_CONTENT_TYPE = MimeType.valueOf("text/html");
+
+	public static final String DEFAULT_PREFIX = "classpath:/templates/";
+
+	public static final String DEFAULT_SUFFIX = ".html";
+    // 只要把HTML页面放在classpath:/templates/，thymeleaf就能自动渲染；
+```
+
+只要把HTML页面放在`classpath:/templates/`，thymeleaf就能自动渲染
+
+```java
+/**
+ * ThymeleafController
+ *
+ * @author colg
+ */
+@Controller
+public class ThymeleafController {
+
+    @GetMapping("/success")
+    public String success() {
+        // classpath:/templates/success.html
+        return "success";
+    }
+}
+
+```
+
+![](http://ww1.sinaimg.cn/large/005PjuVtgy1fvo84g1hcij309l04bq2u.jpg)
+
+- 使用：
+
+  - 导入thymeleaf的名称空间
+
+    ```html
+    <html lang="en" xmlns:th="http://www.thymeleaf.org">
+    ```
+
+  - 使用thymeleaf语法
+
+    ```html
+    <!DOCTYPE html>
+    <html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+    <meta charset="UTF-8">
+    <title>success2</title>
+    </head>
+    <body>
+        <h1>Spring Boot Success2</h1>
+        <!-- th:text 将div里面的文本内容设置为 -->
+        <div th:text="${hello}">这是显示欢迎信息</div>
+    </body>
+    </html>
+    ```
+
+##### 4.4.2.2. Thymeleaf语法
+
+###### 4.2.2.2.1. 属性
+
+- th:任意html属性；替换原生属性的值
+
+###### 4.2.2.2.2.表达式
+
+- #{...}；国际化消息
+- ${...}；变量取值
+- *{...}；当前对象/变量取值
+- @{...}；url表达式
+- ~{...}；片段引用
+- 内置对象/共用对象
+
+###### 4.2.2.2.3. 判断/遍历
+
+- th:if
+- th:unless
+- th:each
+- th:switch、th:case
 
 ## 5. Docker
 

@@ -1,0 +1,17 @@
+2018-09-27 14:47:59.087  INFO 7376 --- [main] cn.colg.logging.LoggingTest              : Starting LoggingTest on Black-Cloud with PID 7376 (started by Black Cloud in D:\workspace-all\atguigu\Java-all\JavaEE\spring-boot\spring-boot-06-logging)
+2018-09-27 14:47:59.090 DEBUG 7376 --- [main] cn.colg.logging.LoggingTest              : Running with Spring Boot v1.5.16.RELEASE, Spring v4.3.19.RELEASE
+2018-09-27 14:47:59.090  INFO 7376 --- [main] cn.colg.logging.LoggingTest              : No active profile set, falling back to default profiles: default
+2018-09-27 14:47:59.129  INFO 7376 --- [main] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@1afdd473: startup date [Thu Sep 27 14:47:59 CST 2018]; root of context hierarchy
+2018-09-27 14:48:00.795  INFO 7376 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.web.context.support.GenericWebApplicationContext@1afdd473: startup date [Thu Sep 27 14:47:59 CST 2018]; root of context hierarchy
+2018-09-27 14:48:00.870  INFO 7376 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-09-27 14:48:00.872  INFO 7376 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-09-27 14:48:00.914  INFO 7376 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-09-27 14:48:00.914  INFO 7376 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-09-27 14:48:00.963  INFO 7376 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-09-27 14:48:01.270  INFO 7376 --- [main] cn.colg.logging.LoggingTest              : Started LoggingTest in 2.534 seconds (JVM running for 3.405)
+2018-09-27 14:48:01.328 TRACE 7376 --- [main] cn.colg.logging.LoggingTest              : 这是trace日志...
+2018-09-27 14:48:01.328 DEBUG 7376 --- [main] cn.colg.logging.LoggingTest              : 这是debug日志...
+2018-09-27 14:48:01.329  INFO 7376 --- [main] cn.colg.logging.LoggingTest              : 这是info日志...
+2018-09-27 14:48:01.329  WARN 7376 --- [main] cn.colg.logging.LoggingTest              : 这是warn日志...
+2018-09-27 14:48:01.331 ERROR 7376 --- [main] cn.colg.logging.LoggingTest              : 这是error日志...
+2018-09-27 14:48:01.360  INFO 7376 --- [Thread-2] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@1afdd473: startup date [Thu Sep 27 14:47:59 CST 2018]; root of context hierarchy

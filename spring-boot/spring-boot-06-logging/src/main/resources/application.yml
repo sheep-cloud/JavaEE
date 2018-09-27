@@ -1,0 +1,12 @@
+logging:
+  level:
+    cn.colg.logging: trace
+# 日志文件名：当前项目下生成springboot.log日志，也可以指定完整的路径
+#  file: springboot.log
+  file: D:/workspace-all/atguigu/Java-all/JavaEE/spring-boot/spring-boot-doc/springboot.log
+  
+# 日志文件的位置：当前磁盘的根路径下创建spirng文件夹和log文件夹；使用spring.log作为默认文件
+#  path: /spring/log
+  path: D:/workspace-all/atguigu/Java-all/JavaEE/spring-boot/spring-boot-doc/spring/log
+  
+# logging.file和logging.path同时指定时，以logging.file为准

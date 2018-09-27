@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.colg</groupId>
-    <artifactId>spring-boot-06-logging</artifactId>
+    <artifactId>spring-boot-07-web-restful-crud</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>spring-boot-06-logging</name>
-    <description>spring-boot-06-logging :: Spring Boot 日志</description>
+    <name>spring-boot-07-web-restful-crud</name>
+    <description>spring-boot-07-web-restful-crud :: Spring Boot web增删改查</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -21,9 +21,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <!-- 覆盖 thymeleaf 版本号 -->
+        <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
+        <!-- 布局功能的支持程序，thymeleaf3主程序适配layout2以上版本 -->
+        <thymeleaf-layout-dialect.version>2.3.0</thymeleaf-layout-dialect.version>
     </properties>
 
     <dependencies>
+        <!-- 引入web模块 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -34,6 +39,20 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        
+        <!-- 引入jquery-webjars -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.3.1-1</version>
+        </dependency>
+        
+        <!-- 引入thymeleaf，默认为2.16版本，推荐修改为3.x版本 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

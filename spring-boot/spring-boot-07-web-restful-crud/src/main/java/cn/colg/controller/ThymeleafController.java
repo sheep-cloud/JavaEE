@@ -1,0 +1,33 @@
+package cn.colg.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+/**
+ * ThymeleafController
+ *
+ * @author colg
+ */
+@Controller
+public class ThymeleafController {
+
+    @GetMapping("/success")
+    public String success() {
+        // classpath:/templates/success.html
+        return "success";
+    }
+    
+    /**
+     * 查出一些数据，在页面展示
+     *
+     * @param model
+     * @return
+     * @author colg
+     */
+    @GetMapping("/success2")
+    public String success2(Model model) {
+        model.addAttribute("hello", "thymeleaf");
+        return "success2";
+    }
+}
