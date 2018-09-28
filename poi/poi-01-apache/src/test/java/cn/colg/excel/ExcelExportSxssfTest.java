@@ -23,7 +23,7 @@ public class ExcelExportSxssfTest extends BaseTest{
     @Test
     public void testExportFile() throws Exception {
         // 导出文件存放的路径
-        String filePath = "E:/upload/file\\";
+        String filePath = "E:/upload/file/";
         // 导出文件的前缀
         String fileName = "ypxx_" + DateUtil.today();
         // -1表示关闭自动刷新，手动控制写磁盘的时机，其它数据表示多少数据在内存保存，超过的则写入磁盘
@@ -43,7 +43,7 @@ public class ExcelExportSxssfTest extends BaseTest{
         List<Ypxx> list = new ArrayList<Ypxx>();
         int size = 1000;
         for (int i = 0; i < size; i++) {
-            Ypxx ypxx = new Ypxx().setBm(NumberUtil.decimalFormat("0000", i))
+            Ypxx ypxx = new Ypxx().setBm(NumberUtil.decimalFormat("0000", i + 1))
                                   .setMc("青霉素-" + i)
                                   .setPrice(NumberUtil.roundStr(2.5f + i, 2))
                                   .setYpjybgyxq(DateUtil.offsetHour(new Date(), i));
