@@ -1,0 +1,9 @@
+server:
+  context-path: /crud
+spring:
+  messages:
+    basename: i18n.login
+  thymeleaf:
+    cache: false              # 禁用模版引擎缓存
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss

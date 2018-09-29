@@ -25,6 +25,7 @@
         <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
         <!-- 布局功能的支持程序，thymeleaf3主程序适配layout2以上版本 -->
         <thymeleaf-layout-dialect.version>2.3.0</thymeleaf-layout-dialect.version>
+        <hutool.version>4.1.14</hutool.version>
     </properties>
 
     <dependencies>
@@ -51,6 +52,16 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
         </dependency>
 
     </dependencies>

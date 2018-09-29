@@ -1,5 +1,7 @@
 package cn.colg.controller;
 
+import java.util.Arrays;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +29,8 @@ public class ThymeleafController {
      */
     @GetMapping("/success2")
     public String success2(Model model) {
-        model.addAttribute("hello", "thymeleaf");
+        model.addAttribute("hello", "<h1>thymeleaf</h1>");
+        model.addAttribute("users", Arrays.asList("Jack", "Rose", "汤姆"));
         return "success2";
     }
 }
