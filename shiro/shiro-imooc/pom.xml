@@ -6,6 +6,14 @@
     <packaging>pom</packaging>
     <name>shiro-imooc :: Shiro 安全框架入门</name>
 
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <skipTests>true</skipTests>
+        <mysql.version>5.1.47</mysql.version>
+        <druid.version>1.1.11</druid.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>cn.colg</groupId>
@@ -15,12 +23,12 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.46</version>
+            <version>${mysql.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>1.1.10</version>
+            <version>${druid.version}</version>
         </dependency>
     </dependencies>
 
