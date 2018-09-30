@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- 引入数据库资源文件 -->
+    <context:property-placeholder location="classpath:dbconfig.properties"/>
+
+    <!-- Spring 控制业务逻辑、数据源、事务、aop -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialSize" value="1"/>
+        <property name="minIdle" value="1"/>
+        <property name="maxActive" value="5"/>
+        <property name="maxWait" value="60000"/>
+        <!-- 验证数据库连接有效性 -->
+        <property name="validationQuery" value="${validationQuery}"/>
+    </bean>
+
+    <!-- Spring 事务管理 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!-- 开启基于注解的事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!-- Spring 整合 Mybatis -->
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 加载数据源 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 加载mybatis的全局配置文件 -->
+        <property name="configLocation" value="classpath:mybatis/mybatis.cfg.xml"/>
+        <!-- 加载mapper.xml文件 -->
+        <property name="mapperLocations">
+            <array>
+                <value>classpath:mybatis/mapper/*.xml</value>
+            </array>
+        </property>
+        <!-- 分页插件 -->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <value>params=value1</value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+
+    <!-- 配置Mapper包扫描器 -->
+    <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.colg.rbac.dao"/>
+    </bean>
+</beans>

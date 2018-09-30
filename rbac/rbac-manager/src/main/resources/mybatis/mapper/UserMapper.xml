@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.colg.rbac.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="cn.colg.rbac.entity.User">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="loginacct" jdbcType="VARCHAR" property="loginacct"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <delete id="delUsers">
+        DELETE FROM
+            user
+        WHERE id IN (
+            <foreach collection="ids" item="id" separator=",">
+                #{id}
+            </foreach>
+        )
+    </delete>
+
+    <insert id="insertUserRoles">
+        INSERT INTO
+            user_role (id, user_id, role_id)
+        VALUES
+            <foreach collection="unAssignRoleIds" item="roleId" separator=",">
+                ((REPLACE(UUID(), '-', '')), #{userId}, #{roleId})
+            </foreach>
+    </insert>
+
+    <delete id="deleteUserRoles">
+        DELETE FROM
+            user_role
+        WHERE
+            user_id = #{userId} AND role_id IN (
+            <foreach collection="assignRoleIds" item="roleId" separator=",">
+                #{roleId}
+            </foreach>
+        )
+    </delete>
+
+    <select id="selectRoleIdsByUserId" resultType="java.lang.String">
+        SELECT
+            ur.role_id
+        FROM
+            user_role ur
+        WHERE
+            ur.user_id = #{id}
+    </select>
+    
+</mapper>

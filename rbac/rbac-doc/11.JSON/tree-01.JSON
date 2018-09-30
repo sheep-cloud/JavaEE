@@ -1,0 +1,41 @@
+{
+  "code": 0,
+  "message": "success",
+  "total": 1,
+  "data": [
+    {
+      "createTime": "2018-07-27 03:48:56",
+      "icon": "",
+      "id": "ee7add86910c11e8bc4454ee75c6aeb0",
+      "name": "系统菜单",
+      "open": false,
+      "pid": "",
+      "updateTime": "2018-07-27 03:48:56",
+      "url": "",
+      "children": [
+        {
+          "createTime": "2018-07-27 03:49:28",
+          "icon": "",
+          "id": "01d78d33910d11e8bc4454ee75c6aeb0",
+          "name": "控制面板",
+          "open": false,
+          "pid": "ee7add86910c11e8bc4454ee75c6aeb0",
+          "updateTime": "2018-07-27 03:49:28",
+          "url": "",
+          "children": []
+        },
+        {
+          "createTime": "2018-07-27 03:49:28",
+          "icon": "",
+          "id": "01d79253910d11e8bc4454ee75c6aeb0",
+          "name": "权限管理",
+          "open": false,
+          "pid": "ee7add86910c11e8bc4454ee75c6aeb0",
+          "updateTime": "2018-07-27 03:49:28",
+          "url": "",
+          "children": []
+        }
+      ]
+    }
+  ]
+}

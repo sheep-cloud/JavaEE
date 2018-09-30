@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.colg.rbac.dao.PermissionMapper">
+    <resultMap id="BaseResultMap" type="cn.colg.rbac.entity.Permission">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="url" jdbcType="VARCHAR" property="url" />
+        <result column="pid" jdbcType="VARCHAR" property="pid" />
+        <result column="icon" jdbcType="VARCHAR" property="icon" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+
+    <select id="queryRootPermission" resultType="cn.colg.rbac.dto.PermissionDto">
+        SELECT p.*
+        FROM
+            permission p
+        WHERE
+            p.pid IS NULL
+    </select>
+
+    <select id="queryChildPermission" resultType="cn.colg.rbac.dto.PermissionDto">
+        SELECT p.*
+        FROM
+            permission p
+        WHERE
+            p.pid = #{pid}
+    </select>
+
+    <select id="queryAll" resultType="cn.colg.rbac.dto.PermissionDto">
+        SELECT p.*
+        FROM
+            permission p
+    </select>
+
+    <select id="queryPermissionIdsByRoleId" resultType="java.lang.String">
+        SELECT rp.permission_id
+        FROM
+            role_permission rp
+        WHERE
+            rp.role_id = #{roleId}
+    </select>
+
+    <select id="queryPermissionsByUser" resultType="cn.colg.rbac.dto.PermissionDto">
+        SELECT p.*
+        FROM
+            permission p
+        WHERE
+            p.id IN (
+                SELECT rp.permission_id
+                FROM
+                    role_permission rp
+                WHERE
+                    rp.role_id IN (
+                        SELECT ur.role_id
+                        FROM
+                            user_role ur
+                        WHERE
+                            ur.user_id = #{dbUser.id}
+                    )
+            )
+    </select>
+
+</mapper>
