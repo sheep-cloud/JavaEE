@@ -3,11 +3,9 @@ package cn.colg.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import cn.colg.component.LoginHandlerInterceptor;
 import cn.colg.component.MyLocaleResolver;
 
 /**
@@ -59,7 +57,7 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
      *
      * @param registry
      */
-    @Override
+/*    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // SpringBoot已经做好了静态资源映射，不需要再处理
         registry.addInterceptor(new LoginHandlerInterceptor())
@@ -67,5 +65,5 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
                 .addPathPatterns("/**")
                 // 不拦截的请求
                 .excludePathPatterns("/", "/index", "/index.html", "/user/login");
-    }
+    }*/
 }

@@ -2090,7 +2090,617 @@ server:
 
 ### 4.4.6. SprignBoot错误处理
 
+#### 4.4.6.1. SpringBoot默认的错误处理
 
+- 默认效果
+
+  - 返回一个默认的错误页面
+
+  ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fvrlzn9ly4j30kb066q2z.jpg)
+  ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fvrnog2j70j30ia03qmx2.jpg)
+
+  - 如果是其他客户端，默认响应一个json数据
+
+  ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fvrnldm1t5j30c606kq2u.jpg)
+  ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fvrnqhmbrqj30m105bglm.jpg)
+
+- 原理：参照`ErrorMvcAutoConfiguration`；错误处理的自动配置
+
+- 给容器中添加了以下组件
+
+    - `DefaultErrorAttributes`
+
+    - `BasicErrorController`：处理默认/error请求
+
+      ```java
+      @Controller
+      @RequestMapping("${server.error.path:${error.path:/error}}")
+      public class BasicErrorController extends AbstractErrorController {
+          
+          // 产生html类型的数据；浏览器发送的请求来到这个方法处理
+      	@RequestMapping(produces = "text/html")
+      	public ModelAndView errorHtml(HttpServletRequest request,
+      			HttpServletResponse response) {
+      		HttpStatus status = getStatus(request);
+      		Map<String, Object> model = Collections.unmodifiableMap(getErrorAttributes(
+      				request, isIncludeStackTrace(request, MediaType.TEXT_HTML)));
+      		response.setStatus(status.value());
+              // 去哪个页面作为错误页面；包含页面地址和页面内容
+      		ModelAndView modelAndView = resolveErrorView(request, response, status, model);
+      		return (modelAndView != null) ? modelAndView : new ModelAndView("error", model);
+      	}
+      
+          // 产生json数据；其他客户端来到这个方法处理
+      	@RequestMapping
+      	@ResponseBody
+      	public ResponseEntity<Map<String, Object>> error(HttpServletRequest request) {
+      		Map<String, Object> body = getErrorAttributes(request,
+      				isIncludeStackTrace(request, MediaType.ALL));
+      		HttpStatus status = getStatus(request);
+      		return new ResponseEntity<Map<String, Object>>(body, status);
+      	}
+      ```
+
+    - `ErrorPageCustomizer`
+
+      ```java
+      	@Value("${error.path:/error}")
+      	private String path = "/error"; // 系统出现错误以后来到error请求进行处理；web.xml
+      ```
+
+    - `DefaultErrorViewResolver`
+
+      ```java
+      	@Override
+      	public ModelAndView resolveErrorView(HttpServletRequest request, HttpStatus status,
+      			Map<String, Object> model) {
+      		ModelAndView modelAndView = resolve(String.valueOf(status), model);
+      		if (modelAndView == null && SERIES_VIEWS.containsKey(status.series())) {
+      			modelAndView = resolve(SERIES_VIEWS.get(status.series()), model);
+      		}
+      		return modelAndView;
+      	}
+      
+      	private ModelAndView resolve(String viewName, Map<String, Object> model) {
+              // 默认SpringBoot可以去找到一个页面 ? error/404
+      		String errorViewName = "error/" + viewName;
+              // 模版引擎可以解析这个页面地址就用模版引擎解析
+      		TemplateAvailabilityProvider provider = this.templateAvailabilityProviders
+      				.getProvider(errorViewName, this.applicationContext);
+      		if (provider != null) {
+                  // 模版引擎可以用的情况下返回到errorViewName指定的视图地址
+      			return new ModelAndView(errorViewName, model);
+      		}
+              // 模版引擎不可用，就在静态资源文件夹下找errorViewName对应的页面 error/404.html
+      		return resolveResource(errorViewName, model);
+      	}
+      ```
+
+  - 步骤：
+
+    - 一旦系统出现4xx或者5xx之类的错误；`ErrorPageCustomizer`就会生效（定制错误的响应规则）；就会来到/error请求；就会被`BasicErrorController`处理；
+    - 响应页面；去哪个页面是由`DefaultErrorViewResolver`解析得到
+
+    ```java
+    	protected ModelAndView resolveErrorView(HttpServletRequest request,
+    			HttpServletResponse response, HttpStatus status, Map<String, Object> model) {
+            // 所有的ErrorViewResolver得到ModelAndView
+    		for (ErrorViewResolver resolver : this.errorViewResolvers) {
+    			ModelAndView modelAndView = resolver.resolveErrorView(request, status, model);
+    			if (modelAndView != null) {
+    				return modelAndView;
+    			}
+    		}
+    		return null;
+    	}
+    ```
+
+- 如何定制错误响应：
+
+  - 如何定制错误页面
+
+    - 有模版引擎：error/状态码.html 【将错误页面明明为：错误状态码.html，放在模版引擎文件夹里面的error文件夹下】，发生此状态码的错误就会来到对应的页面；可以使用4xx和5xx作为错误页面的文件名来匹配这种类型的所有错误，精确优先；
+
+      - 页面能获取的信息
+
+      ```ini
+      timestamp:时间戳
+      status:状态码
+      error:错误提示
+      exception:异常对象
+      message:异常消息
+      path:请求路径
+      errors:JSR303数据校验的错误都在这里
+      ```
+
+    - 没有模版引擎（模版引擎找不到这个错误页面）：静态资源文件夹下找，不推荐；不能使用模版引擎的语法，也不能获取status等页面的信息
+
+    - 以上都没有错误页面，就是默认来到SpringBoot默认的错误提示页面
+
+  - 如何定制错误数据
+
+    - 自定义异常处理&返回定制json数据
+
+      ```java
+      @RestControllerAdvice
+      public class MyExceptionHandler {
+      
+          /**
+           * 1. 没有自适应效果，浏览器和客户端返回的都是json
+           *
+           * @param e
+           * @return
+           * @author colg
+           */
+          @ExceptionHandler(UserNotExistException.class)
+          public Dict handleException(Exception e) {
+              Dict dict = Dict.create()
+                              .set("code", "user.notexist")
+                              .set("message", e.getMessage());
+              return dict;
+          }
+      }
+      ```
+
+    - 自定义异常处理&转发到error进行自适应响应效果处理
+
+      ```java
+      /**
+       * 异常处理器2
+       *
+       * @author colg
+       */
+      @ControllerAdvice
+      public class MyExceptionHandler2 {
+      
+          /**
+           * 2. 转发到/error进行自定义响应效果处理
+           *
+           * @param e
+           * @return
+           * @author colg
+           */
+          @ExceptionHandler(UserNotExistException.class)
+          public String handleException(Exception e, HttpServletRequest request) {
+              Dict dict = Dict.create()
+                              .set("code", "user.notexist")
+                              .set("message", e.getMessage());
+              // 传入自己定义的错误状态码 4xx 5xx，否则就不会进入定制错误页面的解析流程
+              request.setAttribute("javax.servlet.error.status_code", HttpStatus.BAD_REQUEST.value());
+              // 转发到/error
+              return "forward:/error";
+          }
+      }
+      ```
+
+    - 自定义异常处理&将定制数据携带出去
+
+      - 出现错误以后，会来到/error请求，会被`BasicErrorController`处理，响应出去可以获取的数据是由`getErrorAttributes`得到的（是`AbstractErrorController`，`ErrorController`规定的方法）；
+
+      -  编写一个`ErrorController`的实现类，或者编写`AbstractErrorController`的子类，放在容器中
+
+      - 页面上能用的数据，或者是json返回能用的数据都是通过`errorAttributes.getErrorAttributes`得到
+
+        - 自定义`ErrorAttributes`
+
+          ```java
+          /**
+           * 给容器中加入自己定义的ErrorAttributes
+           *
+           * @author colg
+           */
+          @Component
+          public class MyErrorAttributes extends DefaultErrorAttributes{
+          
+              @Override
+              public Map<String, Object> getErrorAttributes(RequestAttributes requestAttributes, boolean includeStackTrace) {
+                  Map<String, Object> map = super.getErrorAttributes(requestAttributes, includeStackTrace);
+                  map.put("company", "colg");
+                  return map;
+              }
+          }
+          ```
+
+        - 最终的效果：响应是自适应的，可以通过定制`ErrorAttributes`改变需要返回的内容
+
+### 4.4.7. 配置嵌入式Servlet容器
+
+SpringBoot默认使用Tomcat作为嵌入式的Servlet；
+
+![](http://ww1.sinaimg.cn/large/005PjuVtgy1fw20cv8cb5j30cb06odfs.jpg)
+
+#### 4.4.7.1. 定制和修改Servlet容器的相关配置
+
+- 配置方式：修改和server有关的配置`ServerProperties`，也是`EmbeddedServletContainerCustomizer`
+
+  ```yaml
+  # 通用的servlet容器设置 server: xxx
+  server:
+    port: 8081
+    context-path: /servlet            # 项目访问路径
+  # Tomcat的设置
+    tomcat:
+      uri-encoding: UTF-8
+  ```
+
+- 编码方式：编写一个`EmbeddedServletContainerCustomizer`，嵌入式的Servlet容器的定制器；来修改Servlet容器的配置
+
+  ```java
+  /**
+   * 修改Servlet配置
+   *
+   * @author colg
+   */
+  @Configuration
+  public class MyServerConfig extends WebMvcConfigurerAdapter{
+  
+      /**
+       * 配置嵌入式的Servlet
+       *
+       * @return
+       * @author colg
+       */
+      @Bean
+      public EmbeddedServletContainerCustomizer embeddedServletContainerCustomizer() {
+          return new EmbeddedServletContainerCustomizer() {
+  
+              /**
+               * 定制嵌入式的Servlet容器相关的规则
+               *
+               * @param container
+               */
+              @Override
+              public void customize(ConfigurableEmbeddedServletContainer container) {
+                  container.setPort(8083);
+              }
+          };
+      }
+  }
+  ```
+
+#### 4.4.7.2. 注册Servlet三大组件（Servlet、Filter、Listener）
+
+由于SpringBoot默认是以jar包的方式启动嵌入式的Servlet容器，没有web.xml文件。
+
+注册三大组件用以下下方式：
+
+- Servlet
+
+  ```java
+  /**
+   * 标准Servlet
+   *
+   * @author colg
+   */
+  public class MyServlet extends HttpServlet{
+  
+      private static final long serialVersionUID = 1L;
+  
+      /**
+       * 处理get请求
+       *
+       * @param req
+       * @param resp
+       * @throws ServletException
+       * @throws IOException
+       */
+      @Override
+      protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+          doPost(req, resp);
+      }
+      
+      /**
+       * 处理post请求
+       *
+       * @param req
+       * @param resp
+       * @throws ServletException
+       * @throws IOException
+       */
+      @Override
+      protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+          resp.getWriter().println("Hello MyServlet");
+      }
+  }
+  ```
+
+  ```java
+      /**
+       * 注册Servlet
+       *
+       * @return
+       * @author colg
+       */
+      @Bean
+      public ServletRegistrationBean servletRegistrationBean() {
+          ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new MyServlet(), "/myServlet");
+          return servletRegistrationBean;
+      }
+  ```
+
+- Filter
+
+  ```java
+  /**
+   * 标准Filter
+   *
+   * @author colg
+   */
+  @Slf4j
+  public class MyFilter implements Filter {
+  
+      @Override
+      public void init(FilterConfig filterConfig) throws ServletException {}
+  
+      @Override
+      public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+          log.info("MyFilter 执行");
+          // 放行
+          chain.doFilter(request, response);
+      }
+  
+      @Override
+      public void destroy() {}
+  
+  }
+  ```
+
+  ```java
+      /**
+       * 注册Filter
+       *
+       * @return
+       * @author colg
+       */
+      @Bean
+      public FilterRegistrationBean filterRegistrationBean() {
+          FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+          filterRegistrationBean.setFilter(new MyFilter());
+          filterRegistrationBean.setUrlPatterns(Arrays.asList("/hello", "/myServlet"));
+          return filterRegistrationBean;
+      }
+  ```
+
+- Listener
+
+  ```java
+  /**
+   * 标准Listener
+   *
+   * @author colg
+   */
+  @Slf4j
+  public class MyListener implements ServletContextListener {
+  
+      @Override
+      public void contextInitialized(ServletContextEvent sce) {
+          log.info("contextInitialized... web应用启动");
+      }
+  
+      @Override
+      public void contextDestroyed(ServletContextEvent sce) {
+          log.info("contextDestroyed... web项目销毁");
+      }
+  
+  }
+  ```
+
+  ```java
+      /**
+       * 注册Listener
+       *
+       * @return
+       * @author colg
+       */
+      @Bean
+      public ServletListenerRegistrationBean<MyListener> servletListenerRegistrationBean() {
+          ServletListenerRegistrationBean<MyListener> servletListenerRegistrationBean = new ServletListenerRegistrationBean<>(new MyListener());
+          return servletListenerRegistrationBean;
+      }
+  ```
+
+#### 4.4.7.3. 替换为其他嵌入式Servlet容器
+
+![](http://ww1.sinaimg.cn/large/005PjuVtgy1fw21lo1azxj30j2051dfz.jpg)
+
+默认支持：
+
+- Tomcat（默认使用）
+
+  ```xml
+          <dependency>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-starter-web</artifactId>
+              <!-- 排除Tomcat容器 -->
+              <exclusions>
+                  <exclusion>
+                      <artifactId>spring-boot-starter-tomcat</artifactId>
+                      <groupId>org.springframework.boot</groupId>
+                  </exclusion>
+              </exclusions>
+          </dependency>
+  ```
+
+- Jetty
+
+  ```xml
+          <!-- 引入其他的Servlet容器：jetty -->
+          <dependency>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-starter-jetty</artifactId>
+          </dependency>
+  ```
+
+- Undertow
+
+  ```xml
+          <!-- 引入其他的Servlet容器：Undertow -->
+          <dependency>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-starter-undertow</artifactId>
+          </dependency>
+  ```
+
+#### 4.4.7.4. 嵌入式Servlet容器自动配置原理
+
+`EmbeddedServletContainerAutoConfiguration`：嵌入式的Servlet容器自动配置
+
+```java
+@AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)
+@Configuration
+@ConditionalOnWebApplication
+@Import(BeanPostProcessorsRegistrar.class)
+public class EmbeddedServletContainerAutoConfiguration {
+	/**
+	 * Nested configuration if Tomcat is being used.
+	 */
+	@Configuration
+    // 判断当前是否引入了Tomcat依赖
+	@ConditionalOnClass({ Servlet.class, Tomcat.class })
+    // 判断当前容器有没有用户自定义EmbeddedServletContainerFactory：嵌入式的Servlet容器工厂；作用：创建嵌入式的Servlet容器
+	@ConditionalOnMissingBean(value = EmbeddedServletContainerFactory.class, search = SearchStrategy.CURRENT)
+	public static class EmbeddedTomcat {
+
+		@Bean
+		public TomcatEmbeddedServletContainerFactory tomcatEmbeddedServletContainerFactory() {
+			return new TomcatEmbeddedServletContainerFactory();
+		}
+
+	}
+    
+	/**
+	 * Nested configuration if Jetty is being used.
+	 */
+	@Configuration
+    // 判断当前是否引入了Jetty依赖
+	@ConditionalOnClass({ Servlet.class, Server.class, Loader.class,
+			WebAppContext.class })
+	@ConditionalOnMissingBean(value = EmbeddedServletContainerFactory.class, search = SearchStrategy.CURRENT)
+	public static class EmbeddedJetty {
+
+		@Bean
+		public JettyEmbeddedServletContainerFactory jettyEmbeddedServletContainerFactory() {
+			return new JettyEmbeddedServletContainerFactory();
+		}
+
+	}
+
+	/**
+	 * Nested configuration if Undertow is being used.
+	 */
+	@Configuration
+    // 判断当前是否引入了Undertow依赖
+	@ConditionalOnClass({ Servlet.class, Undertow.class, SslClientAuthMode.class })
+	@ConditionalOnMissingBean(value = EmbeddedServletContainerFactory.class, search = SearchStrategy.CURRENT)
+	public static class EmbeddedUndertow {
+
+		@Bean
+		public UndertowEmbeddedServletContainerFactory undertowEmbeddedServletContainerFactory() {
+			return new UndertowEmbeddedServletContainerFactory();
+		}
+
+	}
+```
+
+- `EmbeddedServletContainerFactory`：嵌入式Servlet容器工厂
+
+  ```java
+  public interface EmbeddedServletContainerFactory {
+  
+      // 获取嵌入式的Servlet容器
+  	EmbeddedServletContainer getEmbeddedServletContainer(
+  			ServletContextInitializer... initializers);
+  
+  }
+  ```
+
+  ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fw2203v77pj30iz036wei.jpg)
+
+- EmbeddedServletContainer`：嵌入式的Servlet容器
+
+  ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fw220se3zej30hq02k3yg.jpg)
+
+- 以`TomcatEmbeddedServletContainerFactory`为例
+
+  ```java
+  	@Override
+  	public EmbeddedServletContainer getEmbeddedServletContainer(
+  			ServletContextInitializer... initializers) {
+          // 创建一个Tomcat
+  		Tomcat tomcat = new Tomcat();
+          // 配置Tomcat的基本环节
+  		File baseDir = (this.baseDirectory != null) ? this.baseDirectory
+  				: createTempDir("tomcat");
+  		tomcat.setBaseDir(baseDir.getAbsolutePath());
+  		Connector connector = new Connector(this.protocol);
+  		tomcat.getService().addConnector(connector);
+  		customizeConnector(connector);
+  		tomcat.setConnector(connector);
+  		tomcat.getHost().setAutoDeploy(false);
+  		configureEngine(tomcat.getEngine());
+  		for (Connector additionalConnector : this.additionalTomcatConnectors) {
+  			tomcat.getService().addConnector(additionalConnector);
+  		}
+  		prepareContext(tomcat.getHost(), initializers);
+          // 将配置好的Tomcat传入进入，返回一个侵入式的Servlet容器，并且启动Tomcat容器
+  		return getTomcatEmbeddedServletContainer(tomcat);
+  	}
+  ```
+
+#### 4.4.7.5. 嵌入式Servlet容器启动原理
+
+- SpringBoot应用启动run方法
+- refreshContext(context)：SpringBoot刷新IOC容器（创建IOC容器对象，并初始化容器，创建容器中的每一个组件）
+- refresh(context)：刷新刚才创建好的IOC容器
+- onRefresh()：web容器重写了onRefresh方法
+- webioc容器会创建嵌入式的Servlet容器
+- ......
+
+### 4.4.8. 配置外部servlet容器
+
+- 嵌入式Servlet容器：应用打成可执行的jar
+  - 优点：简单，便捷
+  - 缺点：默认不支持jsp，优化定制比较复杂（使用定制器【ServerProperties、自定义EmbeddedServletContainerCustomizer】，自己编写嵌入式Servlet容器的创建工厂）
+
+- 外置的Servlet容器：应用打成war包
+
+  - 必须创建一个war项目(注意目录结构)
+
+  - 将嵌入式的Tomcat指定为`provided`，不打包该依赖
+
+    ```xml
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-tomcat</artifactId>
+                <scope>provided</scope>
+            </dependency>
+    ```
+
+  - 必须编写一个`SpringBootServletInitializer`的子类，并调用configure方法
+
+    ```java
+    /**
+     * 
+     *
+     * @author colg
+     */
+    public class ServletInitializer extends SpringBootServletInitializer {
+    
+        @Override
+        protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+            // 传入SpringBoot应用的主程序
+            return application.sources(SpringBoot09WebJspApplication.class);
+        }
+    
+    }
+    ```
+
+  - 启动服务器就可以使用
+
+- 原理
+
+  - jar包：执行SpringBoot主类的main方法，启动ioc容器，创建嵌入式的Servlet容器
+  - war包：启动服务器，服务器启动SpringBoot应用`SpringBootServletInitializer`，启动ioc容器
 
 ## 5. Docker
 

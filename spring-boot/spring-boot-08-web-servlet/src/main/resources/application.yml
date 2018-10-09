@@ -1,0 +1,7 @@
+# 通用的servlet容器设置 server: xxx
+server:
+  port: 8081
+  context-path: /servlet            # 项目访问路径
+# Tomcat的设置
+  tomcat:
+    uri-encoding: UTF-8
