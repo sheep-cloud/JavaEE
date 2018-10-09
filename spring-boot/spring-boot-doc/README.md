@@ -2706,6 +2706,10 @@ public class EmbeddedServletContainerAutoConfiguration {
 
 ## 6. SpringBoot与数据访问
 
+### 6.1. JDBC
+
+
+
 ## 7. 自定义starter
 
 ## 8. 更多SpringBoot整合示例
