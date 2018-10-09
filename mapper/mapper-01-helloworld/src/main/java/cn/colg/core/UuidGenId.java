@@ -1,6 +1,6 @@
 package cn.colg.core;
 
-import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.IdUtil;
 import tk.mybatis.mapper.genid.GenId;
 
 /**
@@ -12,7 +12,7 @@ public class UuidGenId implements GenId<String> {
 
     @Override
     public String genId(String table, String column) {
-        return RandomUtil.simpleUUID();
+        return IdUtil.simpleUUID();
     }
 
 }
