@@ -1,4 +1,4 @@
-package cn.colg;
+package cn.colg.jdbc;
 
 import java.sql.Connection;
 
@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import cn.colg.SpringBoot10DataJdbcApplicationTests;
 import lombok.extern.slf4j.Slf4j;
 
 /**
