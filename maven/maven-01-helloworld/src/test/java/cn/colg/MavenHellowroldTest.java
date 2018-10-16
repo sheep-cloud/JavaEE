@@ -4,18 +4,18 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * HelloMaven 测试
+ * MavenHellowrold 测试
  *
  * @author colg
  */
-public class HelloMavenTest {
+public class MavenHellowroldTest {
 
     /**
-     * Test method for {@link cn.colg.HelloMaven#sayHello(java.lang.String)}.
+     * Test method for {@link cn.colg.MavenHellowrold#sayHello(java.lang.String)}.
      */
     @Test
     public void testSayHello() {
-        HelloMaven helloMaven = new HelloMaven();
+        MavenHellowrold helloMaven = new MavenHellowrold();
         String result = helloMaven.sayHello("maven");
         Assert.assertEquals("hello maven", result);
     }

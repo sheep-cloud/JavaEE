@@ -1,11 +1,11 @@
 package cn.colg;
 
 /**
- * HelloMaven
+ * MavenHellowrold
  *
  * @author colg
  */
-public class HelloMaven {
+public class MavenHellowrold {
 
     public String sayHello(String name) {
         return "hello " + name;

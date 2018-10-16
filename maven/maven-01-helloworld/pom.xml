@@ -5,13 +5,13 @@
     <!-- 组织名称：实际名称 按照访问路径规范设置，通常以功能作为名称 -->
     <groupId>cn.colg</groupId>
     <!-- 项目名称 -->
-    <artifactId>maven-01-hello</artifactId>
+    <artifactId>maven-01-helloworld</artifactId>
     <!-- 当前版本号：同一个项目开发过程中可以发布多个版本 -->
     <!-- 当前版本号：每个工程发布后可以发布多个版本，依赖时调用不同的版本，使用不同的版本号 -->
     <version>0.0.1-SNAPSHOT</version>
-    <name>maven-01-hello :: maven 初识</name>
+    <name>maven-01-helloworld :: maven 初识</name>
     
-    <!-- 依赖关系 -->
+	<!-- 依赖关系 -->
     <dependencies>
         <!-- 依赖设置 -->
         <dependency>
@@ -25,5 +25,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 </project>
