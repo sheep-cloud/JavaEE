@@ -22,7 +22,7 @@ public class StudentEntity extends BaseEntity {
     private String id;
 
     /** 学生姓名 */
-    @Excel(name = "学生姓名", height = 20, width = 30, isImportField = "true_st")
+    @Excel(name = "学生姓名", width = 30, isImportField = "true_st")
     private String name;
 
     /** 学生性别 */
@@ -34,7 +34,7 @@ public class StudentEntity extends BaseEntity {
     private Date birthday;
 
     /** 进校日期 */
-    @Excel(name = "进校日期", databaseFormat = "yyyyMMddHHmmss", format = "yyyy-MM-dd")
+    @Excel(name = "进校日期", databaseFormat = "yyyyMMddHHmmss", format = "yyyy-MM-dd HH:mm:ss", width = 20)
     private Date registrationDate;
 
 }

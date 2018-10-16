@@ -18,7 +18,7 @@ import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import cn.colg.BaseTest;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.Console;
-import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.IdUtil;
 
 /**
  * 公司测试 - 导出（集合）
@@ -38,7 +38,7 @@ public class CompanyHasImgModelTest extends BaseTest{
         List<CompanyHasImgModel> list = new ArrayList<>();
         int size = 10;
         for (int i = 0; i < size; i++) {
-            CompanyHasImgModel companyHasImgModel = new CompanyHasImgModel().setCompanyId(RandomUtil.simpleUUID())
+            CompanyHasImgModel companyHasImgModel = new CompanyHasImgModel().setCompanyId(IdUtil.simpleUUID())
                                                                             .setCompanyName("百度-" + i)
                                                                             .setCompanyLogo("E:\\upload\\file\\vue.jpg")
                                                                             .setCompanyAddress("天河-" + i);

@@ -11,16 +11,19 @@ import java.util.Map;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Test;
 
+import com.alibaba.fastjson.JSON;
+
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import cn.colg.BaseTest;
+import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.Console;
-import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.IdUtil;
 
 /**
  * 学生测试 - 基本
@@ -38,22 +41,22 @@ public class StudentEntityTest extends BaseTest {
     @Test
     public void test01() throws Exception {
         List<StudentEntity> list = new ArrayList<>();
-        int size = 100;
-        for (int i = 0; i < size; i++) {
-            StudentEntity studentEntity = new StudentEntity().setId(RandomUtil.simpleUUID())
+        for (int i = 0, size = 100; i < size; i++) {
+            StudentEntity studentEntity = new StudentEntity().setId(IdUtil.simpleUUID())
                                                              .setName("Jack-" + i)
                                                              .setSex(i % 2 == 0 ? 1 : 2)
-                                                             .setBirthday(DateUtil.offsetHour(new Date(), -i))
-                                                             .setRegistrationDate(DateUtil.offsetMinute(new Date(), 1));
+                                                             .setBirthday(DateUtil.offset(new Date(), DateField.YEAR, -i))
+                                                             .setRegistrationDate(DateUtil.offsetMinute(new Date(), i));
             list.add(studentEntity);
         }
         
         ExportParams entity = new ExportParams("计算机一班学生", "学生");
+        entity.setHeight((short)20);
         Workbook workbook = ExcelExportUtil.exportExcel(entity, StudentEntity.class, list);
         
-        String file = "E:\\upload\\file\\计算机";
+        String filePath = "E:\\upload\\file\\计算机";
         String suffix = entity.getType().equals(ExcelType.HSSF) ? ".xls" : ".xlsx";
-        OutputStream out = new FileOutputStream(file + suffix);
+        OutputStream out = new FileOutputStream(filePath + suffix);
         workbook.write(out);
         IoUtil.close(out);
     }
@@ -68,7 +71,9 @@ public class StudentEntityTest extends BaseTest {
     public void test02() throws Exception {
         ImportParams params = new ImportParams();
         params.setTitleRows(1);
-        List<StudentEntity> list = ExcelImportUtil.importExcel(new File("E:\\upload\\file\\计算机.xls"), StudentEntity.class, params);
+        File file = new File("E:\\upload\\file\\计算机.xls");
+        List<StudentEntity> list = ExcelImportUtil.importExcel(file, StudentEntity.class, params);
+        Console.log(list.size());
         list.forEach(Console::log);
     }
     
@@ -82,9 +87,10 @@ public class StudentEntityTest extends BaseTest {
     public void test03() throws Exception {
         ImportParams params = new ImportParams();
         params.setTitleRows(1);
-        List<Map<String, Object>> list = ExcelImportUtil.importExcel(new File("E:\\upload\\file\\计算机.xls"), Map.class, params);
+        File file = new File("E:\\upload\\file\\计算机.xls");
+        List<Map<String, Object>> list = ExcelImportUtil.importExcel(file, Map.class, params);
         Console.log(list.size());
-        list.forEach(Console::log);
+        list.forEach(e -> Console.log(JSON.toJSONString(e)));
     }
 
 }

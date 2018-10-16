@@ -19,7 +19,7 @@ import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.Console;
-import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.IdUtil;
 
 /**
  * 课程测试 - 导出
@@ -39,7 +39,7 @@ public class CourseEntityTest {
         List<StudentEntity> studentlist1 = new ArrayList<>();
         int size = 10;
         for (int i = 0; i < size; i++) {
-            StudentEntity studentEntity = new StudentEntity().setId(RandomUtil.simpleUUID())
+            StudentEntity studentEntity = new StudentEntity().setId(IdUtil.simpleUUID())
                                                              .setName("Jack-" + i)
                                                              .setSex(i % 2 == 0 ? 1 : 2)
                                                              .setBirthday(DateUtil.offsetHour(new Date(), -i))
@@ -48,7 +48,7 @@ public class CourseEntityTest {
         }
         List<StudentEntity> studentlist2 = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            StudentEntity studentEntity = new StudentEntity().setId(RandomUtil.simpleUUID())
+            StudentEntity studentEntity = new StudentEntity().setId(IdUtil.simpleUUID())
                                                              .setName("Rose-" + i)
                                                              .setSex(i % 2 == 0 ? 1 : 2)
                                                              .setBirthday(DateUtil.offsetHour(new Date(), -i))
@@ -57,10 +57,10 @@ public class CourseEntityTest {
         }
         
         List<CourseEntity> list = new ArrayList<>();
-        CourseEntity courseEntity1 = new CourseEntity(RandomUtil.simpleUUID(), "语文", studentlist1)
-                                                    .setMathTeacher(new TeacherEntity(RandomUtil.simpleUUID(), "Jack"));
-        CourseEntity courseEntity2 = new CourseEntity(RandomUtil.simpleUUID(), "数学", studentlist2)
-                                                    .setMathTeacher(new TeacherEntity(RandomUtil.simpleUUID(), "Rose"));
+        CourseEntity courseEntity1 = new CourseEntity(IdUtil.simpleUUID(), "语文", studentlist1)
+                                                    .setMathTeacher(new TeacherEntity(IdUtil.simpleUUID(), "Jack"));
+        CourseEntity courseEntity2 = new CourseEntity(IdUtil.simpleUUID(), "数学", studentlist2)
+                                                    .setMathTeacher(new TeacherEntity(IdUtil.simpleUUID(), "Rose"));
         list.add(courseEntity1);
         list.add(courseEntity2);
         
