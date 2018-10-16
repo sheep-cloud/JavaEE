@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- 版本：4.0.0 -->
+    <modelVersion>4.0.0</modelVersion>
+    <!-- 组织名称：暂时使用 组织名称+项目项目名称 -->
+    <!-- 组织名称：实际名称 按照访问路径规范设置，通常以功能作为名称 -->
+    <groupId>cn.colg</groupId>
+    <!-- 项目名称 -->
+    <artifactId>maven-01-hello</artifactId>
+    <!-- 当前版本号：同一个项目开发过程中可以发布多个版本 -->
+    <!-- 当前版本号：每个工程发布后可以发布多个版本，依赖时调用不同的版本，使用不同的版本号 -->
+    <version>0.0.1-SNAPSHOT</version>
+    <name>maven-01-hello :: maven 初识</name>
+    
+    <!-- 依赖关系 -->
+    <dependencies>
+        <!-- 依赖设置 -->
+        <dependency>
+            <!-- 依赖组织名称 -->
+            <groupId>junit</groupId>
+            <!-- 依赖项目名称 -->
+            <artifactId>junit</artifactId>
+            <!-- 依赖版本号 -->
+            <version>4.12</version>
+            <!-- 依赖范围：test包下依赖该设置 -->
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>
