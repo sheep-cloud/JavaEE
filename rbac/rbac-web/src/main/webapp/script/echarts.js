@@ -174,7 +174,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var PRIORITY_VISUAL_GLOBAL = 2000;
 	    var PRIORITY_VISUAL_CHART = 3000;
 	    var PRIORITY_VISUAL_COMPONENT = 4000;
-	    // FIXME
+	    // FIXME1-1
 	    // necessary?
 	    var PRIORITY_VISUAL_BRUSH = 5000;
 
@@ -390,7 +390,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            ecModel.init(null, null, theme, optionManager);
 	        }
 
-	        // FIXME
+	        // FIXME1-1
 	        // ugly
 	        this.__lastOnlyGraphic = !!(option && option.graphic);
 	        zrUtil.each(option, function (o, mainType) {
@@ -784,10 +784,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return;
 	            }
 
-	            // Fixme First time update ?
+	            // FIXME1-1 First time update ?
 	            ecModel.restoreData();
 
-	            // TODO
+	            // TODO1-1
 	            // Save total ecModel here for undo/redo (after restoring data and before processing data).
 	            // Undo (restoration of total ecModel) can be carried out in 'action' or outside API call.
 
@@ -809,7 +809,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var backgroundColor = ecModel.get('backgroundColor') || 'transparent';
 
 	            var painter = zr.painter;
-	            // TODO all use clearColor ?
+	            // TODO1-1 all use clearColor ?
 	            if (painter.isSingleCanvas && painter.isSingleCanvas()) {
 	                zr.configLayer(0, {
 	                    clearColor: backgroundColor
@@ -826,7 +826,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	                if (backgroundColor.colorStops || backgroundColor.image) {
 	                    // Gradient background
-	                    // FIXME Fixed layer？
+	                    // FIXME1-1 Fixed layer？
 	                    zr.configLayer(0, {
 	                        clearColor: backgroundColor
 	                    });
@@ -923,7 +923,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            prepareView.call(this, 'chart', ecModel);
 
-	            // FIXME
+	            // FIXME1-1
 	            // ugly
 	            if (this.__lastOnlyGraphic) {
 	                each(this._componentsViews, function (componentView) {
@@ -1148,7 +1148,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (updateMethod !== 'none' && !isHighDown && !cptType) {
 	            // Still dirty
 	            if (this[OPTION_UPDATED]) {
-	                // FIXME Pass payload ?
+	                // FIXME1-1 Pass payload ?
 	                updateMethods.prepareAndUpdate.call(this, payload);
 	                this[OPTION_UPDATED] = false;
 	            }
@@ -1527,7 +1527,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var needProgressive = elCount > seriesModel.get('progressiveThreshold') && frameDrawNum && !env.node;
 	        if (needProgressive) {
 	            chartView.group.traverse(function (el) {
-	                // FIXME marker and other components
+	                // FIXME1-1 marker and other components
 	                if (!el.isGroup) {
 	                    el.progressive = needProgressive ?
 	                        Math.floor(elCount++ / frameDrawNum) : -1;
@@ -1546,7 +1546,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        }
 	        chartView.group.traverse(function (el) {
-	            // FIXME marker and other components
+	            // FIXME1-1 marker and other components
 	            if (!el.isGroup) {
 	                el.setStyle('blend', blendMode);
 	            }
@@ -2156,7 +2156,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        var weChat = (/micromessenger/i).test(ua);
 
-	        // Todo: clean this up with a better OS/browser seperation:
+	        // TODO1-1: clean this up with a better OS/browser seperation:
 	        // - discern (more) between multiple browsers on android
 	        // - decide if kindle fire in silk mode is android or not
 	        // - Firefox on Android doesn't specify the Android version
@@ -2383,7 +2383,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            });
 
-	            // FIXME OPTION 同步是否要改回原来的
+	            // FIXME1-1 OPTION 同步是否要改回原来的
 	            ComponentModel.topologicalTravel(
 	                newCptTypes, ComponentModel.getAllClassMainTypes(), visitComponent, this
 	            );
@@ -2869,7 +2869,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        mergeTheme(baseOption, this._theme.option);
 
-	        // TODO Needs clone when merging to the unexisted property
+	        // TODO1-1 Needs clone when merging to the unexisted property
 	        zrUtil.merge(baseOption, globalDefault, false);
 
 	        this.mergeOption(baseOption);
@@ -3126,7 +3126,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function createCanvas() {
 	        return document.createElement('canvas');
 	    }
-	    // FIXME
+	    // FIXME1-1
 	    var _ctx;
 	    function getContext() {
 	        if (!_ctx) {
@@ -4809,7 +4809,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var textLineLen = ((text || '') + '').split('\n').length;
 
 	        var width = getTextWidth(text, textFont);
-	        // FIXME 高度计算比较粗暴
+	        // FIXME1-1 高度计算比较粗暴
 	        var lineHeight = getTextWidth('国', textFont);
 	        var height = textLineLen * lineHeight;
 
@@ -4829,7 +4829,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // case 'top':
 	        }
 
-	        // FIXME Right to left language
+	        // FIXME1-1 Right to left language
 	        switch (textAlign) {
 	            case 'end':
 	            case 'right':
@@ -4960,10 +4960,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        ellipsis = retrieve(ellipsis, '...');
 	        var maxIterations = retrieve(options.maxIterations, 2);
 	        var minChar = retrieve(options.minChar, 0);
-	        // FIXME
+	        // FIXME1-1
 	        // Other languages?
 	        var cnCharWidth = getTextWidth('国', textFont);
-	        // FIXME
+	        // FIXME1-1
 	        // Consider proportional font?
 	        var ascCharWidth = getTextWidth('a', textFont);
 	        var placeholder = retrieve(options.placeholder, '');
@@ -6158,7 +6158,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {string|Array.<string>} properties
 	     */
 	    clazz.setReadOnly = function (obj, properties) {
-	        // FIXME It seems broken in IE8 simulation of IE11
+	        // FIXME1-1 It seems broken in IE8 simulation of IE11
 	        // if (!zrUtil.isArray(properties)) {
 	        //     properties = properties != null ? [properties] : [];
 	        // }
@@ -6219,8 +6219,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// TODO Parse shadow style
-	// TODO Only shallow path support
+	// TODO1-1 Parse shadow style
+	// TODO1-1 Only shallow path support
 
 	    var zrUtil = __webpack_require__(4);
 
@@ -6300,7 +6300,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var ecModel = this.ecModel;
 	            var gTextStyleModel = ecModel && ecModel.getModel('textStyle');
 	            return [
-	                // FIXME in node-canvas fontWeight is before fontStyle
+	                // FIXME1-1 in node-canvas fontWeight is before fontStyle
 	                this.getShallow('fontStyle') || getShallow(gTextStyleModel, 'fontStyle'),
 	                this.getShallow('fontWeight') || getShallow(gTextStyleModel, 'fontWeight'),
 	                (this.getShallow('fontSize') || getShallow(gTextStyleModel, 'fontSize') || 12) + 'px',
@@ -7407,7 +7407,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        update: function (ecModel, api) {
 	            zrUtil.each(this._coordinateSystems, function (coordSys) {
-	                // FIXME MUST have
+	                // FIXME1-1 MUST have
 	                coordSys.update && coordSys.update(ecModel, api);
 	            });
 	        },
@@ -7575,7 +7575,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        setOption: function (rawOption, optionPreprocessorFuncs) {
 	            rawOption = clone(rawOption, true);
 
-	            // FIXME
+	            // FIXME1-1
 	            // 如果 timeline options 或者 media 中设置了某个属性，而baseOption中没有设置，则进行警告。
 
 	            var oldOptionBackup = this._optionBackup;
@@ -7614,7 +7614,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        mountOption: function (isRecreate) {
 	            var optionBackup = this._optionBackup;
 
-	            // TODO
+	            // TODO1-1
 	            // 如果没有reset功能则不clone。
 
 	            this._timelineOptions = map(optionBackup.timelineOptions, clone);
@@ -7679,7 +7679,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }
 
-	            // FIXME
+	            // FIXME1-1
 	            // 是否mediaDefault应该强制用户设置，否则可能修改不能回归。
 	            if (!indices.length && mediaDefault) {
 	                indices = [-1];
@@ -7972,7 +7972,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            zrUtil.merge(option, this.getDefaultOption());
 
 	            // Default label emphasis `position` and `show`
-	            // FIXME Set label in mergeOption
+	            // FIXME1-1 Set label in mergeOption
 	            modelUtil.defaultEmphasis(option.label, modelUtil.LABEL_OPTIONS);
 
 	            this.fillDataTextStyle(option.data);
@@ -7992,7 +7992,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 
 	            var data = this.getInitialData(newSeriesOption, ecModel);
-	            // TODO Merge data?
+	            // TODO1-1 Merge data?
 	            if (data) {
 	                set(this, 'data', data);
 	                set(this, 'dataBeforeProcessed', data.cloneShallow());
@@ -8001,8 +8001,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        fillDataTextStyle: function (data) {
 	            // Default data label emphasis `position` and `show`
-	            // FIXME Tree structure data ?
-	            // FIXME Performance ?
+	            // FIXME1-1 Tree structure data ?
+	            // FIXME1-1 Performance ?
 	            if (data) {
 	                for (var i = 0; i < data.length; i++) {
 	                    if (data[i] && data[i].label) {
@@ -8079,7 +8079,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return coordSys && coordSys.getBaseAxis && coordSys.getBaseAxis();
 	        },
 
-	        // FIXME
+	        // FIXME1-1
 	        /**
 	         * Default tooltip formatter
 	         *
@@ -8130,7 +8130,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                + 'border-radius:10px;width:9px;height:9px;background-color:' + encodeHTML(color) + '"></span>';
 
 	            var seriesName = this.name;
-	            // FIXME
+	            // FIXME1-1
 	            if (seriesName === '\0-') {
 	                // Not show '-'
 	                seriesName = '';
@@ -8534,7 +8534,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * @return {module:zrender/core/BoundingRect}
 	         */
 	        getBoundingRect: function (includeChildren) {
-	            // TODO Caching
+	            // TODO1-1 Caching
 	            var rect = null;
 	            var tmpRect = new BoundingRect(0, 0, 0, 0);
 	            var children = includeChildren || this._children;
@@ -8548,7 +8548,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	                var childRect = child.getBoundingRect();
 	                var transform = child.getLocalTransform(tmpMat);
-	                // TODO
+	                // TODO1-1
 	                // The boundingRect cacluated by transforming original
 	                // rect may be bigger than the actual bundingRect when rotation
 	                // is used. (Consider a circle rotated aginst its center, where
@@ -9526,7 +9526,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                el.dirty(animatingShape);
 	            })
 	            .done(function () {
-	                // FIXME Animator will not be removed if use `Animator#stop` to stop animation
+	                // FIXME1-1 Animator will not be removed if use `Animator#stop` to stop animation
 	                animators.splice(util.indexOf(animators, animator), 1);
 	            });
 
@@ -9579,7 +9579,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *      position: [10, 10]
 	         *  }, 100, 100, 'cubicOut', function () { // done })
 	         */
-	         // TODO Return animation key
+	         // TODO1-1 Return animation key
 	        animateTo: function (target, time, delay, easing, callback) {
 	            // animateTo(target, time, easing, callback);
 	            if (isString(delay)) {
@@ -9686,7 +9686,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	                else if (target[name] != null) {
 	                    // Attr directly if not has property
-	                    // FIXME, if some property not needed for element ?
+	                    // FIXME1-1, if some property not needed for element ?
 	                    if (!path) {
 	                        this.attr(name, target[name]);
 	                    }
@@ -9788,7 +9788,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var arr0Len = arr0.length;
 	        var arr1Len = arr1.length;
 	        if (arr0Len !== arr1Len) {
-	            // FIXME Not work for TypedArray
+	            // FIXME1-1 Not work for TypedArray
 	            var isPreviousLarger = arr0Len > arr1Len;
 	            if (isPreviousLarger) {
 	                // Cut the previous
@@ -10382,7 +10382,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @config ondestroy(optional)
 	 * @config onrestart(optional)
 	 *
-	 * TODO pause
+	 * TODO1-1 pause
 	 */
 
 
@@ -11035,7 +11035,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // #abc and #abc123 syntax.
 	        if (str.charAt(0) === '#') {
 	            if (str.length === 4) {
-	                var iv = parseInt(str.substr(1), 16);  // TODO(deanm): Stricter parsing.
+	                var iv = parseInt(str.substr(1), 16);  // TODO1-1(deanm): Stricter parsing.
 	                if (!(iv >= 0 && iv <= 0xfff)) {
 	                    setRgba(rgbaArr, 0, 0, 0, 1);
 	                    return;  // Covers NaN.
@@ -11050,7 +11050,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return rgbaArr;
 	            }
 	            else if (str.length === 7) {
-	                var iv = parseInt(str.substr(1), 16);  // TODO(deanm): Stricter parsing.
+	                var iv = parseInt(str.substr(1), 16);  // TODO1-1(deanm): Stricter parsing.
 	                if (!(iv >= 0 && iv <= 0xffffff)) {
 	                    setRgba(rgbaArr, 0, 0, 0, 1);
 	                    return;  // Covers NaN.
@@ -12731,7 +12731,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return path;
 	    }
 
-	    // TODO Optimize double memory cost problem
+	    // TODO1-1 Optimize double memory cost problem
 	    function createPathOptions(str, opts) {
 	        var pathProxy = createPathProxyFromString(str);
 	        opts = opts || {};
@@ -12781,9 +12781,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        /**
 	         * Merge multiple paths
 	         */
-	        // TODO Apply transform
-	        // TODO stroke dash
-	        // TODO Optimize double memory cost problem
+	        // TODO1-1 Apply transform
+	        // TODO1-1 stroke dash
+	        // TODO1-1 Optimize double memory cost problem
 	        mergePath: function (pathEls, opts) {
 	            var pathList = [];
 	            var len = pathEls.length;
@@ -13001,7 +13001,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var rectWithStroke = this._rectWithStroke || (this._rectWithStroke = rect.clone());
 	                if (this.__dirty || needsUpdateRect) {
 	                    rectWithStroke.copy(rect);
-	                    // FIXME Must after updateTransform
+	                    // FIXME1-1 Must after updateTransform
 	                    var w = style.lineWidth;
 	                    // PENDING, Min line width is needed when line is horizontal or vertical
 	                    var lineScale = style.strokeNoScale ? this.getLineScale() : 1;
@@ -13092,7 +13092,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        // Overwrite attrKV
 	        attrKV: function (key, value) {
-	            // FIXME
+	            // FIXME1-1
 	            if (key === 'shape') {
 	                this.setShape(value);
 	                this.__dirtyPath = true;
@@ -13177,7 +13177,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        zrUtil.inherits(Sub, Path);
 
-	        // FIXME 不能 extend position, rotation 等引用对象
+	        // FIXME1-1 不能 extend position, rotation 等引用对象
 	        for (var name in defaults) {
 	            // Extending prototype values and methods
 	            if (name !== 'style' && name !== 'shape') {
@@ -13243,7 +13243,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // Shapes for cascade clipping.
 	        this.__clipPaths = [];
 
-	        // FIXME Stateful must be mixined after style is setted
+	        // FIXME1-1 Stateful must be mixined after style is setted
 	        // Stateful.call(this, opts);
 	    }
 
@@ -13411,7 +13411,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * If displayable object binded any event
 	         * @return {boolean}
 	         */
-	        // TODO, 通过 bind 绑定的事件
+	        // TODO1-1, 通过 bind 绑定的事件
 	        // isSilent: function () {
 	        //     return !(
 	        //         this.hoverable || this.draggable
@@ -13683,7 +13683,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var styleName = prop[0];
 
 	                if (firstDraw || style[styleName] !== prevStyle[styleName]) {
-	                    // FIXME Invalid property value will cause style leak from previous element.
+	                    // FIXME1-1 Invalid property value will cause style leak from previous element.
 	                    ctx[styleName] = style[styleName] || prop[1];
 	                }
 	            }
@@ -13835,7 +13835,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return;
 	            }
 
-	            // FIXME
+	            // FIXME1-1
 	            ctx.save();
 
 	            var x;
@@ -13912,7 +13912,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            textFill && (ctx.fillStyle = textFill);
 	            textStroke && (ctx.strokeStyle = textStroke);
 
-	            // TODO Invalid font
+	            // TODO1-1 Invalid font
 	            ctx.font = font || '12px sans-serif';
 
 	            // Text shadow
@@ -13957,7 +13957,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @author Yi Shen (http://www.github.com/pissang)
 	 */
 
-	 // TODO getTotalLength, getPointAtLength
+	 // TODO1-1 getTotalLength, getPointAtLength
 
 
 	    var curve = __webpack_require__(51);
@@ -14189,7 +14189,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return this;
 	        },
 
-	        // TODO
+	        // TODO1-1
 	        arcTo: function (x1, y1, x2, y2, radius) {
 	            if (this._ctx) {
 	                this._ctx.arcTo(x1, y1, x2, y2, radius);
@@ -14197,7 +14197,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return this;
 	        },
 
-	        // TODO
+	        // TODO1-1
 	        rect: function (x, y, w, h) {
 	            this._ctx && this._ctx.rect(x, y, w, h);
 	            this.addData(CMD.R, x, y, w, h);
@@ -14573,14 +14573,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        yi = data[i++];
 	                        break;
 	                    case CMD.A:
-	                        // TODO Arc 判断的开销比较大
+	                        // TODO1-1 Arc 判断的开销比较大
 	                        var cx = data[i++];
 	                        var cy = data[i++];
 	                        var rx = data[i++];
 	                        var ry = data[i++];
 	                        var startAngle = data[i++];
 	                        var endAngle = data[i++] + startAngle;
-	                        // TODO Arc 旋转
+	                        // TODO1-1 Arc 旋转
 	                        var psi = data[i++];
 	                        var anticlockwise = 1 - data[i++];
 
@@ -15666,7 +15666,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }
 
-	    // TODO
+	    // TODO1-1
 	    // Arc 旋转
 	    function windingArc(
 	        cx, cy, r, startAngle, endAngle, anticlockwise, x, y
@@ -15825,14 +15825,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    yi = data[i++];
 	                    break;
 	                case CMD.A:
-	                    // TODO Arc 判断的开销比较大
+	                    // TODO1-1 Arc 判断的开销比较大
 	                    var cx = data[i++];
 	                    var cy = data[i++];
 	                    var rx = data[i++];
 	                    var ry = data[i++];
 	                    var theta = data[i++];
 	                    var dTheta = data[i++];
-	                    // TODO Arc 旋转
+	                    // TODO1-1 Arc 旋转
 	                    var psi = data[i++];
 	                    var anticlockwise = 1 - data[i++];
 	                    var x1 = Math.cos(theta) * rx + cx;
@@ -15882,7 +15882,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        }
 	                    }
 	                    else {
-	                        // FIXME Clockwise ?
+	                        // FIXME1-1 Clockwise ?
 	                        w += windingLine(x1, y0, x1, y1, x, y);
 	                        w += windingLine(x0, y1, x0, y0, x, y);
 	                    }
@@ -15899,7 +15899,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        // Close a subpath
 	                        w += windingLine(xi, yi, x0, y0, x, y);
 	                        // 如果被任何一个 subpath 包含
-	                        // FIXME subpaths may overlap
+	                        // FIXME1-1 subpaths may overlap
 	                        // if (w !== 0) {
 	                        //     return true;
 	                        // }
@@ -16261,7 +16261,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    data[i] *= sy;
 	                    data[i++] += y;
 	                    // Scale rx and ry
-	                    // FIXME Assume psi is 0 here
+	                    // FIXME1-1 Assume psi is 0 here
 	                    data[i++] *= sx;
 	                    data[i++] *= sy;
 
@@ -16269,7 +16269,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    data[i++] += angle;
 	                    // end angle
 	                    data[i++] += angle;
-	                    // FIXME psi
+	                    // FIXME1-1 psi
 	                    i += 2;
 	                    j = i;
 	                    break;
@@ -16352,7 +16352,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            else {
 	                image = src;
 	            }
-	            // FIXME Case create many images with src
+	            // FIXME1-1 Case create many images with src
 	            if (!image && src) {
 	                // Try get from global image cache
 	                var cachedImgObj = globalImageCache.get(src);
@@ -16476,7 +16476,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Text element
 	 * @module zrender/graphic/Text
 	 *
-	 * TODO Wrapping
+	 * TODO1-1 Wrapping
 	 *
 	 * Text not support gradient
 	 */
@@ -16544,14 +16544,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    textBaseline = style.textBaseline;
 	                }
 
-	                // TODO Invalid font
+	                // TODO1-1 Invalid font
 	                ctx.font = font || '12px sans-serif';
 	                ctx.textAlign = textAlign || 'left';
 	                // Use canvas default left textAlign. Giving invalid value will cause state not change
 	                if (ctx.textAlign !== textAlign) {
 	                    ctx.textAlign = 'left';
 	                }
-	                // FIXME in text contain default is top
+	                // FIXME1-1 in text contain default is top
 	                ctx.textBaseline = textBaseline || 'alphabetic';
 	                // Use canvas default alphabetic baseline
 	                if (ctx.textBaseline !== textBaseline) {
@@ -17980,7 +17980,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var storage = new Storage();
 
 	        var rendererType = opts.renderer;
-	        // TODO WebGL
+	        // TODO1-1 WebGL
 	        if (useVML) {
 	            if (!painterCtors.vml) {
 	                throw new Error('You need to require \'zrender/vml/vml\' to support IE8');
@@ -18015,7 +18015,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this._needsRefresh;
 
 	        // 修改 storage.delFromStorage, 每次删除元素之前删除动画
-	        // FIXME 有点ugly
+	        // FIXME1-1 有点ugly
 	        var oldDelFromStorage = storage.delFromStorage;
 	        var oldAddToStorage = storage.addToStorage;
 
@@ -18620,8 +18620,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 84 */
 /***/ function(module, exports) {
 
-	// TODO Draggable for group
-	// FIXME Draggable on element which has parent rotation or scale
+	// TODO1-1 Draggable for group
+	// FIXME1-1 Draggable on element which has parent rotation or scale
 
 	    function Draggable() {
 
@@ -18735,7 +18735,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (a.zlevel === b.zlevel) {
 	            if (a.z === b.z) {
 	                // if (a.z2 === b.z2) {
-	                //     // FIXME Slow has renderidx compare
+	                //     // FIXME1-1 Slow has renderidx compare
 	                //     // http://stackoverflow.com/questions/20883421/sorting-in-javascript-should-every-compare-function-have-a-return-0-statement
 	                //     // https://github.com/v8/v8/blob/47cce544a31ed5577ffe2963f67acb4144ee0232/src/js/array.js#L1012
 	                //     return a.__renderidx - b.__renderidx;
@@ -18831,7 +18831,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var userSetClipPath = el.clipPath;
 	            if (userSetClipPath) {
 
-	                // FIXME 效率影响
+	                // FIXME1-1 效率影响
 	                if (clipPaths) {
 	                    clipPaths = clipPaths.slice();
 	                }
@@ -18861,7 +18861,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    var child = children[i];
 
 	                    // Force to mark as dirty if group is dirty
-	                    // FIXME __dirtyPath ?
+	                    // FIXME1-1 __dirtyPath ?
 	                    if (el.__dirty) {
 	                        child.__dirty = true;
 	                    }
@@ -19658,7 +19658,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @module zrender/animation/Animation
 	 * @author pissang(https://github.com/pissang)
 	 */
-	// TODO Additive animation
+	// TODO1-1 Additive animation
 	// http://iosoteric.com/additive-animations-animatewithduration-in-ios-8/
 	// https://developer.apple.com/videos/wwdc2014/#236
 
@@ -19884,7 +19884,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *         如果指定setter函数，会通过setter函数设置属性值
 	         * @return {module:zrender/animation/Animation~Animator}
 	         */
-	        // TODO Gap
+	        // TODO1-1 Gap
 	        animate: function (target, options) {
 	            options = options || {};
 
@@ -19940,7 +19940,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // (see http://www.jacklmoore.com/notes/mouse-position/)
 	        // In zr painter.dom, padding edge equals to border edge.
 
-	        // FIXME
+	        // FIXME1-1
 	        // When mousemove event triggered on ec tooltip, target is not zr painter.dom, and
 	        // offsetX/Y is relative to e.target, where the calculation of zrX/Y via offsetX/Y
 	        // is too complex. So css-transfrom dont support in this case temporarily.
@@ -20294,7 +20294,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 
 	        pointermove: function (event) {
-	            // FIXME
+	            // FIXME1-1
 	            // pointermove is so sensitive that it always triggered when
 	            // tap(click) on touch screen, which affect some judgement in
 	            // upper application. So, we dont support mousemove on MS touch
@@ -20403,7 +20403,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // So we use pointer event to both detect touch gesture and mouse behavior.
 	            mountHandlers(pointerHandlerNames, this);
 
-	            // FIXME
+	            // FIXME1-1
 	            // Note: MS Gesture require CSS touch-action set. But touch-action is not reliable,
 	            // which does not prevent defuault behavior occasionally (which may cause view port
 	            // zoomed in but use can not zoom it back). And event.preventDefault() does not work.
@@ -20793,7 +20793,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // Device pixel ratio is fixed to 1 because given canvas has its specified width and height
 	            var mainLayer = new Layer(root, this, 1);
 	            mainLayer.initContext();
-	            // FIXME Use canvas width and height
+	            // FIXME1-1 Use canvas width and height
 	            // mainLayer.resize(width, height);
 	            layers[0] = mainLayer;
 	            zlevelList.push(0);
@@ -20908,7 +20908,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            timsort(hoverElements, this.storage.displayableSortFunc);
 
 	            // Use a extream large zlevel
-	            // FIXME?
+	            // FIXME1-1?
 	            if (!hoverLayer) {
 	                hoverLayer = this._hoverlayer = this.getLayer(1e5);
 	            }
@@ -20929,7 +20929,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                i++;
 
 	                // Use transform
-	                // FIXME style and shape ?
+	                // FIXME1-1 style and shape ?
 	                if (!originalEl.invisible) {
 	                    el.transform = originalEl.transform;
 	                    el.invTransform = originalEl.invTransform;
@@ -21482,7 +21482,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         */
 	        resize: function (width, height) {
 	            var domRoot = this._domRoot;
-	            // FIXME Why ?
+	            // FIXME1-1 Why ?
 	            domRoot.style.display = 'none';
 
 	            // Save input w/h
@@ -21920,7 +21920,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var color = seriesModel.get(colorAccessPath) // Set in itemStyle
 	                || seriesModel.getColorFromPalette(seriesModel.get('name'));  // Default color
 
-	            // FIXME Set color function or use the platte color
+	            // FIXME1-1 Set color function or use the platte color
 	            data.setVisual('color', color);
 
 	            // Only visible series has each data be visual encoded
@@ -22589,7 +22589,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        var value = storage[dim] && storage[dim][dataIndex];
-	        // FIXME ordinal data type is not stackable
+	        // FIXME1-1 ordinal data type is not stackable
 	        if (stack) {
 	            var dimensionInfo = this._dimensionInfos[dim];
 	            if (dimensionInfo && dimensionInfo.stackable) {
@@ -22677,7 +22677,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // var isOrdinal = dimInfo.type === 'ordinal';
 	            for (var i = 0, len = this.count(); i < len; i++) {
 	                value = this.get(dim, i, stack);
-	                // FIXME
+	                // FIXME1-1
 	                // if (isOrdinal && typeof value === 'string') {
 	                //     value = zrUtil.indexOf(dimData, value);
 	                // }
@@ -22718,7 +22718,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {number} value
 	     * @return {number}
 	     */
-	    // FIXME Precision of float value
+	    // FIXME1-1 Precision of float value
 	    listProto.indexOf = function (dim, value) {
 	        var storage = this._storage;
 	        var dimData = storage[dim];
@@ -23008,7 +23008,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            zrUtil.map(allDimensions, original.getDimensionInfo, original),
 	            original.hostModel
 	        );
-	        // FIXME If needs stackedOn, value may already been stacked
+	        // FIXME1-1 If needs stackedOn, value may already been stacked
 	        transferProperties(list, original);
 
 	        var storage = list._storage = {};
@@ -23125,7 +23125,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     *
 	     * @param {number} idx
 	     */
-	    // FIXME Model proxy ?
+	    // FIXME1-1 Model proxy ?
 	    listProto.getItemModel = function (idx) {
 	        var hostModel = this.hostModel;
 	        idx = this.indices[idx];
@@ -23349,7 +23349,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var dimensionInfoList = zrUtil.map(this.dimensions, this.getDimensionInfo, this);
 	        var list = new List(dimensionInfoList, this.hostModel);
 
-	        // FIXME
+	        // FIXME1-1
 	        list._storage = this._storage;
 
 	        transferProperties(list, this);
@@ -23719,7 +23719,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return {Array}
 	         */
-	         // FIXME Situation when labels is on ticks
+	         // FIXME1-1 Situation when labels is on ticks
 	        getBands: function () {
 	            var extent = this.getExtent();
 	            var bands = [];
@@ -23888,7 +23888,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var coordSysName = seriesModel.get('coordinateSystem');
 	        var creator = creators[coordSysName];
 	        var registeredCoordSys = CoordinateSystem.get(coordSysName);
-	        // FIXME
+	        // FIXME1-1
 	        var axesInfo = creator && creator(data, seriesModel, ecModel);
 	        var dimensions = axesInfo && axesInfo.dimensions;
 	        if (!dimensions) {
@@ -24124,7 +24124,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 
 	        geo: function (data, seriesModel, ecModel) {
-	            // TODO Region
+	            // TODO1-1 Region
 	            // 多个散点图系列在同一个地区的时候
 	            return {
 	                dimensions: completeDimensions([
@@ -24145,7 +24145,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        if (categoryAxisModel) {
-	            // FIXME Two category axis
+	            // FIXME1-1 Two category axis
 	            var categories = categoryAxisModel.getCategories();
 	            if (categories) {
 	                var dataLen = data.length;
@@ -24419,7 +24419,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var symbolShapeMakers = {
 
 	        line: function (x, y, w, h, shape) {
-	            // FIXME
+	            // FIXME1-1
 	            shape.x1 = x;
 	            shape.y1 = y + h / 2;
 	            shape.x2 = x + w;
@@ -24507,7 +24507,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        beforeBrush: function () {
 	            var style = this.style;
 	            var shape = this.shape;
-	            // FIXME
+	            // FIXME1-1
 	            if (shape.symbolType === 'pin' && style.textPosition === 'inside') {
 	                style.textPosition = ['50%', '40%'];
 	                style.textAlign = 'center';
@@ -24545,7 +24545,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                symbolStyle.fill = '#fff';
 	            }
 	            else {
-	                // FIXME 判断图形默认是填充还是描边，使用 onlyStroke ?
+	                // FIXME1-1 判断图形默认是填充还是描边，使用 onlyStroke ?
 	                symbolStyle.fill && (symbolStyle.fill = color);
 	                symbolStyle.stroke && (symbolStyle.stroke = color);
 	            }
@@ -24564,7 +24564,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * @param {string} color
 	         */
 	        createSymbol: function (symbolType, x, y, w, h, color) {
-	            // TODO Support image object, DynamicImage.
+	            // TODO1-1 Support image object, DynamicImage.
 
 	            var isEmpty = symbolType.indexOf('empty') === 0;
 	            if (isEmpty) {
@@ -24677,7 +24677,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        //      be the result that originalExtent enlarged by boundaryGap.
 	        // (3) If no data, it should be ensured that `scale.setBlank` is set.
 
-	        // FIXME
+	        // FIXME1-1
 	        // (1) When min/max is 'dataMin' or 'dataMax', should boundaryGap be able to used?
 	        // (2) When `needCrossZero` and all data is positive/negative, should it be ensured
 	        // that the results processed by boundaryGap are positive/negative?
@@ -24761,7 +24761,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // is not good enough. He can specify the interval. It is often appeared
 	        // in angle axis with angle 0 - 360. Interval calculated in interval scale is hard
 	        // to be 60.
-	        // FIXME
+	        // FIXME1-1
 	        var interval = model.get('interval');
 	        if (interval != null) {
 	            scale.setInterval && scale.setInterval(interval);
@@ -24809,7 +24809,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @return {number}
 	     */
 	    axisHelper.getAxisLabelInterval = function (tickCoords, labels, font, isAxisHorizontal) {
-	        // FIXME
+	        // FIXME1-1
 	        // 不同角的axis和label，不只是horizontal和vertical.
 
 	        var textSpaceTakenRect;
@@ -24828,7 +24828,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                labels[i], font, 'center', 'top'
 	            );
 	            rect[isAxisHorizontal ? 'x' : 'y'] += tickCoord;
-	            // FIXME Magic number 1.5
+	            // FIXME1-1 Magic number 1.5
 	            rect[isAxisHorizontal ? 'width' : 'height'] *= 1.3;
 	            if (!textSpaceTakenRect) {
 	                textSpaceTakenRect = rect.clone();
@@ -24902,7 +24902,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * http://en.wikipedia.org/wiki/Level_of_measurement
 	 */
 
-	// FIXME only one data
+	// FIXME1-1 only one data
 
 
 	    var zrUtil = __webpack_require__(4);
@@ -25296,7 +25296,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return;
 	            }
 	            // User may set axis min 0 and data are all negative
-	            // FIXME If it needs to reverse ?
+	            // FIXME1-1 If it needs to reverse ?
 	            if (span < 0) {
 	                span = -span;
 	                extent.reverse();
@@ -25503,7 +25503,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var ONE_HOUR = ONE_MINUTE * 60;
 	    var ONE_DAY = ONE_HOUR * 24;
 
-	    // FIXME 公用？
+	    // FIXME1-1 公用？
 	    var bisect = function (a, x, lo, hi) {
 	        while (lo < hi) {
 	            var mid = lo + hi >>> 1;
@@ -26072,7 +26072,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	// FIXME step not support polar
+	// FIXME1-1 step not support polar
 
 
 	    var zrUtil = __webpack_require__(4);
@@ -26413,7 +26413,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            group.add(lineGroup);
 
-	            // FIXME step not support polar
+	            // FIXME1-1 step not support polar
 	            var step = !isCoordSysPolar && seriesModel.get('step');
 	            // Initialization animation or coordinate system changed
 	            if (
@@ -26422,7 +26422,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                showSymbol && symbolDraw.updateData(data, isSymbolIgnore);
 
 	                if (step) {
-	                    // TODO If stacked series is not step
+	                    // TODO1-1 If stacked series is not step
 	                    points = turnPointsIntoStep(points, coordSys, step);
 	                    stackedOnPoints = turnPointsIntoStep(stackedOnPoints, coordSys, step);
 	                }
@@ -26458,7 +26458,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                showSymbol && symbolDraw.updateData(data, isSymbolIgnore);
 
 	                // Stop symbol animation and sync with line points
-	                // FIXME performance?
+	                // FIXME1-1 performance?
 	                data.eachItemGraphicEl(function (el) {
 	                    el.stopAnimation(true);
 	                });
@@ -26476,7 +26476,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    else {
 	                        // Not do it in update with animation
 	                        if (step) {
-	                            // TODO If stacked series is not step
+	                            // TODO1-1 If stacked series is not step
 	                            points = turnPointsIntoStep(points, coordSys, step);
 	                            stackedOnPoints = turnPointsIntoStep(stackedOnPoints, coordSys, step);
 	                        }
@@ -26602,7 +26602,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }
 	            else {
-	                // FIXME
+	                // FIXME1-1
 	                // can not downplay completely.
 	                // Downplay whole series
 	                ChartView.prototype.downplay.call(
@@ -26678,7 +26678,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        /**
 	         * @private
 	         */
-	        // FIXME Two value axis
+	        // FIXME1-1 Two value axis
 	        _updateAnimation: function (data, stackedOnPoints, coordSys, api, step) {
 	            var polyline = this._polyline;
 	            var polygon = this._polygon;
@@ -26695,7 +26695,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var next = diff.next;
 	            var stackedOnNext = diff.stackedOnNext;
 	            if (step) {
-	                // TODO If stacked series is not step
+	                // TODO1-1 If stacked series is not step
 	                current = turnPointsIntoStep(diff.current, coordSys, step);
 	                stackedOnCurrent = turnPointsIntoStep(diff.stackedOnCurrent, coordSys, step);
 	                next = turnPointsIntoStep(diff.next, coordSys, step);
@@ -27306,7 +27306,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        // convertToIntId(newIdList, oldIdList);
 
-	        // // FIXME One data ?
+	        // // FIXME1-1 One data ?
 	        // diff = arrayDiff(oldIdList, newIdList);
 
 	        var currPoints = [];
@@ -27323,7 +27323,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var diffItem = diff[i];
 	            var pointAdded = true;
 
-	            // FIXME, animation is not so perfect when dataZoom window moves fast
+	            // FIXME1-1, animation is not so perfect when dataZoom window moves fast
 	            // Which is in case remvoing or add more than one data in the tail or head
 	            switch (diffItem.cmd) {
 	                case '=':
@@ -27362,7 +27362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    var idx = diffItem.idx;
 	                    var rawIndex = oldData.getRawIndex(idx);
 	                    // Data is replaced. In the case of dynamic data queue
-	                    // FIXME FIXME FIXME
+	                    // FIXME1-1 FIXME1-1 FIXME1-1
 	                    if (rawIndex !== idx) {
 	                        currPoints.push(oldData.getItemLayout(idx));
 	                        nextPoints.push(newCoordSys.dataToPoint([
@@ -27707,7 +27707,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if (typeof symbolSize === 'function') {
 	                    data.each(function (idx) {
 	                        var rawValue = seriesModel.getRawValue(idx);
-	                        // FIXME
+	                        // FIXME1-1
 	                        var params = seriesModel.getDataParams(idx);
 	                        data.setItemVisual(idx, 'symbolSize', symbolSize(rawValue, params));
 	                    });
@@ -27804,7 +27804,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	            return min;
 	        },
-	        // TODO
+	        // TODO1-1
 	        // Median
 	        nearest: function (frame) {
 	            return frame[0];
@@ -27898,7 +27898,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Grid is a region which contains at most 4 cartesian systems
 	 *
-	 * TODO Default cartesian
+	 * TODO1-1 Default cartesian
 	 */
 	var factory = exports;
 
@@ -27939,7 +27939,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        for (var i = 0; i < labelCount; i += step) {
 	            if (!axis.isLabelIgnored(i)) {
 	                var singleRect = textStyleModel.getTextRect(labels[i]);
-	                // FIXME consider label rotate
+	                // FIXME1-1 consider label rotate
 	                rect ? rect.union(singleRect) : (rect = singleRect);
 	            }
 	        }
@@ -28027,7 +28027,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 
 	        // Resize again if containLabel is enabled
-	        // FIXME It may cause getting wrong grid size in data processing stage
+	        // FIXME1-1 It may cause getting wrong grid size in data processing stage
 	        this.resize(this.model, api);
 	    };
 
@@ -29046,7 +29046,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var ComponentModel = __webpack_require__(19);
 	    var layout = __webpack_require__(21);
 
-	    // FIXME axisType is fixed ?
+	    // FIXME1-1 axisType is fixed ?
 	    var AXIS_TYPES = ['value', 'category', 'time', 'log'];
 
 	    /**
@@ -29240,7 +29240,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // minInterval: null
 	    }, defaultOption);
 
-	    // FIXME
+	    // FIXME1-1
 	    var timeAxis = zrUtil.defaults({
 	        scale: true,
 	        min: 'dataMin',
@@ -29264,7 +29264,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	// TODO boundaryGap
+	// TODO1-1 boundaryGap
 
 
 	    __webpack_require__(130);
@@ -29604,7 +29604,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         */
 	        this.group = new graphic.Group();
 
-	        // FIXME Not use a seperate text group?
+	        // FIXME1-1 Not use a seperate text group?
 	        var dumbGroup = new graphic.Group({
 	            position: opt.position.slice(),
 	            rotation: opt.rotation
@@ -29838,7 +29838,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    textEl.eventData.value = labelStr;
 	                }
 
-	                // FIXME
+	                // FIXME1-1
 	                this._dumbGroup.add(textEl);
 	                textEl.updateTransform();
 
@@ -29972,7 +29972,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                textEl.eventData.name = name;
 	            }
 
-	            // FIXME
+	            // FIXME1-1
 	            this._dumbGroup.add(textEl);
 	            textEl.updateTransform();
 
@@ -30178,7 +30178,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * @override
 	         */
 	        render: function (axisModel, ecModel, api, payload) {
-	            // FIXME
+	            // FIXME1-1
 	            // This process should proformed after coordinate systems updated
 	            // (axis scale updated), and should be performed each time update.
 	            // So put it here temporarily, although it is not appropriate to
@@ -30811,7 +30811,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var BAR_BORDER_WIDTH_QUERY = ['itemStyle', 'normal', 'barBorderWidth'];
 
-	    // FIXME
+	    // FIXME1-1
 	    // Just for compatible with ec2.
 	    zrUtil.extend(__webpack_require__(12).prototype, __webpack_require__(144));
 
@@ -31145,7 +31145,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // only the attributes set on the last series will work.
 	            // Do not change this fact unless there will be a break change.
 
-	            // TODO
+	            // TODO1-1
 	            if (barWidth && !stacks[stackId].width) {
 	                barWidth = Math.min(columnsOnAxis.remainedWidth, barWidth);
 	                stacks[stackId].width = barWidth;
@@ -31418,7 +31418,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var data = this.getData();
 	            var params = PieSeries.superCall(this, 'getDataParams', dataIndex);
 	            var sum = data.getSum('value');
-	            // FIXME toFixed?
+	            // FIXME1-1 toFixed?
 	            //
 	            // Percent is 0 if sum is 0
 	            params.percent = !sum ? 0 : +(data.get('value', dataIndex) / sum * 100).toFixed(2);
@@ -32062,7 +32062,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        && data.getItemVisual(filteredIdx, 'color', true);
 
 	                    if (!singleDataColor) {
-	                        // FIXME Performance
+	                        // FIXME1-1 Performance
 	                        var itemModel = dataAll.getItemModel(rawIdx);
 	                        var color = itemModel.get('itemStyle.normal.color')
 	                            || seriesModel.getColorFromPalette(dataAll.getName(rawIdx), paletteScope);
@@ -32088,7 +32088,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// TODO minAngle
+	// TODO1-1 minAngle
 
 
 
@@ -32164,7 +32164,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    return;
 	                }
 
-	                // FIXME 兼容 2.0 但是 roseType 是 area 的时候才是这样？
+	                // FIXME1-1 兼容 2.0 但是 roseType 是 area 的时候才是这样？
 	                if (roseType !== 'area') {
 	                    angle = (sum === 0 && stillShowZeroSum)
 	                        ? unitRadian : (value * unitRadian);
@@ -32235,7 +32235,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	// FIXME emphasis label position is not same with normal label position
+	// FIXME1-1 emphasis label position is not same with normal label position
 
 
 	    var textContain = __webpack_require__(8);
@@ -32634,7 +32634,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// TODO Batch by color
+	// TODO1-1 Batch by color
 
 
 
@@ -32825,7 +32825,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// TODO clockwise
+	// TODO1-1 clockwise
 
 
 	    var zrUtil = __webpack_require__(4);
@@ -32906,7 +32906,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var radian = Math.atan2(-dy, dx);
 
 	        // Find the closest angle
-	        // FIXME index can calculated directly
+	        // FIXME1-1 index can calculated directly
 	        var minRadianDiff = Infinity;
 	        var closestAxis;
 	        var closestAxisIdx = -1;
@@ -32989,7 +32989,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            if (fixedMin != null && fixedMax != null) {
 	                // User set min, max, divide to get new interval
-	                // FIXME precision
+	                // FIXME1-1 precision
 	                scale.setInterval(
 	                    (fixedMax - fixedMin) / splitNumber
 	                );
@@ -33001,7 +33001,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    max = fixedMin + interval * splitNumber;
 	                    scale.setExtent(+fixedMin, max);
 	                    // Interval must been set after extent
-	                    // FIXME
+	                    // FIXME1-1
 	                    scale.setInterval(interval);
 
 	                    interval = increaseInterval(interval);
@@ -33936,7 +33936,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        getRawValue: function (dataIndex) {
 	            // Use value stored in data instead because it is calculated from multiple series
-	            // FIXME Provide all value of multiple series ?
+	            // FIXME1-1 Provide all value of multiple series ?
 	            return this.getData().get('value', dataIndex);
 	        },
 
@@ -33956,7 +33956,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * @param {number} dataIndex
 	         */
 	        formatTooltip: function (dataIndex) {
-	            // FIXME orignalData and data is a bit confusing
+	            // FIXME1-1 orignalData and data is a bit confusing
 	            var data = this.getData();
 	            var formattedValue = addCommas(this.getRawValue(dataIndex));
 	            var name = data.getName(dataIndex);
@@ -34222,7 +34222,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        create: function (ecModel, api) {
 	            var geoList = [];
 
-	            // FIXME Create each time may be slow
+	            // FIXME1-1 Create each time may be slow
 	            ecModel.eachComponent('geo', function (geoModel, idx) {
 	                var name = geoModel.get('map');
 	                var mapData = mapDataStores[name];
@@ -34389,7 +34389,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    echarts.parseGeoJSON = __webpack_require__(173);
 
-	    // TODO
+	    // TODO1-1
 	    echarts.loadMap = function () {};
 
 	    echarts.registerCoordinateSystem('geo', geoCreator);
@@ -34590,7 +34590,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                rect = rect || regionRect.clone();
 	                rect.union(regionRect);
 	            }
-	            // FIXME Always return new ?
+	            // FIXME1-1 Always return new ?
 	            return (this._rect = rect || new BoundingRect(0, 0, 0, 0));
 	        },
 
@@ -35641,7 +35641,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    function updateMapSelected(mapOrGeoModel, group) {
-	        // FIXME
+	        // FIXME1-1
 	        group.eachChild(function (otherRegionEl) {
 	            zrUtil.each(otherRegionEl.__regions, function (region) {
 	                otherRegionEl.trigger(mapOrGeoModel.isSelected(region.name) ? 'emphasis' : 'normal');
@@ -36482,7 +36482,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var zrUtil = __webpack_require__(4);
 
-	    // FIXME 公用？
+	    // FIXME1-1 公用？
 	    /**
 	     * @param {Array.<module:echarts/data/List>} datas
 	     * @param {string} statisticType 'average' 'sum'
@@ -36550,7 +36550,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                seriesList[i].originalData = seriesList[i].getData();
 	            }
 
-	            // FIXME Put where?
+	            // FIXME1-1 Put where?
 	            for (var i = 0; i < seriesList.length; i++) {
 	                seriesList[i].seriesGroup = seriesList;
 	                seriesList[i].needsDrawMap = i === 0 && !seriesList[i].getHostGeoModel();
@@ -37775,7 +37775,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _giveContainerGroup: function (layoutInfo) {
 	            var containerGroup = this._containerGroup;
 	            if (!containerGroup) {
-	                // FIXME
+	                // FIXME1-1
 	                // 加一层containerGroup是为了clip，但是现在clip功能并没有实现。
 	                containerGroup = this._containerGroup = new Group();
 	                this._initEvents(containerGroup);
@@ -38126,7 +38126,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * @private
 	         */
 	        _initEvents: function (containerGroup) {
-	            // FIXME
+	            // FIXME1-1
 	            // 不用click以及silent的原因是，animate时视图设置silent true来避免click生效，
 	            // 但是animate中，按下鼠标，animate结束后（silent设回为false）松开鼠标，
 	            // 还是会触发click，期望是不触发。
@@ -38182,7 +38182,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (!targetInfo) {
 	                targetInfo = seriesModel.get('leafDepth', true) != null
 	                    ? {node: seriesModel.getViewRoot()}
-	                    // FIXME
+	                    // FIXME1-1
 	                    // better way?
 	                    // Find breadcrumb tail on center of containerGroup.
 	                    : this.findTarget(api.getWidth() / 2, api.getHeight() / 2);
@@ -39648,7 +39648,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var pieceValue = pieceList[i].value;
 	            if (pieceValue != null) {
 	                if (pieceValue === value
-	                    // FIXME
+	                    // FIXME1-1
 	                    // It is supposed to compare value according to value type of dimension,
 	                    // but currently value type can exactly be string or number.
 	                    // Compromise for numeric-like string (like '12'), especially
@@ -39794,7 +39794,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                // layout should be cleared because using updateView but not update.
 	                viewRoot.hostTree.clearLayouts();
 
-	                // TODO
+	                // TODO1-1
 	                // optimize: if out of view clip, do not layout.
 	                // But take care that if do not render node out of view clip,
 	                // how to calculate start po
@@ -39827,7 +39827,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            seriesModel.setLayoutInfo(layoutInfo);
 
-	            // FIXME
+	            // FIXME1-1
 	            // 现在没有clip功能，暂时取ec高宽。
 	            prunning(
 	                treeRoot,
@@ -40624,9 +40624,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            nodeData = createListFromArray(nodes, hostModel, hostModel.ecModel);
 	        }
 	        else {
-	            // FIXME
+	            // FIXME1-1
 	            var coordSysCtor = CoordinateSystem.get(coordSys);
-	            // FIXME
+	            // FIXME1-1
 	            var dimensionNames = completeDimensions(
 	                ((coordSysCtor && coordSysCtor.type !== 'view') ? (coordSysCtor.dimensions || []) : []).concat(['value']),
 	                nodes
@@ -40942,7 +40942,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    };
 
-	    // TODO
+	    // TODO1-1
 	    // graphProto.depthFirstTraverse = function (
 	    //     cb, startNode, direction, context
 	    // ) {
@@ -41721,7 +41721,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        var line = lineGroup.childOfName('line');
 	        // If line not changed
-	        // FIXME Parent scale changed
+	        // FIXME1-1 Parent scale changed
 	        if (!this.__dirty && !line.__dirty) {
 	            return;
 	        }
@@ -42891,7 +42891,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	    // FIXME Where to create the simple view coordinate system
+	    // FIXME1-1 Where to create the simple view coordinate system
 	    var View = __webpack_require__(176);
 	    var layout = __webpack_require__(21);
 	    var bbox = __webpack_require__(52);
@@ -42932,7 +42932,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    min[1] -= 1;
 	                }
 	                var aspect = (max[0] - min[0]) / (max[1] - min[1]);
-	                // FIXME If get view rect after data processed?
+	                // FIXME1-1 If get view rect after data processed?
 	                var viewRect = getViewRect(seriesModel, api, aspect);
 	                // Position may be NaN, use view rect instead
 	                if (isNaN(aspect)) {
@@ -43471,7 +43471,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    style: {
 	                        x: x,
 	                        y: y,
-	                        // FIXME First data name ?
+	                        // FIXME1-1 First data name ?
 	                        text: seriesModel.getData().getName(0),
 	                        fill: textStyleModel.getTextColor(),
 	                        textFont: textStyleModel.getFont(),
@@ -43516,7 +43516,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    },
 	                    style: {
 	                        text: formatLabel(
-	                            // FIXME First data name ?
+	                            // FIXME1-1 First data name ?
 	                            value, detailModel.get('formatter')
 	                        ),
 	                        fill: detailModel.get('backgroundColor'),
@@ -44610,10 +44610,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                matrix.rotate(transform, transform, rotation);
 	                matrix.translate(transform, transform, position);
 
-	                // TODO
+	                // TODO1-1
 	                // tick等排布信息。
 
-	                // TODO
+	                // TODO1-1
 	                // 根据axis order 更新 dimensions顺序。
 
 	                this._axesLayout[dim] = {
@@ -45003,12 +45003,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            layout: 'horizontal',      // 'horizontal' or 'vertical'
 
-	            // FIXME
+	            // FIXME1-1
 	            // naming?
 	            axisExpandable: false,
 	            axisExpandCenter: null,
 	            axisExpandCount: 0,
-	            axisExpandWidth: 50,      // FIXME '10%' ?
+	            axisExpandWidth: 50,      // FIXME1-1 '10%' ?
 	            axisExpandRate: 17,
 	            axisExpandDebounce: 50,
 	            // [out, in, jumpTarget]. In percentage. If use [null, 0.05], null means full.
@@ -46303,7 +46303,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        mouseup: handleDragEnd //,
 
-	        // FIXME
+	        // FIXME1-1
 	        // in tooltip, globalout should not be triggered.
 	        // globalout: handleDragEnd
 	    };
@@ -46694,13 +46694,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if (!dataItem) {
 	                    return;
 	                }
-	                // FIXME
+	                // FIXME1-1
 	                // time consuming, should use hash?
 	                var index = zrUtil.indexOf(axisData, dataItem[numberDim]);
 	                dataItem[numberDim] = index >= 0 ? index : NaN;
 	            });
 	        }
-	        // FIXME
+	        // FIXME1-1
 	        // 如果没有设置axis data, 应自动算出，或者提示。
 	    }
 
@@ -46967,7 +46967,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    //     return false;
 	    // }
 
-	    // FIXME
+	    // FIXME1-1
 	    // 公用方法?
 	    function isEmptyValue(val, axisType) {
 	        return axisType === 'category'
@@ -47951,7 +47951,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        dependencies: ['xAxis', 'yAxis', 'grid'],
 
-	        // TODO
+	        // TODO1-1
 	        // box width represents group size, so dimension should have 'size'.
 
 	        /**
@@ -48050,7 +48050,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var yAxisType = yAxisModel.get('type');
 	            var addOrdinal;
 
-	            // FIXME
+	            // FIXME1-1
 	            // 考虑时间轴
 
 	            if (xAxisType === 'category') {
@@ -48726,7 +48726,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    color: '#c23531', // 阳线 positive
 	                    color0: '#314656', // 阴线 negative     '#c23531', '#314656'
 	                    borderWidth: 1,
-	                    // FIXME
+	                    // FIXME1-1
 	                    // ec2中使用的是lineStyle.color 和 lineStyle.color0
 	                    borderColor: '#c23531',
 	                    borderColor0: '#314656'
@@ -49254,7 +49254,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 
 	            var delay = -i / EFFECT_RIPPLE_NUMBER * effectCfg.period + effectCfg.effectOffset;
-	            // TODO Configurable effectCfg.period
+	            // TODO1-1 Configurable effectCfg.period
 	            ripplePath.animate('', true)
 	                .when(effectCfg.period, {
 	                    scale: [effectCfg.rippleScale / 2, effectCfg.rippleScale / 2]
@@ -49633,7 +49633,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            var zr = api.getZr();
 	            // Avoid the drag cause ghost shadow
-	            // FIXME Better way ?
+	            // FIXME1-1 Better way ?
 	            zr.painter.getLayer(zlevel).clear(true);
 	            // Config layer with motion blur
 	            if (this._lastZlevel != null) {
@@ -50083,7 +50083,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// TODO Batch by color
+	// TODO1-1 Batch by color
 
 
 
@@ -50238,7 +50238,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var coordSys = seriesModel.coordinateSystem;
 	            var lineData = seriesModel.getData();
 
-	            // FIXME Use data dimensions ?
+	            // FIXME1-1 Use data dimensions ?
 	            lineData.each(function (idx) {
 	                var itemModel = lineData.getItemModel(idx);
 
@@ -51307,7 +51307,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                isUpdate
 	            );
 
-	            // FIXME
+	            // FIXME1-1
 	            // If all emphasis/normal through action.
 	            path
 	                .on('mouseover', onMouseOver)
@@ -52547,7 +52547,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            point = findPointFromSeries({
 	                seriesIndex: finder.seriesIndex,
 	                // Do not use dataIndexInside from other ec instance.
-	                // FIXME: auto detect it?
+	                // FIXME1-1: auto detect it?
 	                dataIndex: finder.dataIndex
 	            }, ecModel).point;
 	        }
@@ -52812,7 +52812,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // Basic logic: If nothing highlighted, should downplay all highlighted items.
 	        // This case will occur when mouse leave coordSys.
 
-	        // FIXME
+	        // FIXME1-1
 	        // (1) highlight status shoule be managemented in series.getData()?
 	        // (2) If axisPointer A triggerOn 'handle' and axisPointer B triggerOn
 	        // 'mousemove', items highlighted by A will be downplayed by B.
@@ -53198,7 +53198,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            showTip: [],
 	            hideTip: []
 	        };
-	        // FIXME
+	        // FIXME1-1
 	        // better approach?
 	        // 'showTip' and 'hideTip' can be triggered by axisPointer and tooltip,
 	        // which may be conflict, (axisPointer call showTip but tooltip call hideTip);
@@ -54410,7 +54410,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            dimensions = [
 	                {
 	                    name: 'time',
-	                    // FIXME common?
+	                    // FIXME1-1 common?
 	                    type: axisType === 'category'
 	                        ? 'ordinal'
 	                        : axisType === 'time'
@@ -55333,7 +55333,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }, this);
 	        },
 
-	        // FIXME
+	        // FIXME1-1
 	        // Pass to view using payload? setOption has a payload?
 	        useElOptionsToUpdate: function () {
 	            var els = this._elOptionsToUpdate;
@@ -56104,7 +56104,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            );
 
 	                            itemGroup.on('click', curry(dispatchSelectAction, name, api))
-	                                // FIXME Should not specify the series name
+	                                // FIXME1-1 Should not specify the series name
 	                                .on('mouseover', curry(dispatchHighlightAction, seriesModel, name, api))
 	                                .on('mouseout', curry(dispatchDownplayAction, seriesModel, name, api));
 
@@ -56122,7 +56122,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            listComponentHelper.layout(group, legendModel, api);
 	            // Render background after group is layout
-	            // FIXME
+	            // FIXME1-1
 	            listComponentHelper.addBackground(group, legendModel);
 	        },
 
@@ -56329,7 +56329,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// FIXME Better way to pack data in graphic element
+	// FIXME1-1 Better way to pack data in graphic element
 
 
 	    __webpack_require__(297);
@@ -56464,7 +56464,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    width: 1,
 	                    type: 'dashed',
 
-	                    // TODO formatter
+	                    // TODO1-1 formatter
 	                    textStyle: {}
 	                }
 
@@ -56606,7 +56606,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this._refreshUpdateTimeout = setTimeout(function () {
 	                    // Show tip next tick after other charts are rendered
 	                    // In case highlight action has wrong result
-	                    // FIXME
+	                    // FIXME1-1
 	                    self.manuallyShowTip(tooltipModel, ecModel, api, {
 	                        x: self._lastX,
 	                        y: self._lastY
@@ -56629,7 +56629,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *      dataIndex or dataIndexInside or name
 	         * });
 	         *
-	         *  TODO Batch
+	         *  TODO1-1 Batch
 	         */
 	        manuallyShowTip: function (tooltipModel, ecModel, api, payload) {
 	            if (payload.from === this.uid || env.node) {
@@ -56686,7 +56686,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }
 	            else if (payload.x != null && payload.y != null) {
-	                // FIXME
+	                // FIXME1-1
 	                // should wrap dispatchAction like `axisPointer/globalListener` ?
 	                api.dispatchAction({
 	                    type: 'updateAxisPointer',
@@ -56857,7 +56857,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    });
 
 	                    // Default tooltip content
-	                    // FIXME
+	                    // FIXME1-1
 	                    // (1) shold be the first data which has name?
 	                    // (2) themeRiver, firstDataIndex is array, and first line is unnecessary.
 	                    var firstLine = valueLabel;
@@ -56932,7 +56932,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                );
 	            });
 
-	            // FIXME
+	            // FIXME1-1
 	            // duplicated showtip if manuallyShowTip is called from dispatchAction.
 	            dispatchAction({
 	                type: 'showTip',
@@ -57091,7 +57091,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            content.moveTo(x, y);
 	        },
 
-	        // FIXME
+	        // FIXME1-1
 	        // Should we remove this but leave this to user?
 	        _updateContentNotChangedOnAxis: function (dataByCoordSys) {
 	            var lastCoordSys = this._lastDataByCoordSys;
@@ -57133,7 +57133,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // Do not directly hideLater here, because this behavior may be prevented
 	            // in dispatchAction when showTip is dispatched.
 
-	            // FIXME
+	            // FIXME1-1
 	            // duplicated hideTip if manuallyHideTip is called from dispatchAction.
 	            this._lastDataByCoordSys = null;
 	            dispatchAction({
@@ -57434,7 +57434,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * Update when tooltip is rendered
 	         */
 	        update: function () {
-	            // FIXME
+	            // FIXME1-1
 	            // Move this logic to ec main?
 	            var container = this._container;
 	            var stl = container.currentStyle
@@ -57545,7 +57545,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 325 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// TODO Axis scale
+	// TODO1-1 Axis scale
 
 
 	    var Polar = __webpack_require__(326);
@@ -57621,7 +57621,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        axis.scale = axisHelper.createScaleByModel(axisModel);
 	        axis.onBand = axisModel.get('boundaryGap') && axis.type === 'category';
 
-	        // FIXME Radius axis not support inverse axis
+	        // FIXME1-1 Radius axis not support inverse axis
 	        if (axisModel.mainType === 'angleAxis') {
 	            var startAngle = axisModel.get('startAngle');
 	            axis.inverse = axisModel.get('inverse') ^ axisModel.get('clockwise');
@@ -57915,7 +57915,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var minAngle = Math.min(extent[0], extent[1]);
 	            var maxAngle = Math.max(extent[0], extent[1]);
 	            // Fix fixed extent in polarCreator
-	            // FIXME
+	            // FIXME1-1
 	            angleAxis.inverse
 	                ? (minAngle = maxAngle - 360)
 	                : (maxAngle = minAngle + 360);
@@ -59724,7 +59724,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var COORD_CONVERTS = ['dataToPoint', 'pointToData'];
 
-	    // FIXME
+	    // FIXME1-1
 	    // how to genarialize to more coordinate systems.
 	    var INCLUDE_FINDER_MAIN_TYPES = [
 	        'grid', 'xAxis', 'yAxis', 'geo', 'graph',
@@ -60204,7 +60204,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                    // If null, no throttle. Valid only in the first brush component
 	            throttleDelay: 0,       // Unit: ms, 0 means every event will be triggered.
 
-	            // FIXME
+	            // FIXME1-1
 	            // 试验效果
 	            removeOnClick: true,
 
@@ -62136,7 +62136,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        dimNames.name, axisIndex, this, ecModel
 	                    )
 	                );
-	                // FIXME
+	                // FIXME1-1
 	                // dispose __dzAxisProxy
 
 	                axisProxies[dimNames.name + '_' + axisIndex] = axisProxy;
@@ -62248,7 +62248,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 
 	            if (autoAxisIndex) {
-	                // FIXME
+	                // FIXME1-1
 	                // 这里是兼容ec2的写法（没指定xAxisIndex和yAxisIndex时把scatter和双数值轴折柱纳入dataZoom控制），
 	                // 但是实际是否需要Grid.js#getScaleByOption来判断（考虑time，log等axis type）？
 
@@ -62309,7 +62309,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * @private
 	         */
 	        _isSeriesHasAllAxesTypeOf: function (seriesModel, axisType) {
-	            // FIXME
+	            // FIXME1-1
 	            // 需要series的xAxisIndex和yAxisIndex都首先自动设置上。
 	            // 例如series.type === scatter时。
 
@@ -62922,7 +62922,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var filterMode = dataZoomModel.get('filterMode');
 	            var valueWindow = this._valueWindow;
 
-	            // FIXME
+	            // FIXME1-1
 	            // Toolbox may has dataZoom injected. And if there are stacked bar chart
 	            // with NaN data, NaN will be filtered and stack will be wrong.
 	            // So we need to force the mode to be set empty.
@@ -63525,10 +63525,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    return;
 	                }
 
-	                // FIXME
+	                // FIXME1-1
 	                // Should consider axis.min/axis.max when drawing dataShadow.
 
-	                // FIXME
+	                // FIXME1-1
 	                // 应该使用统一的空判断？还是在list里进行空判断？
 	                var isEmpty = value == null || isNaN(value) || value === '';
 	                // See #4235.
@@ -63800,7 +63800,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var orient = this._orient;
 	            var labelTexts = ['', ''];
 
-	            // FIXME
+	            // FIXME1-1
 	            // date型，支持formatter，autoformatter（ec2 date.getAutoFormatter）
 	            if (dataZoomModel.get('showDetail')) {
 	                var axisProxy = dataZoomModel.findRepresentativeAxisProxy();
@@ -63870,7 +63870,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            var valueStr = (value == null || isNaN(value))
 	                ? ''
-	                // FIXME Glue code
+	                // FIXME1-1 Glue code
 	                : (axis.type === 'category' || axis.type === 'time')
 	                    ? axis.scale.getLabel(Math.round(value))
 	                    // param of toFixed should less then 20.
@@ -63972,7 +63972,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 
 	    function getOtherDim(thisDim) {
-	        // FIXME
+	        // FIXME1-1
 	        // 这个逻辑和getOtherAxis里一致，但是写在这里是否不好
 	        var map = {x: 'y', y: 'x', radius: 'angle', angle: 'radius'};
 	        return map[thisDim];
@@ -64716,7 +64716,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	    }
 
-	    // FIXME
+	    // FIXME1-1
 	    // performance and export for heatmap?
 	    // value can be Infinity or -Infinity
 	    function getColorVisual(seriesModel, visualMapModel, value, valueState) {
@@ -64982,7 +64982,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        // When using colorHue mapping, it is not linear color any more.
 	        // Moreover, canvas gradient seems not to be accurate linear.
-	        // FIXME
+	        // FIXME1-1
 	        // Should be arbitrary value 100? or based on pixel size?
 	        var count = 200;
 	        var step = (dataExtent[1] - dataExtent[0]) / count;
@@ -65156,7 +65156,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        optionUpdated: function (newOption, isInit) {
 	            var thisOption = this.option;
 
-	            // FIXME
+	            // FIXME1-1
 	            // necessary?
 	            // Disable realtime view update if canvas is not supported.
 	            if (!env.canvasSupported) {
@@ -65507,7 +65507,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        getValueState: noop,
 
 	        /**
-	         * FIXME
+	         * FIXME1-1
 	         * Do not publish to thirt-part-dev temporarily
 	         * util the interface is stable. (Should it return
 	         * a function but not visual meta?)
@@ -66699,7 +66699,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var actionInfo = {
 	        type: 'selectDataRange',
 	        event: 'dataRangeSelected',
-	        // FIXME use updateView appears wrong
+	        // FIXME1-1 use updateView appears wrong
 	        update: 'update'
 	    };
 
@@ -66847,7 +66847,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    mappingOption.pieceList = zrUtil.map(this._pieceList, function (piece) {
 	                        var piece = zrUtil.clone(piece);
 	                        if (state !== 'inRange') {
-	                            // FIXME
+	                            // FIXME1-1
 	                            // outOfRange do not support special visual in pieces.
 	                            piece.visual = null;
 	                        }
@@ -67163,7 +67163,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        categories: function () {
 	            var thisOption = this.option;
 	            zrUtil.each(thisOption.categories, function (cate) {
-	                // FIXME category模式也使用pieceList，但在visualMapping中不是使用pieceList。
+	                // FIXME1-1 category模式也使用pieceList，但在visualMapping中不是使用pieceList。
 	                // 是否改一致。
 	                this._pieceList.push({
 	                    text: this.formatValueText(cate, true),
@@ -67619,7 +67619,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            fillLabel(markerOpt);
 	                        }
 	                        zrUtil.each(markerOpt.data, function (item) {
-	                            // FIXME Overwrite fillLabel method ?
+	                            // FIXME1-1 Overwrite fillLabel method ?
 	                            if (item instanceof Array) {
 	                                fillLabel(item[0]);
 	                                fillLabel(item[1]);
@@ -67764,7 +67764,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            var mpData = createList(coordSys, seriesModel, mpModel);
 
-	            // FIXME
+	            // FIXME1-1
 	            mpModel.setData(mpData);
 
 	            updateMarkerLayout(mpModel.getData(), seriesModel, api);
@@ -67773,7 +67773,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var itemModel = mpData.getItemModel(idx);
 	                var symbolSize = itemModel.getShallow('symbolSize');
 	                if (typeof symbolSize === 'function') {
-	                    // FIXME 这里不兼容 ECharts 2.x，2.x 貌似参数是整个数据？
+	                    // FIXME1-1 这里不兼容 ECharts 2.x，2.x 貌似参数是整个数据？
 	                    symbolSize = symbolSize(
 	                        mpModel.getRawValue(idx), mpModel.getDataParams(idx)
 	                    );
@@ -67786,12 +67786,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                });
 	            });
 
-	            // TODO Text are wrong
+	            // TODO1-1 Text are wrong
 	            symbolDraw.updateData(mpData);
 	            this.group.add(symbolDraw.group);
 
 	            // Set host model for tooltip
-	            // FIXME
+	            // FIXME1-1
 	            mpData.eachItemGraphicEl(function (el) {
 	                el.traverse(function (child) {
 	                    child.dataModel = mpModel;
@@ -67900,7 +67900,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    var curry = zrUtil.curry;
-	    // TODO Specified percent
+	    // TODO1-1 Specified percent
 	    var markerTypeCalculator = {
 	        /**
 	         * @method
@@ -67967,7 +67967,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                item.value = item.coord[targetCoordIndex];
 	            }
 	            else {
-	                // FIXME Only has one of xAxis and yAxis.
+	                // FIXME1-1 Only has one of xAxis and yAxis.
 	                var coord = [
 	                    item.xAxis != null ? item.xAxis : item.radiusAxis,
 	                    item.yAxis != null ? item.yAxis : item.angleAxis
@@ -68428,7 +68428,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            lineDraw.updateData(lineData);
 
 	            // Set host model for tooltip
-	            // FIXME
+	            // FIXME1-1
 	            mlData.line.eachItemGraphicEl(function (el, idx) {
 	                el.traverse(function (child) {
 	                    child.dataModel = mlModel;
@@ -68576,7 +68576,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 394 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// TODO Better on polar
+	// TODO1-1 Better on polar
 
 
 	    var zrUtil = __webpack_require__(4);
@@ -68592,7 +68592,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var rb = markerHelper.dataTransform(seriesModel, item[1]);
 	        var retrieve = zrUtil.retrieve;
 
-	        // FIXME make sure lt is less than rb
+	        // FIXME1-1 make sure lt is less than rb
 	        var ltCoord = lt.coord;
 	        var rbCoord = rb.coord;
 	        ltCoord[0] = retrieve(ltCoord[0], -Infinity);
@@ -69527,7 +69527,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                })[orient][labelPosOpt];
 	            }
 
-	            // FIXME
+	            // FIXME1-1
 	            // 暂没有实现用户传入
 	            // var labelAlign = timelineModel.get('label.normal.textStyle.align');
 	            // var labelBaseline = timelineModel.get('label.normal.textStyle.baseline');
@@ -70070,7 +70070,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        symbol.attr(opt);
 
-	        // FIXME
+	        // FIXME1-1
 	        // (1) When symbol.style.strokeNoScale is true and updateTransform is not performed,
 	        // getBoundingRect will return wrong result.
 	        // (This is supposed to be resolved in zrender, but it is a little difficult to
@@ -70413,7 +70413,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    var iconPaths = this.iconPaths;
 	                    option.iconStatus = option.iconStatus || {};
 	                    option.iconStatus[iconName] = status;
-	                    // FIXME
+	                    // FIXME1-1
 	                    iconPaths[iconName] && iconPaths[iconName].trigger(status);
 	                };
 
@@ -70506,7 +70506,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            listComponentHelper.layout(group, toolboxModel, api);
 	            // Render background after group is layout
-	            // FIXME
+	            // FIXME1-1
 	            listComponentHelper.addBackground(group, toolboxModel);
 
 	            // Adjust icon title positions to avoid them out of screen
@@ -71518,7 +71518,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                ? {
 	                    brushType: 'auto',
 	                    brushStyle: {
-	                        // FIXME user customized?
+	                        // FIXME1-1 user customized?
 	                        lineWidth: 0,
 	                        fill: 'rgba(0,0,0,0.2)'
 	                    }
@@ -71584,7 +71584,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    // Id for merge mapping.
 	                    id: DATA_ZOOM_ID_BASE + axisName + axisIndex
 	                };
-	                // FIXME
+	                // FIXME1-1
 	                // Only support one axis now.
 	                newOpt[axisIndicesName] = axisIndex;
 	                dataZoomOpts.push(newOpt);
@@ -71830,7 +71830,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	// http://www.w3.org/TR/NOTE-VML
-	// TODO Use proxy like svg instead of overwrite brush methods
+	// TODO1-1 Use proxy like svg instead of overwrite brush methods
 
 
 	if (!__webpack_require__(2).canvasSupported) {
@@ -71934,7 +71934,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    var updateFillNode = function (el, style, zrEl) {
-	        // TODO pattern
+	        // TODO1-1 pattern
 	        var fill = style.fill;
 	        if (fill != null) {
 	            // Modified from excanvas
@@ -72031,7 +72031,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    // When colors attribute is used, the meanings of opacity and o:opacity2
 	                    // are reversed.
 	                    el.opacity = opacity2;
-	                    // FIXME g_o_:opacity ?
+	                    // FIXME1-1 g_o_:opacity ?
 	                    el.opacity2 = opacity1;
 	                }
 	                if (gradientType === 'radial') {
@@ -72039,7 +72039,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }
 	            else {
-	                // FIXME Change from Gradient fill to color fill
+	                // FIXME1-1 Change from Gradient fill to color fill
 	                setColorAndOpacity(el, fill, style.opacity);
 	            }
 	        }
@@ -72069,7 +72069,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // Stroke must have lineWidth
 	        if (style[type] != null && style[type] !== 'none' && (isFill || (!isFill && style.lineWidth))) {
 	            vmlEl[isFill ? 'filled' : 'stroked'] = 'true';
-	            // FIXME Remove before updating, or set `colors` will throw error
+	            // FIXME1-1 Remove before updating, or set `colors` will throw error
 	            if (style[type] instanceof Gradient) {
 	                remove(vmlEl, el);
 	            }
@@ -72176,7 +72176,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    var ry = data[i++];
 	                    var startAngle = data[i++] + angle;
 	                    var endAngle = data[i++] + startAngle + angle;
-	                    // FIXME
+	                    // FIXME1-1
 	                    // var psi = data[i++];
 	                    i++;
 	                    var clockwise = data[i++];
@@ -72261,7 +72261,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    );
 	                    break;
 	                case CMD.Z:
-	                    // FIXME Update xi, yi
+	                    // FIXME1-1 Update xi, yi
 	                    str.push(' x ');
 	            }
 
@@ -72352,7 +72352,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * IMAGE
 	     **************************************************/
 	    var isImage = function (img) {
-	        // FIXME img instanceof Image 如果 img 是一个字符串的时候，IE8 下会报错
+	        // FIXME1-1 img instanceof Image 如果 img 是一个字符串的时候，IE8 下会报错
 	        return (typeof img === 'object') && img.tagName && img.tagName.toUpperCase() === 'IMG';
 	        // return img instanceof Image;
 	    };
@@ -72419,7 +72419,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        var vmlEl = this._vmlEl;
 	        if (!vmlEl) {
-	            // FIXME 使用 group 在 left, top 都不是 0 的时候就无法显示了。
+	            // FIXME1-1 使用 group 在 left, top 都不是 0 的时候就无法显示了。
 	            // vmlEl = vmlCore.createNode('group');
 	            vmlEl = vmlCore.doc.createElement('div');
 	            initRootElStyle(vmlEl);
@@ -72466,7 +72466,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        'Dy=', round(y * scaleY + m[5]));
 
 	            vmlElStyle.padding = '0 ' + round(maxX) + 'px ' + round(maxY) + 'px 0';
-	            // FIXME DXImageTransform 在 IE11 的兼容模式下不起作用
+	            // FIXME1-1 DXImageTransform 在 IE11 的兼容模式下不起作用
 	            vmlElStyle.filter = imageTransformPrefix + '.Matrix('
 	                + transformFilter.join('') + ', SizingMethod=clip)';
 
@@ -72663,7 +72663,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var y;
 	        var align = style.textAlign;
 	        var fontStyle = getFontStyle(style.textFont);
-	        // FIXME encodeHtmlAttribute ?
+	        // FIXME1-1 encodeHtmlAttribute ?
 	        var font = fontStyle.style + ' ' + fontStyle.variant + ' ' + fontStyle.weight + ' '
 	            + fontStyle.size + 'px "' + fontStyle.family + '"';
 
@@ -72770,7 +72770,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            textPathEl = createNode('textpath');
 	            skewEl = createNode('skew');
 
-	            // FIXME Why here is not cammel case
+	            // FIXME1-1 Why here is not cammel case
 	            // Align 'center' seems wrong
 	            textPathEl.style['v-text-align'] = 'left';
 
@@ -72821,7 +72821,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        textPathEl.string = encodeHtmlAttribute(text);
-	        // TODO
+	        // TODO1-1
 	        try {
 	            textPathEl.style.font = font;
 	        }
@@ -73055,7 +73055,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                // Detached from document at first time
 	                // to avoid page refreshing too many times
 
-	                // FIXME 如果每次都先 removeChild 可能会导致一些填充和描边的效果改变
+	                // FIXME1-1 如果每次都先 removeChild 可能会导致一些填充和描边的效果改变
 	                this._vmlViewport.appendChild(vmlRoot);
 	                this._firstPaint = false;
 	            }
