@@ -440,6 +440,7 @@ site-deploy :将生成的站点文档部署到特定的服务器上
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.2</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -658,6 +659,7 @@ site-deploy :将生成的站点文档部署到特定的服务器上
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
                 <configuration>
                     <port>8080</port>
                     <path>/</path>
@@ -763,7 +765,7 @@ site-deploy :将生成的站点文档部署到特定的服务器上
   - group(仓库组)：一组仓库的集合
   - hosted(宿主)：配置第三方仓库（包括公司内部私服）
   - proxy(代理)：私服会对中央仓库进行代理，用户连接私服，私服自动去中央仓库下载jar包或插件
-  - virtual(虚拟)：兼容`Maven 1`版本的jar或插件
+  - virtual(虚拟)：兼容`Maven 1`版本的jar或插件
 
 - `Nuexus`的仓库和仓库组介绍：
 
