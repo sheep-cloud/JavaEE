@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
     public User insertUser(User user) {
         User insertUser = userDao.insert(user);
         // userDao.other()...
+        log.info("UserServiceImpl.insertUser() >> 待插入的数据 : {}", user);
         log.info("UserServiceImpl.insertUser() >> 插入完成");
         Console.log(1 / 0);
         return insertUser;

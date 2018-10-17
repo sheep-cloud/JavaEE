@@ -2,15 +2,15 @@ package cn.colg.tx.bean;
 
 import java.io.Serializable;
 
+import cn.colg.core.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.Accessors;
 
 /**
- * 
+ * User 实体类
  *
  * @author colg
  */
@@ -18,9 +18,8 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Accessors(chain = true)
-public class User implements Serializable {
+public class User extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
