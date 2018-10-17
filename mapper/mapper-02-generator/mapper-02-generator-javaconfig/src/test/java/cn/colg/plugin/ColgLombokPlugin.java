@@ -176,7 +176,8 @@ public class ColgLombokPlugin extends FalseMethodPlugin {
         super.setProperties(properties);
         String mappers = this.properties.getProperty("mappers");
         if (StringUtility.stringHasValue(mappers)) {
-            for (String mapper : mappers.split(",")) {
+            String comma = ",";
+            for (String mapper : mappers.split(comma)) {
                 this.mappers.add(mapper);
             }
         } else {

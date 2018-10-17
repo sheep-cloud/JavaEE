@@ -71,7 +71,7 @@ public class CustomRealm extends AuthorizingRealm {
         
         // 2. 根据用户名到数据库获取凭证
         String password = this.getPasswordByUserName(username);
-        if (StrUtil.isBlank(password)) {
+        if (StrUtil.isEmpty(password)) {
             return null;
         }
         log.info("password: {}", password);

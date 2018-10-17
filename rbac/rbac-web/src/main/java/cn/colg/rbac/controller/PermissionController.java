@@ -209,7 +209,8 @@ public class PermissionController extends BaseController {
         pds.forEach(child -> {
             // 获取每一个节点的pid
             String pid = child.getPid();
-            if ("0".equals(pid)) {
+            String zero = "0";
+            if (zero.equals(pid)) {
                 // 如果为顶级节点，直接添加
                 permissionDtos.add(child);
             } else {

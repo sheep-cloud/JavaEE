@@ -50,10 +50,10 @@ public class JdbcRealmTest {
         jdbcRealm.setPermissionsQuery(permissionsQuery);
 
         // 1. 构建 SecurityManager 环境
-        DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager(jdbcRealm);
+        DefaultSecurityManager securityManager = new DefaultSecurityManager(jdbcRealm);
 
         // 2. 主体提交认证
-        SecurityUtils.setSecurityManager(defaultSecurityManager);
+        SecurityUtils.setSecurityManager(securityManager);
         Subject subject = SecurityUtils.getSubject();
         log.info("subject: {}", JSON.toJSONString(subject));
 

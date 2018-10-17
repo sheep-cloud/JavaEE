@@ -24,10 +24,10 @@ public class IniRealmTest {
     @Test
     public void testAuthentication() throws Exception {
         // 1. 创建 SecurityManager
-        DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager(iniRealm);
+        DefaultSecurityManager securityManager = new DefaultSecurityManager(iniRealm);
         
         // 2. 主体提交认证
-        SecurityUtils.setSecurityManager(defaultSecurityManager);
+        SecurityUtils.setSecurityManager(securityManager);
         Subject subject = SecurityUtils.getSubject();
         log.info("subject: {}", JSON.toJSONString(subject));
         

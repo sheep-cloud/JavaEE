@@ -31,7 +31,8 @@ public class HelloController {
      */
     @GetMapping("/hello/user")
     public Map<String, Object> helloUser(@RequestParam("user") String user) {
-        if (user.equals("aaa")) {
+        String name = "aaa";
+        if (name.equals(user)) {
             throw new UserNotExistException();
         }
         return Collections.singletonMap("Hello", user);

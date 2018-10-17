@@ -23,7 +23,7 @@ public class CustomRealmTest {
     public void testCustomRealm() throws Exception {
         // 1. 构建 SecurityManager 环境
         CustomRealm customRealm = new CustomRealm();
-        DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager(customRealm);
+        DefaultSecurityManager securityManager = new DefaultSecurityManager(customRealm);
 
         // 加密
         HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
@@ -33,7 +33,7 @@ public class CustomRealmTest {
         customRealm.setCredentialsMatcher(matcher);
 
         // 2. 主体提交认证
-        SecurityUtils.setSecurityManager(defaultSecurityManager);
+        SecurityUtils.setSecurityManager(securityManager);
         Subject subject = SecurityUtils.getSubject();
         log.info("subject: {}", JSON.toJSONString(subject));
 

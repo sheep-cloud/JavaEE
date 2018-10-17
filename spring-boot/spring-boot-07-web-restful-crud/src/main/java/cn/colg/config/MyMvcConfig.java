@@ -12,11 +12,12 @@ import cn.colg.component.MyLocaleResolver;
  * <pre>
  * SpringMVC 扩展
  *  `WebMvcConfigurerAdapter`： 扩展SpringMVC的功能
+ *  
+ *  // @EnableWebMvc 不要接管SpringMVC
  * </pre>
  *
  * @author colg
  */
-// @EnableWebMvc 不要接管SpringMVC
 @Configuration
 public class MyMvcConfig extends WebMvcConfigurerAdapter {
 

@@ -7,10 +7,11 @@ import cn.hutool.core.lang.Dict;
 
 /**
  * 异常处理器
+ * 
+ * //@RestControllerAdvice 禁用
  *
  * @author colg
  */
-//@RestControllerAdvice
 public class MyExceptionHandler {
 
     /**

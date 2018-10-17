@@ -24,7 +24,8 @@ public class UserController {
      */
     @PostMapping("/user/login")
     public String login(String username, String password, Model model, HttpSession session) {
-        if (StrUtil.isNotBlank(username) && "123456".equals(password)) {
+        String pwd = "123456";
+        if (StrUtil.isNotBlank(username) && pwd.equals(password)) {
             // 登录成功
             session.setAttribute("loginUser", username);
             
