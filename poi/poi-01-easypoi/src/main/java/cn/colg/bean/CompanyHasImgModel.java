@@ -28,7 +28,7 @@ public class CompanyHasImgModel extends BaseEntity {
     private String companyName;
 
     /** 公司logo */
-    @Excel(name = "公司LOGO", type = 2, width = 64, height = 64, imageType = 1)
+    @Excel(name = "公司LOGO", type = 2, width = 64, imageType = 1)
     private String companyLogo;
 
     /** 公司地址 */

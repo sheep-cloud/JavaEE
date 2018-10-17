@@ -10,6 +10,8 @@ import java.util.Map;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Test;
 
+import com.alibaba.fastjson.JSON;
+
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
@@ -40,12 +42,13 @@ public class CompanyHasImgModelTest extends BaseTest{
         for (int i = 0; i < size; i++) {
             CompanyHasImgModel companyHasImgModel = new CompanyHasImgModel().setCompanyId(IdUtil.simpleUUID())
                                                                             .setCompanyName("百度-" + i)
-                                                                            .setCompanyLogo("E:\\upload\\file\\vue.jpg")
+                                                                            .setCompanyLogo("E:\\upload\\file\\logo.png")
                                                                             .setCompanyAddress("天河-" + i);
             list.add(companyHasImgModel);
         }
         
         ExportParams entity = new ExportParams("公司信息", "公司");
+        entity.setHeight((short)64);
         Workbook workbook = ExcelExportUtil.exportExcel(entity, CompanyHasImgModel.class, list);
         
         String file = "E:\\upload\\file\\公司信息";
@@ -67,6 +70,7 @@ public class CompanyHasImgModelTest extends BaseTest{
         params.setTitleRows(1);
         params.setNeedSave(true);
         List<CompanyHasImgModel> list = ExcelImportUtil.importExcel(new File("E:\\upload\\file\\公司信息.xls"), CompanyHasImgModel.class, params );
+        Console.log(list.size());
         list.forEach(Console::log);
     }
     
@@ -82,6 +86,7 @@ public class CompanyHasImgModelTest extends BaseTest{
         params.setTitleRows(1);
         params.setNeedSave(true);
         List<Object> list = ExcelImportUtil.importExcel(new File("E:\\upload\\file\\公司信息.xls"), Map.class, params);
-        list.forEach(Console::log);
+        Console.log(list.size());
+        list.forEach(e -> Console.log(JSON.toJSONString(e)));
     }
 }

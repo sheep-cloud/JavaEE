@@ -11,11 +11,14 @@ import java.util.Map;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Test;
 
+import com.alibaba.fastjson.JSON;
+
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
+import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.Console;
@@ -42,7 +45,7 @@ public class CourseEntityTest {
             StudentEntity studentEntity = new StudentEntity().setId(IdUtil.simpleUUID())
                                                              .setName("Jack-" + i)
                                                              .setSex(i % 2 == 0 ? 1 : 2)
-                                                             .setBirthday(DateUtil.offsetHour(new Date(), -i))
+                                                             .setBirthday(DateUtil.offset(new Date(), DateField.YEAR, -i))
                                                              .setRegistrationDate(DateUtil.offsetMinute(new Date(), 1));
             studentlist1.add(studentEntity);
         }
@@ -51,7 +54,7 @@ public class CourseEntityTest {
             StudentEntity studentEntity = new StudentEntity().setId(IdUtil.simpleUUID())
                                                              .setName("Rose-" + i)
                                                              .setSex(i % 2 == 0 ? 1 : 2)
-                                                             .setBirthday(DateUtil.offsetHour(new Date(), -i))
+                                                             .setBirthday(DateUtil.offset(new Date(), DateField.YEAR, -i))
                                                              .setRegistrationDate(DateUtil.offsetMinute(new Date(), 1));
             studentlist2.add(studentEntity);
         }
@@ -65,6 +68,7 @@ public class CourseEntityTest {
         list.add(courseEntity2);
         
         ExportParams entity = new ExportParams("各科学生", "课程");
+        entity.setHeight((short)10);
         Workbook workbook = ExcelExportUtil.exportExcel(entity, CourseEntity.class, list);
         
         String file = "E:\\upload\\file\\课程";
@@ -82,7 +86,7 @@ public class CourseEntityTest {
      */
     @Test
     public void test02() throws Exception {
-        // TODO colg [导入有bug]
+        // TODO: colg [导入有bug]
         ImportParams params = new ImportParams();
         params.setTitleRows(2);
         params.setHeadRows(2);
@@ -101,6 +105,7 @@ public class CourseEntityTest {
         ImportParams params = new ImportParams();
         params.setTitleRows(2);
         List<Map<String, Object>> list = ExcelImportUtil.importExcel(new File("E:\\upload\\file\\课程.xls"), Map.class, params);
-        list.forEach(Console::log);
+        Console.log(list.size());
+        list.forEach(e -> Console.log(JSON.toJSONString(e)));
     }
 }
