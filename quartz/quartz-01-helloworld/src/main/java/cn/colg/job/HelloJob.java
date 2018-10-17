@@ -9,7 +9,7 @@ import cn.hutool.core.date.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 任务类；
+ * 任务类
  * 
  * @author colg
  */

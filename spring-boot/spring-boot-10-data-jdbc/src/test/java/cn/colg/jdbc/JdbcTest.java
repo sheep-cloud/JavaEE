@@ -30,5 +30,6 @@ public class JdbcTest extends SpringBoot10DataJdbcApplicationTests {
         // ProxyConnection[PooledConnection[com.mysql.jdbc.JDBC4Connection@6d8796c1]]
         log.info(connection.toString());
         connection.close();
+        // TODO: colg [Spring Boot]
     }
 }

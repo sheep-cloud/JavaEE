@@ -14,11 +14,11 @@ import org.quartz.impl.StdSchedulerFactory;
 import com.alibaba.fastjson.JSON;
 
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.IdUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 任务调度器；
+ * 任务调度器
  * 
  * @author colg
  */
@@ -37,8 +37,8 @@ public class HelloScheduler {
                                         .build();
         
         JobDataMap jobDataMap = jobDetail.getJobDataMap();
-        jobDataMap.put("did", RandomUtil.simpleUUID());
-        jobDataMap.put("air", RandomUtil.randomUUID());
+        jobDataMap.put("did", IdUtil.simpleUUID());
+        jobDataMap.put("air", IdUtil.simpleUUID());
         
         log.info("HelloScheduler.startHelloJob() : {}", JSON.toJSONString(jobDetail));
         
