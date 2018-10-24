@@ -9,7 +9,7 @@ import com.alibaba.fastjson.JSON;
 
 import cn.colg.BaseMapperTest;
 import cn.colg.entity.Employee;
-import cn.hutool.core.lang.Console;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Dict;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,7 +28,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testQueryByLastNameResultMap() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         Map<Integer, Employee> map = employeeMapper.queryByLastNameResultMap("a");
-        Console.log(JSON.toJSONString(map, true));
+        log.info("map : {}", JSON.toJSONString(map));
     }
 
     /**
@@ -38,7 +38,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testFindByIdResultMap() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         Map<String, Object> map = employeeMapper.findByIdResultMap(1);
-        Console.log(JSON.toJSONString(map, true));
+        log.info("map : {}", JSON.toJSONString(map));
     }
 
     /**
@@ -47,8 +47,8 @@ public class EmployeeMapperTest extends BaseMapperTest {
     @Test
     public void testQueryByLastName() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
-        List<Employee> list = employeeMapper.queryByLastName("jack");
-        log.info("EmployeeMapperTest.testQueryByLastName() >> list : {}", list);
+        List<Employee> list = employeeMapper.queryByLastName("a");
+        log.info("list : {}", list);
     }
 
     /**
@@ -57,12 +57,11 @@ public class EmployeeMapperTest extends BaseMapperTest {
     @Test
     public void testFindByMap() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
-        Dict map = new Dict(4);
-        map.set("tableName", "tbl_employee")
-           .set("lastName", "jack")
-           .set("id", 1);
+        Dict map = Dict.create().set("tableName", "tbl_employee")
+                                .set("lastName", "jack")
+                                .set("id", 1);
         Employee employee = employeeMapper.findByMap(map);
-        log.info("EmployeeMapperTest.testFindByMap() >> employee : {}", employee);
+        log.info("employee : {}", employee);
     }
 
     /**
@@ -72,7 +71,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testFindByIdAndLastName() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         Employee employee = employeeMapper.findByIdAndLastName(1, "jack");
-        log.info("EmployeeMapperTest.testFindByIdAndLastName() >> employee : {}", employee);
+        log.info("employee : {}", employee);
     }
 
     /**
@@ -82,7 +81,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testFindById() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         Employee employee = employeeMapper.findById(1);
-        log.info("EmployeeMapperTest.testFindById() >> employee : {}", employee);
+        log.info("employee : {}", employee);
     }
     
     /**
@@ -92,7 +91,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testFindLastNameById() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         String lastName = employeeMapper.findLastNameById(1);
-        log.info("EmployeeMapperTest.testFindLastNameById() >> lastName : {}", lastName);
+        log.info("lastName : {}", lastName);
     }
 
     /**
@@ -105,7 +104,20 @@ public class EmployeeMapperTest extends BaseMapperTest {
         employeeMapper.addEmployee(employee);
         
         // 不是直接得到返回的主键id，而是通过之前的对象get出来
-        log.info("EmployeeMapperTest.testAddEmployee() >> employee.getId() : {}", employee.getId());
+        log.info("employee.getId() : {}", employee.getId());
+    }
+    
+    /**
+     * Test method for {@link cn.colg.dao.EmployeeMapper#addEmployee2(cn.colg.entity.Employee)}.
+     */
+    @Test
+    public void testAddEmployee2() {
+        EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
+        Employee employee = new Employee(null, "rose", "1", "rose@colg.com");
+        employeeMapper.addEmployee2(employee);
+        
+        // 不是直接得到返回的主键id，而是通过之前的对象get出来
+        log.info("employee.getId() : {}", employee.getId());
     }
 
     /**
@@ -115,11 +127,13 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testUpdateEmployee() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         List<Employee> list = employeeMapper.queryByLastName("rose");
-        Employee employee = list.stream().findFirst().get();
+        Employee employee = CollUtil.getFirst(list);
         
         if (employee != null) {
+            log.info("employee : {}", employee);
+            
             Integer integer = employeeMapper.updateEmployee(employee.setLastName("Junit-rose"));
-            log.info("EmployeeMapperTest.testUpdateEmployee() >> integer : {}", integer);
+            log.info("integer : {}", integer);
         }
     }
 
@@ -130,11 +144,13 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testDeleteById() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         List<Employee> list = employeeMapper.queryByLastName("rose");
-        Employee employee = list.stream().findFirst().get();
+        Employee employee = CollUtil.getFirst(list);
         
         if (employee != null) {
-            Boolean boolean1 = employeeMapper.deleteById(employee.getId());
-            log.info("EmployeeMapperTest.testDeleteById() >> boolean1 : {}", boolean1);
+            log.info("employee : {}", employee);
+            
+            Boolean bool = employeeMapper.deleteById(employee.getId());
+            log.info("bool : {}", bool);
         }
     }
 
@@ -142,16 +158,16 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testList() throws Exception {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         List<String> ids = employeeMapper.selectIds();
-        log.info("EmployeeMapperTest.testList() >> ids : {}", ids);
+        log.info("ids : {}", ids);
         
         List<String> lastNames = employeeMapper.selectLastNamesByIds(ids);
-        log.info("EmployeeMapperTest.testList() >> lastNames : {}", lastNames);
+        log.info("lastNames : {}", lastNames);
     }
     
     @Test
     public void testQueryByLastNameResultDict() throws Exception {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         List<Dict> list = employeeMapper.queryByLastNameResultDict("a");
-        Console.log(JSON.toJSONString(list, true));
+        log.info("list : {}", JSON.toJSONString(list));
     }
 }

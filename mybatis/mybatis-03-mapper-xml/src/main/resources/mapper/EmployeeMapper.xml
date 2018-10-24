@@ -5,91 +5,108 @@
 
 <mapper namespace="cn.colg.dao.EmployeeMapper">
 
-	<select id="queryByLastNameResultMap" resultType="cn.colg.entity.Employee">
+    <select id="queryByLastNameResultMap" resultType="cn.colg.entity.Employee">
         SELECT
             te.id, te.last_name lastName, te.gender, te.email
         FROM
             tbl_employee te
         WHERE te.last_name LIKE '%${lastName}%'
-	</select>
-	
-	<select id="findByIdResultMap" resultType="map">
-		SELECT
+    </select>
+
+    <select id="findByIdResultMap" resultType="map">
+        SELECT
             te.id, te.last_name lastName, te.gender, te.email
-		FROM
+        FROM
             tbl_employee te
-		WHERE te.id = #{id}
-	</select>
+        WHERE te.id = #{id}
+    </select>
 
 	<!-- resultType: 如果返回的是一个集合，要写集合中元素的类型 -->
-	<select id="queryByLastName" resultType="cn.colg.entity.Employee">
-		SELECT
+    <select id="queryByLastName" resultType="cn.colg.entity.Employee">
+        SELECT
             te.id, te.last_name lastName, te.gender, te.email
-		FROM
+        FROM
             tbl_employee te
-		WHERE te.last_name LIKE '%${lastName}%'
-	</select>
-	
-	<select id="findByMap" resultType="cn.colg.entity.Employee">
-		SELECT
+        WHERE te.last_name LIKE '%${lastName}%'
+    </select>
+
+    <select id="findByMap" resultType="cn.colg.entity.Employee">
+        SELECT
             te.id, te.last_name lastName, te.gender, te.email
-		FROM
+        FROM
             ${map.tableName} te
-		WHERE te.id = #{map.id} AND te.last_name LIKE '%${map.lastName}%'
-	</select>
-	
-	<select id="findByIdAndLastName" resultType="cn.colg.entity.Employee">
-		SELECT
+        WHERE te.id = #{map.id} AND te.last_name = #{map.lastName}
+    </select>
+
+    <select id="findByIdAndLastName" resultType="cn.colg.entity.Employee">
+        SELECT
             te.id, te.last_name lastName, te.gender, te.email
-		FROM
+        FROM
             tbl_employee te
-		WHERE te.id = #{id} AND te.last_name LIKE '%${lastName}%'
-	</select>
-	
-	<select id="findById" resultType="cn.colg.entity.Employee">
-		SELECT
+        WHERE te.id = #{id} AND te.last_name = #{lastName}
+    </select>
+
+    <select id="findById" resultType="cn.colg.entity.Employee">
+        SELECT
             te.id, te.last_name lastName, te.gender, te.email
-		FROM
+        FROM
             tbl_employee te
-		WHERE te.id = #{id}
-	</select>
-	
-	<select id="findLastNameById" resultType="string">
-		SELECT
+        WHERE te.id = #{id}
+    </select>
+
+    <select id="findLastNameById" resultType="string">
+        SELECT
             te.last_name lastName
-		FROM
+        FROM
             tbl_employee te
-		WHERE te.id = #{id}
-	</select>
+        WHERE te.id = #{id}
+    </select>
 	
 	<!-- 
-		parameterType：参数类型，可以省略
-		
-		获取自增主键的值：
-			Mysql支持自增主键，自增主键值的获取，Mybatis也是利用statement.getGenreatedKeys();
-			useGeneratedKeys="true"	使用自增主键获取主键值策略
-			keyProperty				指定对应的主键属性，也就是Mybatis获取到主键值以后，将这个值封装给javaBean的哪个属性
+        parameterType：参数类型，可以省略
+        
+                        获取自增主键的值：
+            Mysql支持自增主键，自增主键值的获取，Mybatis也是利用statement.getGenreatedKeys();
+            useGeneratedKeys="true"  使用自增主键获取主键值策略
+            keyProperty              指定对应的主键属性，也就是Mybatis获取到主键值以后，将这个值封装给javaBean的哪个属性
+            
+                        新添加主键id并不是在执行添加操作时直接返回的，而是在执行添加操作之后将新添加记录的主键id字段设置为POJO对象的主键id属性
 	 -->
-	<insert id="addEmployee" useGeneratedKeys="true" keyProperty="employee.id">
-		INSERT INTO
+    <insert id="addEmployee" useGeneratedKeys="true" keyProperty="employee.id">
+        INSERT INTO
+            tbl_employee (last_name, gender, email)
+        VALUES
+            (#{employee.lastName}, #{employee.gender}, #{employee.email})
+    </insert>
+    
+    <!-- 
+        selectKey: 查询主键
+            keyProperty：    指定对应的主键属性，也就是Mybatis获取到主键值以后，将这个值封装给javaBean的哪个属性
+            order:        在执行操作之前还是之后，执行查询操作
+     -->
+    <insert id="addEmployee2">
+        <selectKey keyProperty="employee.id" order="AFTER" resultType="int">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO
             tbl_employee (last_name, email, gender)
-		VALUES
+        VALUES
             (#{employee.lastName}, #{employee.email}, #{employee.gender})
-	</insert>
-	
-	<update id="updateEmployee">
-		UPDATE
+    </insert>
+
+    <update id="updateEmployee">
+        UPDATE
             tbl_employee
-		SET
+        SET
             last_name = #{employee.lastName}, email = #{employee.email}, gender = #{employee.gender}
-		WHERE id = #{employee.id}
-	</update>
-	
-	<delete id="deleteById">
-		DELETE FROM
+        WHERE id = #{employee.id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM
             tbl_employee
         WHERE id = #{id}
-	</delete>
+    </delete>
 
     <select id="selectIds" resultType="String">
         SELECT
@@ -109,12 +126,12 @@
             </foreach>
         )
     </select>
-    
+
     <select id="queryByLastNameResultDict" resultType="map">
-		SELECT
+        SELECT
             te.id, te.last_name lastName, te.gender, te.email
-		FROM
+        FROM
             tbl_employee te
-		WHERE te.last_name LIKE '%${lastName}%'
+        WHERE te.last_name LIKE '%${lastName}%'
     </select>
 </mapper>

@@ -19,9 +19,9 @@
         <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
         <skipTests>true</skipTests>
         <junit.version>4.12</junit.version>
-        <hutool.version>4.0.12</hutool.version>
-        <commons-lang3.version>3.7</commons-lang3.version>
-        <fastjson.version>1.2.47</fastjson.version>
+        <hutool.version>4.1.18</hutool.version>
+        <commons-lang3.version>3.8.1</commons-lang3.version>
+        <fastjson.version>1.2.51</fastjson.version>
         <sprign-boot.version>1.5.13.RELEASE</sprign-boot.version>
         <spring-cloud.version>Dalston.SR5</spring-cloud.version>
         <swagger2.version>2.8.0</swagger2.version>

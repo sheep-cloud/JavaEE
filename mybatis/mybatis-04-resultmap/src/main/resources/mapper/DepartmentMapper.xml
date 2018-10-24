@@ -3,72 +3,77 @@
 
 <mapper namespace="cn.colg.dao.DepartmentMapper">
 
-	<select id="findById" resultType="cn.colg.entity.Department">
-		SELECT td.id, td.dept_name 'departmentName'
-		FROM tbl_dept td
-		WHERE td.id = #{id}
-	</select>
+    <select id="findById" resultType="cn.colg.entity.Department">
+        SELECT
+            td.id, td.dept_name `departmentName`
+        FROM
+            tbl_dept td
+        WHERE td.id = #{id}
+    </select>
 	
-	<!-- 
-		根据id查询部门，把员工也查询出来
-	 -->
-	 <!-- 一对多：关联查询 -->
-	 <resultMap type="cn.colg.entity.Department" id="MyDept">
-		<id property="id" column="id" />
-		<result property="departmentName" column="dept_name" />
-		<!-- 
-			collection：	定义关联集合类型的属性的封装规则
-				property="emps"：					指定哪个属性是关联的集合
-				ofType="cn.colg.entity.Employee"：	指定这个集合中对象的类型（不能省略）
+    <!-- 
+                        根据id查询部门，把员工也查询出来
+     -->
+    <!-- 一对多：关联查询 -->
+    <resultMap type="cn.colg.entity.Department" id="MyDept">
+        <id property="id" column="id" />
+        <result property="departmentName" column="dept_name" />
+        <!-- 
+            collection：	定义关联集合类型的属性的封装规则
+                property="emps"：                                                        指定哪个属性是关联的集合
+                ofType="cn.colg.entity.Employee"：     指定这个集合中对象的类型（不能省略）
 				
 		 -->
-		 <collection property="emps" ofType="cn.colg.entity.Employee">
+        <collection property="emps" ofType="cn.colg.entity.Employee">
 		 	<!-- 这里的 column 对应的是查询的别名，而不是表中的别名 -->
-			<id property="id" column="te_id" />
-			<result property="lastName" column="last_name" />
-			<result property="gender" column="gender" />
-			<result property="email" column="email" />
-		 </collection>
-	 </resultMap>
-	 <select id="findByIdPlus" resultMap="MyDept">
+            <id property="id" column="te_id" />
+            <result property="lastName" column="last_name" />
+            <result property="gender" column="gender" />
+            <result property="email" column="email" />
+        </collection>
+    </resultMap>
+    <select id="findByIdPlus" resultMap="MyDept">
 	 	<!-- 不能有重复列名，需要起别名 -->
-		SELECT
-			td.id, td.dept_name,
-			te.id te_id, te.last_name, te.gender, te.email, te.dept_id
-		FROM tbl_dept td
-		INNER JOIN tbl_employee te ON td.id = te.dept_id
+        SELECT
+            td.id, td.dept_name,
+            te.id te_id, te.last_name, te.gender, te.email, te.dept_id
+        FROM
+            tbl_dept td
+        INNER JOIN tbl_employee te ON td.id = te.dept_id
         <where>
             <if test="id != null and id != ''">
                 td.id = #{id}
             </if>
         </where>
-	 </select>
+    </select>
 	 
 	 <!-- 一对多：分步查询 -->
-	 <resultMap type="cn.colg.entity.Department" id="MyDeptStep">
-		<id property="id" column="id" />
-		<result property="departmentName" column="dept_name" />
-		<collection property="emps" column="deptId=id" select="cn.colg.dao.EmployeeMapper.queryByDeptId"></collection>
-	 </resultMap>
-	 <select id="findByIdStep" resultMap="MyDeptStep">
-		SELECT td.id, td.dept_name
-		FROM tbl_dept td
-		WHERE td.id = #{id}
-	 </select>
+    <resultMap type="cn.colg.entity.Department" id="MyDeptStep">
+        <id property="id" column="id" />
+        <result property="departmentName" column="dept_name" />
+        <collection property="emps" column="deptId=id" select="cn.colg.dao.EmployeeMapper.queryByDeptId" />
+    </resultMap>
+    <select id="findByIdStep" resultMap="MyDeptStep">
+        SELECT
+            td.id, td.dept_name
+        FROM
+            tbl_dept td
+        WHERE td.id = #{id}
+    </select>
 	 
 	 <!--
-	 	扩展：	多列的值的传递方法
-	 				将多列的值封装到map中传递
-	 		单列：	column="id"									查询出来的值
-	 		多列：	column="{key1=column1,key2=column2}"		column="{id=id,lastName=last_name}"  #{id},#{lastName}
+                        扩展: 多列的值的传递方法
+                                            将多列的值封装到map中传递
+                                   单列:  column="id"                             查询出来的值
+	                       多列:  column="{key1=column1,key2=column2}"    column="{id=id,lastName=last_name}"    #{id},#{lastName}
 	  -->
-      
-      <select id="findAllId" resultType="Integer">
+
+    <select id="findAllId" resultType="Integer">
         SELECT
             td.id
         FROM
             tbl_dept td
-      </select>
+    </select>
 
 
     <resultMap type="cn.colg.entity.Department" id="MyGroup">
@@ -86,8 +91,8 @@
 
     <select id="selectAll" resultType="cn.colg.entity.Department">
         SELECT
-            td.id, td.dept_name as departmentName
+        td.id, td.dept_name as departmentName
         FROM
-            tbl_dept td
+        tbl_dept td
     </select>
 </mapper>

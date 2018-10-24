@@ -3,36 +3,38 @@
 
 <mapper namespace="cn.colg.dao.EmployeeMapper">
 
-	<resultMap type="cn.colg.entity.Employee" id="MyDepDis">
-		<id property="id" column="id" />
-		<result property="lastName" column="last_name" />
-		<result property="gender" column="gender" />
-		<result property="email" column="email" />
+    <resultMap type="cn.colg.entity.Employee" id="MyDepDis">
+        <id property="id" column="id" />
+        <result property="lastName" column="last_name" />
+        <result property="gender" column="gender" />
+        <result property="email" column="email" />
 		<!-- 
-			discriminator：	鉴别器，mybatis可以使用discriminator判断某列的值，然后根据某列的值改变封装行为，封装Employee；
-				javaType：	指定对应的java类型
-				column：		指定判定的列名
+			discriminator:   鉴别器，mybatis可以使用discriminator判断某列的值，然后根据某列的值改变封装行为，封装Employee；
+                javaType:    指定对应的java类型
+                column:      指定判定的列名
 		 -->
-		<discriminator javaType="String" column="gender">
+        <discriminator javaType="String" column="gender">
 			<!-- 女生  resultType：指定封装的结果类型 -->
-			<case value="1" resultType="cn.colg.entity.Employee">
+            <case value="1" resultType="cn.colg.entity.Employee">
 				<!-- 如果员工是女生，就是部门信息查询出来 -->
-				<association property="dept" select="cn.colg.dao.DepartmentMapper.findById" column="id"></association>
-			</case>
+                <association property="dept" select="cn.colg.dao.DepartmentMapper.findById" column="id" />
+            </case>
 			<!-- 男生 -->
-			<case value="0" resultType="cn.colg.entity.Employee">
+            <case value="0" resultType="cn.colg.entity.Employee">
 				<!-- 如果员工是男生，就把姓名赋值给email。 -->
-				<id property="id" column="id" />
-				<result property="lastName" column="last_name" />
-				<result property="gender" column="gender" />
-				<result property="email" column="last_name" />
-			</case>
-		</discriminator>
+                <id property="id" column="id" />
+                <result property="lastName" column="last_name" />
+                <result property="gender" column="gender" />
+                <result property="email" column="last_name" />
+            </case>
+        </discriminator>
 
-	</resultMap>
-	<select id="findByIdWithGender" resultMap="MyDepDis">
-		SELECT te.id, te.last_name, te.gender, te.email, te.dept_id
-		FROM tbl_employee te
-		WHERE te.id = #{id}
-	</select>
+    </resultMap>
+    <select id="findByIdWithGender" resultMap="MyDepDis">
+        SELECT
+            te.id, te.last_name, te.gender, te.email, te.dept_id
+        FROM
+            tbl_employee te
+        WHERE te.id = #{id}
+    </select>
 </mapper>

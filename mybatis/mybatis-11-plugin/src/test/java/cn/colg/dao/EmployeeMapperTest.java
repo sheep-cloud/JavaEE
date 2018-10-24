@@ -34,12 +34,15 @@ public class EmployeeMapperTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
-        // EmployeeMapperTest.testFindById() >> mapper : org.apache.ibatis.binding.MapperProxy@55634720
-        log.info("EmployeeMapperTest.testFindById() >> mapper : {}", mapper);
+        // mapper : org.apache.ibatis.binding.MapperProxy@17695df3
+        log.info("mapper : {}", mapper);
 
         Employee employee = mapper.findById(1);
-        // EmployeeMapperTest.testFindById() >> employee : Employee(id=1, lastName=jack, gender=0, email=jack@colg.com)
-        log.info("EmployeeMapperTest.testFindById() >> employee : {}", employee);
+        // employee : {"email":"jack@colg.com","gender":"0","id":1,"lastName":"jack"}
+        log.info("employee : {}", employee);
+
+        // 销毁sqlSession
+        sqlSession.close();
     }
 
 }

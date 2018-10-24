@@ -28,6 +28,9 @@ public class MySecondPlugin implements Interceptor {
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         log.info("MySecondPlugin.intercept() >> invocation.getMethod() : {}", invocation.getMethod());
+        
+        // 动态改变sql运行的参数
+        
         Object object = invocation.proceed();
         return object;
     }
@@ -41,7 +44,7 @@ public class MySecondPlugin implements Interceptor {
 
     @Override
     public void setProperties(Properties properties) {
-        log.info("enclosing_type.setProperties() >> 插件配置的信息 : {}", JSON.toJSONString(properties));
+        log.info("MySecondPlugin.setProperties() >> 插件配置的信息 : {}", JSON.toJSONString(properties));
     }
 
 }

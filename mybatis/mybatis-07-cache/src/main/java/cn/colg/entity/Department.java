@@ -3,9 +3,13 @@ package cn.colg.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
+import cn.colg.core.BaseEntity;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
@@ -15,9 +19,10 @@ import lombok.experimental.Accessors;
  */
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Accessors(chain = true)
-public class Department implements Serializable {
+public class Department extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,5 +32,6 @@ public class Department implements Serializable {
     private String departmentName;
 
     /** 员工集合；一对多 */
+    @JSONField(ordinal = 1)
     private List<Employee> emps;
 }

@@ -3,136 +3,144 @@
 
 <mapper namespace="cn.colg.dao.EmployeeMapper">
 
-	<select id="queryByConditionIf" resultType="cn.colg.entity.Employee">
-		SELECT te.id, te.last_name lastName, te.gender, te.email, te.dept_id
-		FROM tbl_employee te
-		<!-- 
-			test：判断表达式（OGNL）
-				从参数中取值进行判断
-				遇见特殊符号，应该去写转义字符
+    <select id="queryByConditionIf" resultType="cn.colg.entity.Employee">
+        SELECT
+            te.id, te.last_name lastName, te.gender, te.email, te.dept_id
+        FROM
+            tbl_employee te
+        <!-- 
+            test：判断表达式（OGNL）
+                                            从参数中取值进行判断
+                                            遇见特殊符号，应该去写转义字符
+         -->
+        <!-- 
+            where：
+                                            查询的时候如果某些条件没有设置可能sql拼装有问题
+                    1、给where后面加上1=1，以后的条件都加and
+                    2、使用where标签，将所有的查询条件包括在内；mybatis就会将where标签中拼装的sql，多出来的and或者or去掉
+         -->
+        <where>
+            <if test="id != null">
+                AND te.id = #{id}
+            </if>
+            <if test="lastName != null and lastName != ''">
+                AND te.last_name LIKE #{lastName}
+            </if>
+            <!-- OGNL会进行字符串与数字的转换判断："0"==0 -->
+            <if test="gender == 0 or gender == 1">
+                AND te.gender = #{gender}
+            </if>
+            <!-- 转义符号：&=&amp;  '=&apos; -->
+            <if test="email != null &amp;&amp; email.trim() != &apos;&apos;">
+                AND te.email LIKE #{email}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryByConditionIfTrim" resultType="cn.colg.entity.Employee">
+        SELECT
+            te.id, te.last_name lastName, te.gender, te.email, te.dept_id
+        FROM
+            tbl_employee te
+        <!-- 
+            trim：
+                prefix="where":           前缀，trim标签体中整个字符串拼串后的结果；给整个字符串加一个前缀
+                suffix="":                后缀，trim标签体中整个字符串拼串后的结果；给这个字符串加一个后缀
+                prefixOverrides="AND":    前缀覆盖，去掉整个字符串前面多余的字符
+                suffixOverrides="AND":    后缀覆盖，去掉整个字符串后面多余的字符
 		 -->
-		 <!-- 
-		 	where：
-		 		查询的时候如果某些条件没有设置可能sql拼装有问题
-		 			1、给where后面加上1=1，以后的条件都加and
-		 			2、使用where标签，将所有的查询条件包括在内；mybatis就会将where标签中拼装的sql，多出来的and或者or去掉
-		  -->
-		<where>
-			<if test="id != null">
-				AND te.id = #{id}
-			</if>
-			<if test="lastName != null and lastName != ''">
-				AND te.last_name LIKE #{lastName}
-			</if>
+        <trim prefix="where" suffixOverrides="AND">
+            <if test="id != null">
+                te.id = #{id} AND
+            </if>
+            <if test="lastName != null and lastName != ''">
+                te.last_name LIKE #{lastName} AND
+            </if>
 			<!-- OGNL会进行字符串与数字的转换判断："0"==0 -->
-			<if test="gender == 0 or gender == 1">
-				AND te.gender = #{gender}
-			</if>
+            <if test="gender == 0 or gender == 1">
+                te.gender = #{gender} AND
+            </if>
 			<!-- 转义符号：&=&amp;  '=&apos; -->
-			<if test="email != null &amp;&amp; email.trim() != &apos;&apos;">
-				AND te.email LIKE #{email}
-			</if>
-		</where>
-	</select>
+            <if test="email != null &amp;&amp; email.trim() != &apos;&apos;">
+                te.email LIKE #{email} AND
+            </if>
+        </trim>
+    </select>
 
-	<select id="queryByConditionIfTrim" resultType="cn.colg.entity.Employee">
-		SELECT te.id, te.last_name lastName, te.gender, te.email, te.dept_id
-		FROM tbl_employee te
-		<!-- 
-			trim：	
-				prefix="where"：				前缀，trim标签体中整个字符串拼串后的结果；给整个字符串加一个前缀
-				suffix=""：					后缀，trim标签体中整个字符串拼串后的结果；给这个字符串加一个后缀
-				prefixOverrides="AND"：		前缀覆盖，去掉整个字符串前面多余的字符
-				suffixOverrides="AND":		后缀覆盖，去掉整个字符串后面多余的字符
-				
+    <select id="queryByConditionIfChoose" resultType="cn.colg.entity.Employee">
+        SELECT
+            te.id, te.last_name lastName, te.gender, te.email, te.dept_id
+        FROM
+            tbl_employee te
+        <where>
+            <!--
+                choose：	分支查询，只会进入其中一个条件
+             -->
+            <choose>
+                <when test="id != null">
+                    AND te.id = #{id}
+                </when>
+                <when test="lastName != null and lastName != ''">
+                    AND te.last_name LIKE #{lastName}
+                </when>
+                <when test="gender == 0 or gender == 1">
+                    AND te.gender = #{gender}
+                </when>
+                <otherwise>
+                    AND te.email LIKE '%a%'
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <update id="updateEmployee">
+        UPDATE tbl_employee
+        <set>
+            <if test="lastName != null and lastName != ''">
+                last_name = #{lastName},
+            </if>
+            <if test="gender == 0 or gender != 1">
+                gender = #{gender},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <select id="queryByConditionForeach" resultType="cn.colg.entity.Employee">
+        SELECT
+            te.id, te.last_name, te.gender, te.email, te.dept_id
+        FROM
+            tbl_employee te
+        WHERE te.id IN
+        <!-- foreach:   遍历
+                collection="ids":   指定要遍历的的集合；list类型的参数会特殊处理封装在map中，map的key就叫list
+                item="id":          将当前遍历出的元素赋值给指定的变量
+                separator=",":      每个元素之间的分隔符
+                open="(":           遍历出所有结果拼接一个开始的字符串
+                close=")":          遍历出所有结果拼接一个结束的字符串
+                index="":           索引；
+                                                                                                                     遍历list的时候index就是索引，item就是当前值；index不需要填写
+                                                                                                                     遍历map的时候index表示的就是map的key，item就是map的值
+                #{id}:              就是取出变量的值，也就是当前遍历出的元素
 		 -->
-		<trim prefix="where" suffixOverrides="AND">
-			<if test="id != null">
-				te.id = #{id} AND
-			</if>
-			<if test="lastName != null and lastName != ''">
-				te.last_name LIKE #{lastName} AND
-			</if>
-			<!-- OGNL会进行字符串与数字的转换判断："0"==0 -->
-			<if test="gender == 0 or gender == 1">
-				te.gender = #{gender} AND
-			</if>
-			<!-- 转义符号：&=&amp;  '=&apos; -->
-			<if test="email != null &amp;&amp; email.trim() != &apos;&apos;">
-				te.email LIKE #{email} AND
-			</if>
-		</trim>
-	</select>
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
 
-	<select id="queryByConditionIfChoose" resultType="cn.colg.entity.Employee">
-		SELECT te.id, te.last_name lastName, te.gender, te.email, te.dept_id
-		FROM tbl_employee te
-		<where>
-			<!-- 
-				choose：	分支查询，只会进入其中一个条件
-			 -->
-			<choose>
-				<when test="id != null">
-					AND te.id = #{id}
-				</when>
-				<when test="lastName != null and lastName != ''">
-					AND te.last_name LIKE #{lastName}
-				</when>
-				<when test="gender == 0 or gender == 1">
-					AND te.gender = #{gender}
-				</when>
-				<otherwise>
-					AND te.email LIKE '%a%'
-				</otherwise>
-			</choose>
-		</where>
-	</select>
-
-	<update id="updateEmployee">
-		UPDATE tbl_employee
-		<set>
-			<if test="lastName != null and lastName != ''">
-				last_name = #{lastName},
-			</if>
-			<if test="gender == 0 or gender != 1">
-				gender = #{gender},
-			</if>
-			<if test="email != null and email != ''">
-				email = #{email},
-			</if>
-		</set>
-		<where>
-			id = #{id}
-		</where>
-	</update>
-
-	<select id="queryByConditionForeach" resultType="cn.colg.entity.Employee">
-		SELECT te.id, te.last_name, te.gender, te.email, te.dept_id
-		FROM tbl_employee te
-		WHERE te.id IN
-		<!-- foreach：	遍历
-				collection="ids"：	指定要遍历的的集合；list类型的参数会特殊处理封装在map中，map的key就叫list
-				item="id"：			将当前遍历出的元素赋值给指定的变量
-				separator=","：		每个元素之间的分隔符
-				open="("：			遍历出所有结果拼接一个开始的字符串
-				close=")"：			遍历出所有结果拼接一个结束的字符串
-				index=""：			索引；
-										遍历list的时候index就是索引，item就是当前值；list不需要填写
-										遍历map的时候index表示的就是map的key，item就是map的值
-				#{id}：				就是取出变量的值，也就是当前遍历出的元素
-		 -->
-		<foreach collection="ids" item="id" separator="," open="(" close=")">
-			#{id}
-		</foreach>
-	</select>
-
-	<insert id="addEmployees">
-		INSERT INTO tbl_employee(last_name, gender, email)
-		<!-- MySQL下批量保存：	可以foreach遍历；mysql支持values(), (), ()语法 -->
-		VALUES
-		<foreach collection="employees" item="employee" separator=",">
-			(#{employee.lastName}, #{employee.gender}, #{employee.email})
-		</foreach>
-	</insert>
+    <insert id="addEmployees">
+        INSERT INTO
+            tbl_employee(last_name, gender, email, dept_id)
+        <!-- MySQL下批量保存:    可以foreach遍历；mysql支持values(), (), ()语法 -->
+        VALUES
+        <foreach collection="employees" item="employee" separator=",">
+            (#{employee.lastName}, #{employee.gender}, #{employee.email}, #{employee.dept.id})
+        </foreach>
+    </insert>
 
 </mapper>

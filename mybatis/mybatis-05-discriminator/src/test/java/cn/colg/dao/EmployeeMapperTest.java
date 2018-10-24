@@ -20,10 +20,14 @@ public class EmployeeMapperTest extends BaseMapperTest {
     @Test
     public void testFindByIdWithGender() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
-        Employee employee = employeeMapper.findByIdWithGender(22);
-        log.info("testFindByIdWithGender() >> employee : {}", employee);
-        log.info("testFindByIdWithGender() >> employee.getDept() : {}", employee.getDept());
-        // TODO colg [discriminator：case条件：gender=1，没有查询部门]
+        Employee employee = employeeMapper.findByIdWithGender(1);
+        log.info("employee : {}", employee);
+        log.info("employee.getDept() : {}", employee.getDept());
+        log.info("----------------------------------------------------------------------------------------------------");
+
+        employee = employeeMapper.findByIdWithGender(2);
+        log.info("employee : {}", employee);
+        log.info("employee.getDept() : {}", employee.getDept());
     }
 
 }

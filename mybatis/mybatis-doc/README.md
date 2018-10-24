@@ -38,10 +38,10 @@
 
 ### 2.1. HelloWorld简单版
 
-1. 创建一张测试表
-2. 创建对应的javaBean
-3. 创建mybatis配置文件，sql映射文件
-4. 测试
+1.  创建一张测试表
+2.  创建对应的javaBean
+3.  创建mybatis配置文件，sql映射文件
+4.  测试
 
 ### 2.2. 测试
 
@@ -90,7 +90,7 @@ public abstract class BaseMapperTest {
     public void tearDown() throws Exception {
         // 销毁sqlSession
         sqlSession.close();
-        log.info("tearDown() : {}", "----------------------------------------------------------------------------------------------------\n");
+        log.info("tearDown() : {}", "------------------------------------------------\n");
     }
 }
 ```
@@ -117,7 +117,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
      *      2). Sql映射文件：保存了每一个sql语句的映射信息：将sql抽取出来
      */
 
-    /// ----------------------------------------------------------------------------------------------------
+    /// ----------------------------------------------------------------------------------
 
     /**
      * Test method for {@link cn.colg.dao.EmployeeMapper#findById(java.lang.Integer)}.
@@ -127,7 +127,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
         // 1. 唯一标识符。
         // 2. 传递给语句的参数对象。
         Employee employee = sqlSession.selectOne("cn.colg.dao.EmployeeMapper.findById", 1);
-        log.info("EmployeeMapperTest.testFindById01() >> employee : {}", employee);
+        log.info("employee : {}", employee);
     }
 
     /**
@@ -138,10 +138,10 @@ public class EmployeeMapperTest extends BaseMapperTest {
         // mybatis会为接口自动创建一个代理对象，代理对象去执行增删改查方法
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         // class com.sun.proxy.$Proxy8
-        log.info("EmployeeMapperTest.testFindById02() >> employeeMapper.getClass() : {}", employeeMapper.getClass());
+        log.info("employeeMapper.getClass() : {}", employeeMapper.getClass());
 
         Employee employee = employeeMapper.findById(1);
-        log.info("EmployeeMapperTest.testFindById02() >> employee : {}", employee);
+        log.info("employee : {}", employee);
     }
 
 }
@@ -229,21 +229,6 @@ public class EmployeeMapperTest extends BaseMapperTest {
 
 ```xml
 	<mappers>
-		<!-- 
-			mapper: 注册一个sql映射
-				注册配置文件：
-					resource：	引用类路径下的sql映射文件				<mapper resource="org/mybatis/builder/PostMapper.xml"/>
-					url：		引用网络路径下或者磁盘路径下的sql映射文件	<mapper url="file:///var/mappers/PostMapper.xml"/>
-				注册接口：
-				class:		引用（注册）接口
-					1、有sql映射文件，映射文件名必须和接口同名，并且放在与接口同一目录下；
-					2、没有sql映射文件，所有的sql都是利用注解写在接口上
-					推荐：比较重要的，复杂的Dao接口写sql映射文件
-						不重要，简单的Dao接口为了开发快速可以使用注解；
-		 -->
-		<!-- <mapper resource="mybatis/mapper/EmployeeMapper.xml" /> -->
-		<!-- <mapper class="com.atguigu.mybatis.dao.EmployeeMapperAnnotation"/> -->
-		
 		<!-- package：	批量注册：同包名、同命名 -->
 		<package name="cn.colg.dao" />
 	</mappers>
@@ -284,12 +269,12 @@ public class EmployeeMapperTest extends BaseMapperTest {
   			useGeneratedKeys="true"	使用自增主键获取主键值策略
   			keyProperty				指定对应的主键属性，也就是Mybatis获取到主键值以后，将这个值封装给javaBean的哪个属性
   	 -->
-  	<insert id="addEmployee" useGeneratedKeys="true" keyProperty="employee.id">
-  		INSERT INTO
+      <insert id="addEmployee" useGeneratedKeys="true" keyProperty="employee.id">
+          INSERT INTO
               tbl_employee (last_name, email, gender)
-  		VALUES
+          VALUES
               (#{employee.lastName}, #{employee.email}, #{employee.gender})
-  	</insert>
+      </insert>
   ```
 
   - 数据库不支持自动生成主键 - 使用selectKey子元素
@@ -299,17 +284,17 @@ public class EmployeeMapperTest extends BaseMapperTest {
 #### 4.2.1. 单个参数
 
 - 可以接收基本类型、对象类型、集合类型的值。这种情况Mybatis可直接使用这个参数，不需要经过任何处理
-- #{参数名}:	取出参数值
+	 #{参数名}:	取出参数值
 
 #### 4.2.2. 多个参数
 
 - 任意多个参数，都会被MyBatis重新包装成一个Map传入。Map的key是param1，param2...值就是参数的值
-- #{param1}:	取出参数值
+	 #{param1}:	取出参数值
 
 #### 4.2.3. 命名参数
 
 - 为参数使用@Param起一个名字，MyBatis就会将这些参数封装进map中，key就是指定的名字
-- #{指定的key}:	取出参数值
+	 #{指定的key}:	取出参数值
 
 #### 4.2.4. POJO
 
@@ -319,7 +304,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
 #### 4.2.5. Map
 
 - 可以封装多个参数为map。直接传递
-- #{指定的key}:	取出参数值
+	 #{指定的key}:	取出参数值
 
 ### 4.3. 参数处理
 

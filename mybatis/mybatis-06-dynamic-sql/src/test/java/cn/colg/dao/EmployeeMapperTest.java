@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.Test;
 
 import cn.colg.BaseMapperTest;
+import cn.colg.entity.Department;
 import cn.colg.entity.Employee;
 import cn.hutool.core.collection.CollUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         Employee employee = new Employee(1, "%j%", "0", "%j%", null);
         List<Employee> list = employeeMapper.queryByConditionIf(employee);
-        log.info("testQueryByConditionIf() >> list : {}", list);
+        log.info("list : {}", list);
     }
 
     /**
@@ -36,7 +37,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         Employee employee = new Employee(null, null, "0", "%j%", null);
         List<Employee> list = employeeMapper.queryByConditionIfTrim(employee);
-        log.info("testQueryByConditionIf() >> list : {}", list);
+        log.info("list : {}", list);
     }
 
     /**
@@ -48,7 +49,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
         Employee employee = new Employee();
         // 对象为空，直接进入最后一个分支查询
         List<Employee> list = employeeMapper.queryByConditionIfChoose(employee);
-        log.info("testQueryByConditionIf() >> list : {}", list);
+        log.info("list : {}", list);
     }
 
     /**
@@ -59,7 +60,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         Employee employee = new Employee(23, "tom", "0", null, null);
         boolean result = employeeMapper.updateEmployee(employee);
-        log.info("testUpdateEmployee() >> result : {}", result);
+        log.info("result : {}", result);
     }
 
     /**
@@ -68,8 +69,8 @@ public class EmployeeMapperTest extends BaseMapperTest {
     @Test
     public void testQueryByConditionForeach() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
-        List<Employee> list = employeeMapper.queryByConditionForeach(new Integer[] {1, 22, 23});
-        log.info("testQueryByConditionForeach() >> list : {}", list);
+        List<Employee> list = employeeMapper.queryByConditionForeach(new Integer[] {1, 2});
+        log.info("list : {}", list);
     }
     
     /**
@@ -79,10 +80,10 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testAddEmployees() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         List<Employee> employees = CollUtil.newArrayList(
-                new Employee(null, "smith", "0", "smith@colg.com", null),
-                new Employee(null, "allen", "1", "allen@colg.com", null)
+                new Employee(null, "smith", "0", "smith@colg.com", new Department().setId(1)),
+                new Employee(null, "allen", "1", "allen@colg.com", new Department().setId(2))
             );
         long result = employeeMapper.addEmployees(employees);
-        log.info("testAddEmployees() >> result : {}", result);
+        log.info("result : {}", result);
     }
 }

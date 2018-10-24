@@ -23,7 +23,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testFindById() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         Employee employee = employeeMapper.findById(1);
-        log.info("testFindById() >> employee : {}", employee);
+        log.info("employee : {}", employee);
     }
 
     /**
@@ -33,7 +33,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testFindEmpAndDept01() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         Employee employee = employeeMapper.findEmpAndDept01(1);
-        log.info("testFindEmpAndDept() >> employee : {}", employee);
+        log.info("employee : {}", employee);
     }
 
     /**
@@ -43,7 +43,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testFindEmpAndDept02() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         Employee employee = employeeMapper.findEmpAndDept02(1);
-        log.info("testFindEmpAndDept02() >> employee : {}", employee);
+        log.info("employee : {}", employee);
     }
 
     /**
@@ -53,7 +53,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testFindEmpAndDept03() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         Employee employee = employeeMapper.findEmpAndDept03(1);
-        log.info("testFindEmpAndDept02() >> employee : {}", employee);
+        log.info("employee : {}", employee);
     }
 
     /**
@@ -65,8 +65,8 @@ public class EmployeeMapperTest extends BaseMapperTest {
         Employee employee = employeeMapper.findEmpAndDeptStep04(1);
 
         // 延迟加载，按需加载
-        log.info("testFindEmpAndDeptStep04() >> employee.getLastName() : {}", employee.getLastName());
-        log.info("testFindEmpAndDeptStep04() >> employee : {}", employee);
+        log.info("employee.getLastName() : {}", employee.getLastName());
+        log.info("employee : {}", employee);
     }
 
     /**
@@ -76,7 +76,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     public void testQueryByDeptId() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
         List<Employee> list = employeeMapper.queryByDeptId(1);
-        log.info("testQueryByDeptId() >> list : {}", list);
+        log.info("list : {}", list);
     }
     
     /**
@@ -85,7 +85,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     @Test
     public void testQueryByDeptIdAndLastName() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
-        List<Employee> list = employeeMapper.queryByDeptIdAndLastName(1, "o");
-        log.info("testQueryByDeptIdAndLastName() >> list : {}", list);
+        List<Employee> list = employeeMapper.queryByDeptIdAndLastName(1, "a");
+        log.info("list : {}", list);
     }
 }

@@ -18,6 +18,6 @@ public interface EmployeeMapperAnnotation {
      * @param id
      * @return
      */
-    @Select("SELECT * FROM tbl_employee WHERE id = #{id}")
+    @Select("SELECT te.id, te.last_name, te.gender, te.email FROM tbl_employee te WHERE te.id = #{id}")
     Employee findById(@Param("id") Integer id);
 }

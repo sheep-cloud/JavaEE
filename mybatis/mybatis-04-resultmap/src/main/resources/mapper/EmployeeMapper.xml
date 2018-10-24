@@ -4,118 +4,127 @@
 <mapper namespace="cn.colg.dao.EmployeeMapper">
 
 	<!-- 
-		自定义某个javaBean的封装规则
-			typa：	自定义规则的java类型
-			id：		唯一id方便引用
+                        自定义某个javaBean的封装规则
+            typa:   自定义规则的java类型
+            id:     唯一id方便引用
 	 -->
-	<resultMap type="cn.colg.entity.Employee" id="BaseResultMap">
+    <resultMap type="cn.colg.entity.Employee" id="BaseResultMap">
 		<!-- 
-			指定主键列的封装规则
-				id：			定义主键底层会有优化
-				column：		指定哪一列
-				property：	指定对应的javaBean属性
+                                 指定主键列的封装规则
+	           id:         定义主键底层会有优化
+	           column:     指定哪一列
+	           property:   指定对应的javaBean属性
 		 -->
-		<id property="id" column="id" />
-		<result property="lastName" column="last_name" />
-		<result property="gender" column="gender" />
-		<result property="email" column="email" />
-	</resultMap>
+        <id property="id" column="id" />
+        <result property="lastName" column="last_name" />
+        <result property="gender" column="gender" />
+        <result property="email" column="email" />
+    </resultMap>
 	
 	<!-- resultMap：自定义结果集映射规则；resultType和resultMap只能用其中一个 -->
-	<select id="findById" resultMap="BaseResultMap">
-		SELECT te.id, te.last_name, te.gender, te.email
-		FROM tbl_employee te
-		WHERE te.id = #{id}
-	</select>
+    <select id="findById" resultMap="BaseResultMap">
+        SELECT
+            te.id, te.last_name, te.gender, te.email
+        FROM
+            tbl_employee te
+        WHERE te.id = #{id}
+    </select>
 	
 	
 	
 	<!-- 
 		根据id查询员工，把部门也查出来
 	 -->
-	<select id="findEmpAndDept01" resultType="cn.colg.entity.Employee">
-		SELECT
-			te.id, te.last_name 'lastName', te.gender, te.email,
-			td.id 'dept.id', td.dept_name 'dept.departmentName'
-		FROM tbl_employee te
-		INNER JOIN tbl_dept td ON td.id = te.dept_id
-		WHERE te.id = #{id}
-	</select>
+    <select id="findEmpAndDept01" resultType="cn.colg.entity.Employee">
+        SELECT
+            te.id, te.last_name `lastName`, te.gender, te.email,
+            td.id `dept.id`, td.dept_name `dept.departmentName`
+        FROM
+            tbl_employee te
+        INNER JOIN tbl_dept td ON td.id = te.dept_id
+        WHERE te.id = #{id}
+    </select>
 	
 	<!-- 
 		员工与部门对应信息：
 			id		last_name		gender		email		dept_id		id		dept_name
 	 -->
-	<resultMap type="cn.colg.entity.Employee" id="MyDifEmp">
-		<id property="id" column="id" />
-		<result property="lastName" column="last_name" />
-		<result property="gender" column="gender" />
-		<result property="email" column="email" />
-		<result property="dept.id" column="dept_id" />
-		<result property="dept.departmentName" column="dept_name"/>
-	</resultMap>
-	<select id="findEmpAndDept02" resultMap="MyDifEmp">
-		SELECT
-			te.id, te.last_name, te.gender, te.email, te.dept_id,
-			td.id, td.dept_name
-		FROM tbl_employee te
-		INNER JOIN tbl_dept td ON td.id = te.dept_id
-		WHERE te.id = #{id}
-	</select>
-	
-	<resultMap type="cn.colg.entity.Employee" id="MydifEmp2">
-		<id property="id" column="id" />
-		<result property="lastName" column="last_name" />
-		<result property="gender" column="gender" />
-		<result property="email" column="email" />
+    <resultMap type="cn.colg.entity.Employee" id="MyDifEmp">
+        <id property="id" column="id" />
+        <result property="lastName" column="last_name" />
+        <result property="gender" column="gender" />
+        <result property="email" column="email" />
+        <result property="dept.id" column="dept_id" />
+        <result property="dept.departmentName" column="dept_name" />
+    </resultMap>
+    <select id="findEmpAndDept02" resultMap="MyDifEmp">
+        SELECT
+            te.id, te.last_name, te.gender, te.email, te.dept_id,
+            td.id, td.dept_name
+        FROM
+            tbl_employee te
+        INNER JOIN tbl_dept td ON td.id = te.dept_id
+        WHERE te.id = #{id}
+    </select>
+
+    <resultMap type="cn.colg.entity.Employee" id="MydifEmp2">
+        <id property="id" column="id" />
+        <result property="lastName" column="last_name" />
+        <result property="gender" column="gender" />
+        <result property="email" column="email" />
 		<!-- 
 			association:	定义联合的javaBean对象
 				property="dept"：							指定哪个属性是联合的对象
 				javaType="cn.colg.entity.Department"：		指定这个属性对象的类型（不能省略）
 		 -->
-		<association property="dept" javaType="cn.colg.entity.Department">
-			<id property="id" column="id" />
-			<result property="departmentName" column="dept_name" />
-		</association>
-	</resultMap>
-	<select id="findEmpAndDept03" resultMap="MydifEmp2">
-		SELECT
-			te.id, te.last_name, te.gender, te.email, te.dept_id,
-			td.id, td.dept_name
-		FROM tbl_employee te
-		INNER JOIN tbl_dept td ON td.id = te.dept_id
-		WHERE te.id = #{id}
-	</select>
-	
-	<resultMap type="cn.colg.entity.Employee" id="MydifEmpStep3">
-		<id property="id" column="id" />
-		<result property="lastName" column="last_name" />
-		<result property="gender" column="gender" />
-		<result property="email" column="email" />
+        <association property="dept" javaType="cn.colg.entity.Department">
+            <id property="id" column="id" />
+            <result property="departmentName" column="dept_name" />
+        </association>
+    </resultMap>
+    <select id="findEmpAndDept03" resultMap="MydifEmp2">
+        SELECT
+            te.id, te.last_name, te.gender, te.email, te.dept_id,
+            td.id, td.dept_name
+        FROM
+            tbl_employee te
+        INNER JOIN tbl_dept td ON td.id = te.dept_id
+        WHERE te.id = #{id}
+    </select>
+
+    <resultMap type="cn.colg.entity.Employee" id="MydifEmpStep3">
+        <id property="id" column="id" />
+        <result property="lastName" column="last_name" />
+        <result property="gender" column="gender" />
+        <result property="email" column="email" />
 		<!-- 
 			association：定义关联对象的封装规则
 				select="cn.colg.dao.DepartmentMapper.findById"：		表明当前属性是调用select指定的方法查出的结果
 				column="id"：										指定将哪一列的值传给这个方法；findById(Integer id);入参
 			流程：使用select指定的方法（传入column指定的这列参数的值）查出对象，并封装给property指定的属性。
 		 -->
-		<association property="dept" select="cn.colg.dao.DepartmentMapper.findById" column="id" ></association>
-	</resultMap>
-	<select id="findEmpAndDeptStep04" resultMap="MydifEmpStep3">
-		SELECT te.id, te.last_name, te.gender, te.email, te.dept_id
-		FROM tbl_employee te
-		WHERE te.id = #{id}
-	</select>
-	
-	<select id="queryByDeptId" resultType="cn.colg.entity.Employee">
-		SELECT te.id, te.last_name 'lastName', te.gender, te.email, te.dept_id
-		FROM tbl_employee te
-		WHERE te.dept_id = #{deptId}
-	</select>
-	
-	<select id="queryByDeptIdAndLastName" resultType="cn.colg.entity.Employee">
-		SELECT te.id, te.last_name 'lastName', te.gender, te.email, te.dept_id
-		FROM tbl_employee te
-		WHERE te.dept_id = #{deptId} AND te.last_name LIKE '%${lastName}%'
-	</select>
-	
+        <association property="dept" select="cn.colg.dao.DepartmentMapper.findById" column="id" />
+    </resultMap>
+    <select id="findEmpAndDeptStep04" resultMap="MydifEmpStep3">
+        SELECT
+            te.id, te.last_name, te.gender, te.email, te.dept_id
+        FROM tbl_employee te
+        WHERE te.id = #{id}
+    </select>
+
+    <select id="queryByDeptId" resultType="cn.colg.entity.Employee">
+        SELECT
+            te.id, te.last_name `lastName`, te.gender, te.email, te.dept_id
+        FROM
+            tbl_employee te
+        WHERE te.dept_id = #{deptId}
+    </select>
+
+    <select id="queryByDeptIdAndLastName" resultType="cn.colg.entity.Employee">
+        SELECT
+            te.id, te.last_name 'lastName', te.gender, te.email, te.dept_id
+        FROM tbl_employee te
+        WHERE te.dept_id = #{deptId} AND te.last_name LIKE '%${lastName}%'
+    </select>
+
 </mapper>

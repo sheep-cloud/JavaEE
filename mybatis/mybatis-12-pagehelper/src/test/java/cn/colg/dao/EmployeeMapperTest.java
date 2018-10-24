@@ -30,21 +30,21 @@ public class EmployeeMapperTest extends BaseMapperTest {
 
         PageHelper.startPage(1, 2);
         List<Employee> list = employeeMapper.selectAll();
-        log.info("EmployeeMapperTest.testSelectAll() >> list : {}", list);
+        log.info("list : {}", list);
 
         /// ----------------------------------------------------------------------------------------------------
 
         // jdk8 Lambda写法
         Page<Object> page = PageHelper.startPage(1, 2)
                                       .doSelectPage(() -> employeeMapper.selectAll());
-        log.info("EmployeeMapperTest.testSelectAll() >> page : {}", page);
+        log.info("page : {}", page);
 
         /// ----------------------------------------------------------------------------------------------------
 
         PageInfo<Object> pageInfo = PageHelper.startPage(1, 2, "te.last_name ASC")
                                               .doSelectPageInfo(() -> employeeMapper.selectAll());
         
-        log.info("EmployeeMapperTest.testSelectAll() >> pageInfo : {}", pageInfo);
+        log.info("pageInfo : {}", pageInfo);
     }
     
 
@@ -60,7 +60,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
         // 使用PageHelper时，pageSize=0时返回全部结果
         PageHelper.startPage(1, 0);
         List<Employee> list = employeeMapper.selectAll();
-        log.info("EmployeeMapperTest.testPageHelper() >> list.size() : {}", list.size());
+        log.info("list.size() : {}", list.size());
     }
     
     /**

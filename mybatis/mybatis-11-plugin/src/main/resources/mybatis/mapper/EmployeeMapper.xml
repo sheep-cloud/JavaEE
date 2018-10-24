@@ -5,16 +5,18 @@
 
 <mapper namespace="cn.colg.dao.EmployeeMapper">
 <!-- 
-	namespace: 		命名空间，指定为接口的全限定名
-	id:				唯一标识
-	resultType:		返回值类型
-	#{id}:			从传递过来的参数中取出id值
-	
-	Employee findById(Integer id);
+    namespace:      命名空间，指定为接口的全限定名
+    id:	                                    唯一标识
+    resultType:	            返回值类型
+    #{id}:	                        从传递过来的参数中取出id值
+    
+    Employee findById(Integer id);
  -->
-	<select id="findById" resultType="cn.colg.entity.Employee">
-		SELECT te.id, te.last_name lastName, te.gender, te.email
-		FROM tbl_employee te
-		WHERE te.id = #{id}
-	</select>
+    <select id="findById" resultType="cn.colg.entity.Employee">
+        SELECT
+            te.id, te.last_name lastName, te.gender, te.email
+        FROM
+            tbl_employee te
+        WHERE te.id = #{id}
+    </select>
 </mapper>

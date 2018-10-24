@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import cn.colg.BaseMapperTest;
 import cn.colg.entity.Department;
-import cn.hutool.core.lang.Console;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -16,6 +15,16 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class DepartmentMapperTest extends BaseMapperTest {
+    
+    /**
+     * Test method for {@link cn.colg.dao.DepartmentMapper#findById(java.lang.Integer)}.
+     */
+    @Test
+    public void testFindAllId() {
+        DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
+        List<Integer> list = departmentMapper.findAllId();
+        log.info("list : {}", list);
+    }
 
     /**
      * Test method for {@link cn.colg.dao.DepartmentMapper#findById(java.lang.Integer)}.
@@ -24,7 +33,7 @@ public class DepartmentMapperTest extends BaseMapperTest {
     public void testFindById() {
         DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
         Department department = departmentMapper.findById(1);
-        log.info("DepartmentMapperTest.testFindById() >> department : {}", department);
+        log.info("department : {}", department);
     }
 
     /**
@@ -34,7 +43,7 @@ public class DepartmentMapperTest extends BaseMapperTest {
     public void testFindByIdPlus() {
         DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
         Department department = departmentMapper.findByIdPlus(1);
-        Console.log(department);
+        log.info("department : {}", department);
     }
 
     /**
@@ -44,13 +53,13 @@ public class DepartmentMapperTest extends BaseMapperTest {
     public void testFindByIdStep() {
         DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
         Department department = departmentMapper.findByIdStep(1);
-        Console.log(department);
+        log.info("department : {}", department);
     }
 
     @Test
     public void testSelectGroup() throws Exception {
         DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
         List<Department> list = departmentMapper.selectGroup();
-        Console.log(list);
+        log.info("list : {}", list);
     }
 }

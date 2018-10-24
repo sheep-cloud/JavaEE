@@ -2,6 +2,8 @@ package cn.colg.entity;
 
 import java.io.Serializable;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import cn.colg.core.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,6 +35,6 @@ public class Employee extends BaseEntity implements Serializable {
     private String email;
 
     /** 部门；多对一 */
-//    @JSONField(ordinal = 1)
-//    private Department dept;
+    @JSONField(ordinal = 1)
+    private Department dept;
 }

@@ -2,10 +2,12 @@ package cn.colg.entity;
 
 import java.io.Serializable;
 
+import cn.colg.core.BaseEntity;
 import cn.hutool.core.util.StrUtil;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
@@ -15,9 +17,10 @@ import lombok.experimental.Accessors;
  */
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Accessors(chain = true)
-public class Employee implements Serializable {
+public class Employee extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -38,7 +41,7 @@ public class Employee implements Serializable {
     public String getGender() {
         return "0".equals(this.gender) ? "男" : "女";
     }
-    
+
     public String getDisplayName() {
         String displayName = this.lastName;
         if (StrUtil.isBlank(displayName)) {

@@ -21,7 +21,7 @@ public class DepartmentMapperTest extends BaseMapperTest {
     public void testFindById() {
         DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
         Department department = departmentMapper.findById(1);
-        log.info("testFindById() >> department : {}", department);
+        log.info("department : {}", department);
     }
 
 }

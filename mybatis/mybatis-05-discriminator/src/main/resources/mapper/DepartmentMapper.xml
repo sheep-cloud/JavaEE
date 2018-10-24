@@ -4,8 +4,10 @@
 <mapper namespace="cn.colg.dao.DepartmentMapper">
 
 	<select id="findById" resultType="cn.colg.entity.Department">
-		SELECT td.id, td.dept_name 'departmentName'
-		FROM tbl_dept td
+		SELECT
+            td.id, td.dept_name `departmentName`
+		FROM
+            tbl_dept td
 		WHERE td.id = #{id}
 	</select>
 	

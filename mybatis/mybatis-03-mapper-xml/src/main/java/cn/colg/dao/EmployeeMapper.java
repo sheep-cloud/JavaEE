@@ -79,12 +79,18 @@ public interface EmployeeMapper {
     String findLastNameById(@Param("id") Integer id);
 
     /**
-     * 新增员工，返回主键
+     * 新增员工，返回主键方式一： 使用useGeneratedKeys+keyProperty (推荐)
      *
      * @param employee
-     * @return
      */
-    Integer addEmployee(@Param("employee") Employee employee);
+    void addEmployee(@Param("employee") Employee employee);
+    
+    /**
+     * 新增员工，返回主键方式二：使用selectKey
+     *
+     * @param employee
+     */
+    void addEmployee2(@Param("employee") Employee employee);
 
     /**
      * 修改员工，返回修改记录数
@@ -118,7 +124,7 @@ public interface EmployeeMapper {
      * @author colg
      */
     List<String> selectLastNamesByIds(@Param("ids") List<String> ids);
-    
+
     /**
      * 根据姓名模糊查询员工列表
      *
@@ -127,5 +133,5 @@ public interface EmployeeMapper {
      * @author colg
      */
     List<Dict> queryByLastNameResultDict(@Param("lastName") String lastName);
-    
+
 }

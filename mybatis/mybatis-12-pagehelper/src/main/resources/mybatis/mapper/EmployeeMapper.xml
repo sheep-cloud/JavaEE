@@ -4,8 +4,10 @@
 <mapper namespace="cn.colg.dao.EmployeeMapper">
 
     <select id="selectAll" resultType="cn.colg.entity.Employee">
-        SELECT te.id, te.last_name, te.gender, te.email, te.dept_id
-        FROM tbl_employee te
+        SELECT
+            te.id, te.last_name, te.gender, te.email, te.dept_id
+        FROM
+            tbl_employee te
     </select>
-    
+
 </mapper>

@@ -44,7 +44,7 @@ public class MyFirstPlugin implements Interceptor {
     public Object intercept(Invocation invocation) throws Throwable {
         log.info("MyFirstPlugin.intercept() >> invocation.getMethod() : {}", invocation.getMethod());
         
-        // 动态的改变一下sql运行的参数，以前查询的是 id：1 员工，实际从数据库查询 id：23 员工
+        // 动态的改变一下sql运行的参数，以前查询的是 id：1 员工，实际从数据库查询 id：2 员工
         log.info("MyFirstPlugin.intercept() >> 当前拦截到的对象 : {}", invocation.getTarget().getClass());
         // 拿到：StatementHandler==>ParameterHandler==>ParameterObject
         // 拿到target的元数据
@@ -53,7 +53,7 @@ public class MyFirstPlugin implements Interceptor {
         Object value = metaObject.getValue("parameterHandler.parameterObject");
         log.info("MyFirstPlugin.intercept() >> sql语句用的参数是 : {}", value);
         // 修改sql语句要用的参数
-        metaObject.setValue("parameterHandler.parameterObject", 23);
+        metaObject.setValue("parameterHandler.parameterObject", 2);
         // 执行目标方法
         Object object = invocation.proceed();
         // 返回执行后的返回值
