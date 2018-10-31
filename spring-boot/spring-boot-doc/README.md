@@ -3053,8 +3053,94 @@ mybatis:
     - classpath:mybatis/mapper/**/*.xml               # mapper 映射文件
 ```
 
+## 7. SpringBoot启动配置原理
+
+- 几个重要的事件回调机制
+
+  ```ini
+  ApplicationContextInitializer
+  SpringApplicationRunListener
+  ApplicationRunner
+  CommandLineRunner
+  ```
+
+- 启动流程
+
+  - 创建`SpringApplication`对象, `initialize(sources)`
+
+    ```java
+    	private void initialize(Object[] sources) {
+            // 保存主配置
+    		if (sources != null && sources.length > 0) {
+    			this.sources.addAll(Arrays.asList(sources));
+    		}
+            // 判断当前是否是一个web应用
+    		this.webEnvironment = deduceWebEnvironment();
+            // 从类路径下找到"META-INF/spring.factories"配置的所有ApplicationContextInitializer; 然后保存起来
+    		setInitializers((Collection) getSpringFactoriesInstances(
+    				ApplicationContextInitializer.class));
+            // 从类路径下找到"META-INF/spring.factories"配置的所有ApplicationListener
+    		setListeners((Collection) getSpringFactoriesInstances(ApplicationListener.class));
+            // 从多个配置类中找到有main方法的配置类
+    		this.mainApplicationClass = deduceMainApplicationClass();
+    	}
+    ```
+
+  - 运行`run()`方法
+
+    ```java
+    	public ConfigurableApplicationContext run(String... args) {
+    		StopWatch stopWatch = new StopWatch();
+    		stopWatch.start();
+    		ConfigurableApplicationContext context = null;
+    		FailureAnalyzers analyzers = null;
+    		configureHeadlessProperty();
+            // 获取SpringApplicationRunListeners，从类路径下"META-INF/spring.factories"
+    		SpringApplicationRunListeners listeners = getRunListeners(args);
+            // 回调所有的SpringApplicationRunListener.starting()方法
+    		listeners.starting();
+    		try {
+                // 封装命令行参数
+    			ApplicationArguments applicationArguments = new DefaultApplicationArguments(
+    					args);
+                // 准备环境
+    			ConfigurableEnvironment environment = prepareEnvironment(listeners,
+    					applicationArguments);
+                // 创建环境完成后回调SpringApplicationRunListener.environmentPrepared()方法，表示环境准备完成
+                // 打印Banner
+    			Banner printedBanner = printBanner(environment);
+                // 创建ApplicationContext，决定创建web的ioc还是普通的ioc
+    			context = createApplicationContext();
+    			analyzers = new FailureAnalyzers(context);
+                // 准备上下文环境；将environment保存到ioc中；而且applyInitializers(context)
+                // applyInitializers(): 回调之前保存的所有的ApplicationContextInitializer.initialize()方法
+    			prepareContext(context, environment, listeners, applicationArguments,
+    					printedBanner);
+                // prepareContext运行完成以后回调所有的SpringApplicationRunListener.contextPrepared()
+                
+                // 刷新容器；ioc容器初始化；如果是web应用还会创建嵌入式的Tomcat；Spring注解版
+    			refreshContext(context);
+                // 从ioc容器中获取所有的ApplicationRunner和CommandLineRunner进行回调
+                // ApplicationRunner先回调
+    			afterRefresh(context, applicationArguments);
+                // 所有的SpringApplicationRunListener回调finished()方法
+    			listeners.finished(context, null);
+    			stopWatch.stop();
+    			if (this.logStartupInfo) {
+    				new StartupInfoLogger(this.mainApplicationClass)
+    						.logStarted(getApplicationLog(), stopWatch);
+    			}
+                // 整个SpringBoot应用启动完成以后返回启动的ioc容器
+    			return context;
+    		}
+    		catch (Throwable ex) {
+    			handleRunFailure(context, listeners, analyzers, ex);
+    			throw new IllegalStateException(ex);
+    		}
+    	}
+    ```
 
 
-## 7. 自定义starter
+## 8. 自定义starter
 
-## 8. 更多SpringBoot整合示例
+## 9. 更多SpringBoot整合示例
