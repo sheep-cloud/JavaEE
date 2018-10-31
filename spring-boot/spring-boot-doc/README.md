@@ -2708,7 +2708,248 @@ public class EmbeddedServletContainerAutoConfiguration {
 
 ### 6.1. JDBC
 
+#### 6.1.1. 引入starter
 
+```xml
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+```
+
+#### 6.1.2. 配置application.yml
+
+```yaml
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/spring_boot?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+    username: spring_boot
+    password: 123456
+```
+
+```java
+/**
+ * Jdbc测试
+ *
+ * @author colg
+ */
+@Slf4j
+public class JdbcTest extends SpringBoot10DataJdbcApplicationTests {
+
+    @Autowired
+    private DataSource dataSource;
+    
+    @Test
+    public void testName() throws Exception {
+        // driverClassName: class org.apache.tomcat.jdbc.pool.DataSource
+        log.info("driverClassName: {}", dataSource.getClass());
+        
+        Connection connection = dataSource.getConnection();
+        // ProxyConnection[PooledConnection[com.mysql.jdbc.JDBC4Connection@6d8796c1]]
+        log.info("connection: {}", connection.toString());
+        connection.close();
+    }
+}
+```
+
+```ini
+driverClassName: class org.apache.tomcat.jdbc.pool.DataSource
+connection: ProxyConnection[PooledConnection[com.mysql.jdbc.JDBC4Connection@7c5d1d25]]
+```
+
+- 效果
+  - 默认是用`org.apache.tomcat.jdbc.pool.DataSource`作为数据源；
+  - 数据源的相关配置都在`DataSourceProperties`里面。
+
+- 自动配置原理
+
+  - `org.springframework.boot.autoconfigure.jdbc`包
+
+  - 参考`DataSourceConfiguration`，根据配置创建数据源，默认使用Tomcat连接池；可以使用`spring.datasource.type`指定自定义的数据源类型；
+
+  - SpringBoot默认可以支持：
+
+    ```ini
+    org.apache.tomcat.jdbc.pool.DataSource
+    com.zaxxer.hikari.HikariDataSource
+    org.apache.commons.dbcp.BasicDataSource
+    org.apache.commons.dbcp2.BasicDataSource
+    ```
+
+- 自定义数据源类型
+
+  ```java
+  	/**
+  	 * Generic DataSource configuration.
+  	 */
+  	@ConditionalOnMissingBean(DataSource.class)
+  	@ConditionalOnProperty(name = "spring.datasource.type")
+  	static class Generic {
+          // 使用DataSourceBuilder创建数据源，利用反射创建响应type的数据源，并且绑定相关属性
+  		@Bean
+  		public DataSource dataSource(DataSourceProperties properties) {
+  			return properties.initializeDataSourceBuilder().build();
+  		}
+  
+  	}
+  ```
+
+- `DataSourceInitializer`: `ApplicationListener`，作用：
+
+  - `runSchemaScripts()`:  运行建表语句
+  - `runDataScripts()`: 运行插入数据的sql语句
+
+- 默认只需要将文件名修改为：
+
+  ```ini
+  schema-*.sql, data-*.sql
+  默认规则: schema.sql, schema-all.sql
+  可以使用:
+      schema:
+        - classpath:schema-department.sql       # 指定sql文件的位置
+        - classpath:schema-employee.sql
+  ```
+
+#### 6.1.3. 测试
+
+```java
+/**
+ * HelloController
+ *
+ * @author colg
+ */
+@RestController
+public class HelloController {
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @GetMapping("/add")
+    public ResultVo add() {
+        String sql = "INSERT INTO department(departmentName) VALUES('技术部')";
+        int update = jdbcTemplate.update(sql);
+        return success(update);
+    }
+
+    @GetMapping("/query")
+    public ResultVo map() {
+        String sql = "SELECT * FROM department";
+        List<Map<String, Object>> list = jdbcTemplate.queryForList(sql);
+        if (CollUtil.isEmpty(list)) {
+            return fail(1, "数据库里没有数据！");
+        }
+        return success(list);
+    }
+}
+```
+
+### 6.2. 整合Druid数据源
+
+#### 6.2.1. 导入数据源
+
+```xml
+        <!-- 引入 druid 数据源 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+```
+
+
+
+#### 6.2.2. 配置Druid的监控
+
+```java
+/**
+ * 数据源配置
+ *
+ * @author colg
+ */
+@Configuration
+public class DruidConfig {
+
+    /**
+     * 配置 Druid数据源
+     *
+     * @return
+     * @author colg
+     */
+    @ConfigurationProperties(prefix = "spring.datasource")
+    @Bean
+    public DataSource druidDataSource() {
+        return new DruidDataSource();
+    }
+
+    /*
+     * colg  [配置Druid的监控]
+     *  1. 配置一个管理后台的 Servlet
+     *  2. 配置一个监控的 Filter
+     */
+
+    /**
+     * 1. 配置管理后台的 Servlet
+     *
+     * @return
+     * @author colg
+     */
+    @Bean
+    public ServletRegistrationBean statViewServlet() {
+        ServletRegistrationBean bean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
+        Map<String, String> initParameters = new HashMap<>();
+        initParameters.put("loginUsername", "admin");
+        initParameters.put("loginPassword", "123456");
+        bean.setInitParameters(initParameters);
+        return bean;
+    }
+
+    /**
+     * 2. 配置一个web监控的 Filter
+     *
+     * @return
+     * @author colg
+     */
+    @Bean
+    public FilterRegistrationBean webStatFilter() {
+        FilterRegistrationBean bean = new FilterRegistrationBean();
+        bean.setFilter(new WebStatFilter());
+        Map<String, String> initParameters = new HashMap<>();
+        initParameters.put("exclusions", "*.js,*.css,/druid/*");
+        bean.setInitParameters(initParameters);
+        bean.setUrlPatterns(Arrays.asList("/*"));
+        return bean;
+    }
+}
+```
+
+```yaml
+    type: com.alibaba.druid.pool.DruidDataSource    # 指定数据源
+# 数据源其他配置
+    validation-query: SELECT 1
+    initial-size: 2
+    min-idle: 2
+    max-active: 8
+    max-wait: 60000
+# 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat, wall, log4j
+```
+
+
+
+#### 6.2.3. 效果
+
+![](http://ww1.sinaimg.cn/large/005PjuVtgy1fwric22awhj30uq09f0sr.jpg)
 
 ## 7. 自定义starter
 
