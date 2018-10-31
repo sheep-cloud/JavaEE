@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import cn.colg.entities.Department;
 import cn.colg.entities.Employee;
 import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 
 /**
@@ -44,10 +45,10 @@ public class EmployeeDao {
      * @author colg
      */
     private static DateTime getRandomBirth() {
-        long timeMillis = RandomUtil.randomLong(599587200000L, System.currentTimeMillis());
+        long timeMillis = RandomUtil.randomLong(DateUtil.parse("1989-01-01").getTime(), System.currentTimeMillis());
         return new DateTime(timeMillis);
     }
-
+    
     private static Integer initId = 1006;
     
     /**

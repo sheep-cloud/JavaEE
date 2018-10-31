@@ -1081,7 +1081,7 @@ https://docs.spring.io/spring-boot/docs/1.5.16.RELEASE/reference/htmlsingle/#com
 
   ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fvn3ftxgpvj30it056mxd.jpg)
 
-  	
+  ​	
 
   - 如果要引入其他框架，一定要把这个框架的默认日志依赖移除掉
 
@@ -1162,7 +1162,7 @@ logging:
 | Log4j2                  | `log4j2-spring.xml` or `log4j2.xml`                          |
 | JDK (Java Util Logging) | `logging.properties`                                         |
 
-		
+​		
 
 - Logback使用的日志文件
 
@@ -2680,7 +2680,7 @@ public class EmbeddedServletContainerAutoConfiguration {
 
     ```java
     /**
-     * 
+     * Servlet 初始化程序
      *
      * @author colg
      */
@@ -2695,7 +2695,7 @@ public class EmbeddedServletContainerAutoConfiguration {
     }
     ```
 
-  - 启动服务器就可以使用
+  - 启动服务器就可以使用 http://localhost:8080/spring-boot-09-web-jsp
 
 - 原理
 

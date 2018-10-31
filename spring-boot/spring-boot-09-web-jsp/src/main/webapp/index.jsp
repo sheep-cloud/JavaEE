@@ -6,7 +6,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-    <h1>Hello web-jsp!</h1>
-    <a href="success">跳转到 success</a>
+    <h1>index</h1>
 </body>
 </html>

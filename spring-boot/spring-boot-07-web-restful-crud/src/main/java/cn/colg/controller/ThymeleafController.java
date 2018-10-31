@@ -19,7 +19,7 @@ public class ThymeleafController {
         // classpath:/templates/success.html
         return "success";
     }
-    
+
     /**
      * 查出一些数据，在页面展示
      *
@@ -31,6 +31,7 @@ public class ThymeleafController {
     public String success2(Model model) {
         model.addAttribute("hello", "<h1>thymeleaf</h1>");
         model.addAttribute("users", Arrays.asList("Jack", "Rose", "汤姆"));
+        // classpath:/templates/success2.html
         return "success2";
     }
 }
