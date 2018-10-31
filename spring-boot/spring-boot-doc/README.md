@@ -2951,6 +2951,114 @@ public class DruidConfig {
 
 ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fwric22awhj30uq09f0sr.jpg)
 
+### 6.3. 整合MyBatis
+
+#### 6.3.1. 导入数据源
+
+```xml
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+```
+
+```java
+/**
+ * Sprign Boot 启动类
+ * 
+ * <pre>
+ * `@MapperScan`: 批量扫描操作数据库的mapper
+ * </pre>
+ *
+ * @author colg
+ */
+@MapperScan("cn.colg.mapper")
+@SpringBootApplication
+public class SpringBoot11DataMybatisApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(SpringBoot11DataMybatisApplication.class, args);
+    }
+}
+
+```
+
+
+
+#### 6.3.2. 注解版
+
+```java
+/**
+ * DepartmentMapper；注解版
+ * 
+ * <pre>
+ * `@Mapper`: 单独指定这是一个操作数据库的mapper；可在启动类批量扫描
+ * </pre>
+ *
+ * @author colg
+ */
+public interface DepartmentMapper {
+    
+    @Select("SELECT * FROM department")
+    List<Department> query();
+
+    @Select("SELECT d.* FROM department d WHERE d.id = #{id}")
+    Department getDeptById(Integer id);
+    
+    /**
+     * 插入数据，返回主键
+     *
+     * @param department
+     * @return
+     * @author colg
+     */
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    @Insert("INSERT INTO department(departmentName) VALUES(#{departmentName})")
+    int insertDept(Department department);
+}
+```
+
+- MyBatis全局配置
+
+  ```java
+  /**
+   * MyBatis 注解版全局配置
+   *
+   * @author colg
+   */
+  @Configuration
+  public class MyBatisConfig {
+  
+      @Bean
+      public ConfigurationCustomizer configurationCustomizer() {
+          return new ConfigurationCustomizer() {
+  
+              @Override
+              public void customize(org.apache.ibatis.session.Configuration configuration) {
+                  // 是否开启自动驼峰命名规则
+                  configuration.setMapUnderscoreToCamelCase(true);
+                  // 延迟加载的全局开关。
+                  configuration.setLazyLoadingEnabled(true);
+                  // 当开启时，任何方法的调用都会加载该对象的所有属性。
+                  configuration.setAggressiveLazyLoading(true);
+              }
+          };
+      }
+  }
+  ```
+
+#### 6.3.3. 配置版本
+
+```yaml
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml  # mybatis 配置文件所在路径
+  mapper-locations:
+    - classpath:mybatis/mapper/**/*.xml               # mapper 映射文件
+```
+
+
+
 ## 7. 自定义starter
 
 ## 8. 更多SpringBoot整合示例

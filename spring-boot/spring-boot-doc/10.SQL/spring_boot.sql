@@ -16,6 +16,13 @@ SHOW FULL COLUMNS FROM department;
 SELECT * FROM employee;
 SHOW FULL COLUMNS FROM employee;
 
-INSERT INTO department(departmentName) VALUES('技术部');
-
 SELECT NOW() FROM DUAL;
+
+SELECT d.* FROM department d WHERE d.id = ?;
+INSERT INTO department(departmentName) VALUES(?);
+DELETE FROM department WHERE id = ?;
+UPDATE department SET departmentName = ? WHERE id = ?;
+
+SELECT * FROM employee;
+SELECT e.* FROM employee e WHERE e.id = ?;
+INSERT INTO employee(lastName, email, gender, d_id) VALUES(?, ?, ?, ?);
