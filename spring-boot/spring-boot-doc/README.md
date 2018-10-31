@@ -1,5 +1,3 @@
-[TOC]
-
 # spring-boot
 
 ## 1. SpringBoot 入门
@@ -2983,8 +2981,6 @@ public class SpringBoot11DataMybatisApplication {
 }
 
 ```
-
-
 
 #### 6.3.2. 注解版
 

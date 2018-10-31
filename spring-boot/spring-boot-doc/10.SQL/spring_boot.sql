@@ -26,3 +26,6 @@ UPDATE department SET departmentName = ? WHERE id = ?;
 SELECT * FROM employee;
 SELECT e.* FROM employee e WHERE e.id = ?;
 INSERT INTO employee(lastName, email, gender, d_id) VALUES(?, ?, ?, ?);
+
+SELECT * FROM tbl_user;
+SHOW FULL COLUMNS FROM tbl_user;

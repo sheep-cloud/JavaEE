@@ -1,0 +1,14 @@
+spring:
+  datasource:
+# 数据源基本配置
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/spring_boot?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+    username: spring_boot
+    password: 123456
+    
+  jpa:
+    hibernate:
+# 更新或者创建数据表结构
+      ddl-auto: update
+# 控制台显示sql
+    show-sql: true
