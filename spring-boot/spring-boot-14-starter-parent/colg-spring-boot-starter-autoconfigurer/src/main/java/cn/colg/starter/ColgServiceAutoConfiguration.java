@@ -6,18 +6,23 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Auto-Configuration for Colg.
+ *
+ * @author colg
+ */
 @Configuration
 @ConditionalOnWebApplication
-@EnableConfigurationProperties(HelloProperties.class)
-public class HelloServiceAutoConfiguration {
+@EnableConfigurationProperties(ColgProperties.class)
+public class ColgServiceAutoConfiguration {
 
     @Autowired
-    private HelloProperties helloProperties;
+    private ColgProperties colgProperties;
 
     @Bean
-    public HelloService helloService() {
-        HelloService service = new HelloService();
-        service.setHelloProperties(helloProperties);
+    public ColgService helloService() {
+        ColgService service = new ColgService();
+        service.setColgProperties(colgProperties);
         return service;
     }
 }

@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
 
     <name>colg-spring-boot-starter-test</name>
-    <description>colg-spring-boot-starter-test :: 自定义启动器自动配置</description>
+    <description>colg-spring-boot-starter-test :: 自定义启动器自动配置，测试</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

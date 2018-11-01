@@ -2,12 +2,19 @@ package cn.colg.starter;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "colg.hello")
-public class HelloProperties {
+/**
+ * Configuration properties for Colg.
+ *
+ * @author colg
+ */
+@ConfigurationProperties(prefix = ColgProperties.COLG_PREFIX)
+public class ColgProperties {
+
+    public static final String COLG_PREFIX = "colg";
 
     private String prefix;
     private String suffix;
-
+    
     public String getPrefix() {
         return prefix;
     }

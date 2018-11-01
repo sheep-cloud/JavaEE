@@ -1,4 +1,3 @@
 colg:
-  hello:
-    prefix: COLG
-    suffix: CLOUD
+  prefix: colg
+  suffix: cloud

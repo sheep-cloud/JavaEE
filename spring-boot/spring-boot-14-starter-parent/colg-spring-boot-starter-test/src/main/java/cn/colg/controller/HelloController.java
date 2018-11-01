@@ -5,9 +5,10 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.colg.starter.HelloService;
+import cn.colg.starter.ColgService;
 
 /**
  * HelloController
@@ -18,11 +19,11 @@ import cn.colg.starter.HelloService;
 public class HelloController {
 
     @Autowired
-    private HelloService helloService;
+    private ColgService colgService;
 
-    @GetMapping("/hello")
-    public Map<String, Object> hello() {
-        String msg = helloService.sayHelloColg("jack");
+    @GetMapping("/hello/{name}")
+    public Map<String, Object> hello(@PathVariable String name) {
+        String msg = colgService.sayHello(name);
         return Collections.singletonMap("msg", msg);
     }
 }
