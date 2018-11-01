@@ -147,7 +147,7 @@ public class JedisClientTest extends BaseTest {
         Users users = JSON.parseObject(HttpUtil.get(API_ITEMS), Users.class);
         users.getItems().forEach(e -> {
 //             String hset = jedisClient.set(KEY_PRE + "-items" + ":" + e.getId(), e.toString());
-            Long hset = jedisClient.hset(KEY_PRE + "-items:test:" + e.getType(), e.getId() + "", e.toString());
+            Long hset = jedisClient.hset(KEY_PRE + "-items:" + e.getType(), e.getId() + "", e.toString());
             log.info("JedisClientTest.testHset() >> 将哈希表 key 中的字段 field 的值设为 value 。如果哈希表不存在，一个新的哈希表被创建并进行 HSET 操作。如果字段已经存在于哈希表中，旧值将被覆盖 : {}", hset);
         });
     }
