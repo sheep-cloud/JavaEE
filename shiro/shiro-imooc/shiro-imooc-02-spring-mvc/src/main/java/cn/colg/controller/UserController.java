@@ -141,7 +141,10 @@ public class UserController extends BaseController {
 
     @GetMapping("/jedis")
     public ResultVo jedis() {
-        String set = jedisClient.set("demo", "001");
-        return success(set);
+        String key = "demo";
+        jedisClient.set(key, "001");
+        jedisClient.expire(key, 600);
+        Long ttl = jedisClient.ttl(key);
+        return success(ttl);
     }
 }
