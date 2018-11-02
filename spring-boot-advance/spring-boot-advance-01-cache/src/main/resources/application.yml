@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/spring_boot_advance?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+    username: root
+    password: root
+  redis:
+    host: 192.168.21.103
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true            # 是否开启自动驼峰命名规则（camel case）映射
+    lazy-loading-enabled: true                    # 延迟加载的全局开关
+logging:
+  level:
+    cn.colg.mapper: debug
+debug: true
