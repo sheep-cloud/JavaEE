@@ -3,7 +3,7 @@
 <mapper namespace="cn.colg.mapper.EmployeeMapper">
 
     <select id="query" resultType="cn.colg.bean.Employee">
-        SELECT * FROM employee;
+        SELECT * FROM employee
     </select>
     
     <select id="getEmpById" resultType="cn.colg.bean.Employee">
@@ -13,6 +13,7 @@
     <insert id="insertEmp" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO
             employee(lastName, email, gender, d_id)
-        VALUES(#{lastName}, #{email}, #{gender}, #{dId})
+        VALUES
+            (#{lastName}, #{email}, #{gender}, #{dId})
     </insert>
 </mapper>

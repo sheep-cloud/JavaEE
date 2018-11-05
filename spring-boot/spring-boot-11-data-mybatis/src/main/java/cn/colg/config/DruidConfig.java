@@ -50,12 +50,21 @@ public class DruidConfig {
      */
     @Bean
     public ServletRegistrationBean statViewServlet() {
+        /*
         ServletRegistrationBean bean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
         Map<String, String> initParameters = new HashMap<>();
         initParameters.put("loginUsername", "admin");
         initParameters.put("loginPassword", "123456");
         bean.setInitParameters(initParameters);
         return bean;
+        */
+
+        ServletRegistrationBean registrationBean = new ServletRegistrationBean();
+        registrationBean.setServlet(new StatViewServlet());
+        registrationBean.addUrlMappings("/druid/*");
+        registrationBean.addInitParameter("loginUsername", "admin");
+        registrationBean.addInitParameter("loginPassword", "123456");
+        return registrationBean;
     }
 
     /**
@@ -66,10 +75,18 @@ public class DruidConfig {
      */
     @Bean
     public FilterRegistrationBean webStatFilter() {
+        /*
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(new WebStatFilter());
+        registrationBean.addUrlPatterns("/*");
+        registrationBean.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
+        return registrationBean;
+        */
+        
         FilterRegistrationBean bean = new FilterRegistrationBean();
         bean.setFilter(new WebStatFilter());
         Map<String, String> initParameters = new HashMap<>();
-        initParameters.put("exclusions", "*.js,*.css,/druid/*");
+        initParameters.put("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
         bean.setInitParameters(initParameters);
         bean.setUrlPatterns(Arrays.asList("/*"));
         return bean;

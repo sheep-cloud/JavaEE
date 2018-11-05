@@ -5,9 +5,9 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/spring_boot?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
     username: spring_boot
     password: 123456
-#    schema:
-#      - classpath:sql/schema-department.sql         # 指定sql文件的位置
-#      - classpath:sql/schema-employee.sql
+    schema:
+      - classpath:sql/schema-department.sql         # 指定sql文件的位置
+      - classpath:sql/schema-employee.sql
     type: com.alibaba.druid.pool.DruidDataSource    # 指定数据源
 # 数据源其他配置
     validation-query: SELECT 1
@@ -22,3 +22,7 @@ mybatis:
   config-location: classpath:mybatis/mybatis.cfg.xml  # mybatis 配置文件所在路径
   mapper-locations:
     - classpath:mybatis/mapper/**/*.xml               # mapper 映射文件
+    
+logging:
+  level:
+    cn.colg.mapper: debug
