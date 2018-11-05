@@ -33,7 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     /**
-     * 根据id查询员工
+     * 根据id查询员工；（注解方式）
      * 
      * <pre>
      * `@Cacheable`： 将方法的运行结果进行缓存，以后再要相同的数据，直接从缓存中获取，不用调用方法。

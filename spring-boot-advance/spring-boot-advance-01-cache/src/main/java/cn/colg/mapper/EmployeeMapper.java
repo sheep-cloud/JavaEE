@@ -28,6 +28,6 @@ public interface EmployeeMapper {
      * @author colg
      */
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    @Insert("insert into employee(lastName, email, gender, d_id) values(#{lastName}, #{email}, #{gender}, #{dId})")
+    @Insert("INSERT INTO employee(lastName, email, gender, d_id) VALUES(#{lastName}, #{email}, #{gender}, #{dId})")
     void insertEmp(Employee employee);
 }

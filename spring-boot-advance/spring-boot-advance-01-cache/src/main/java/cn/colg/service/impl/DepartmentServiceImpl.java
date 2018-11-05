@@ -36,7 +36,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     /**
-     * 根据id查询部门
+     * 根据id查询部门；（注解方式）
      * 
      * <pre>
      * 缓存的数据能存入redis；
@@ -60,7 +60,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     /**
-     * 根据id查询部门，（编码方式）
+     * 根据id查询部门；（编码方式）
      *
      * @param id
      * @return
