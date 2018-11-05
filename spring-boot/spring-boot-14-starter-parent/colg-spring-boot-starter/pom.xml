@@ -16,7 +16,7 @@
         <!-- 引入自动配置模块 -->
         <dependency>
             <groupId>cn.colg</groupId>
-            <artifactId>colg-spring-boot-starter-autoconfigurer</artifactId>
+            <artifactId>colg-spring-boot-starter-autoconfigure</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

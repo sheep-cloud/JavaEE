@@ -9,9 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author colg
  */
 @SpringBootApplication
-public class ColgSpringBootStarterTestApplication {
+public class SpringBoot14StarterTestApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(ColgSpringBootStarterTestApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(SpringBoot14StarterTestApplication.class, args);
+	}
 }

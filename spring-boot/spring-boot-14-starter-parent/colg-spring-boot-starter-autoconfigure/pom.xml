@@ -3,12 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.colg</groupId>
-    <artifactId>colg-spring-boot-starter-test</artifactId>
+    <artifactId>colg-spring-boot-starter-autoconfigure</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>colg-spring-boot-starter-test</name>
-    <description>colg-spring-boot-starter-test :: 自定义启动器自动配置，测试</description>
+    <name>colg-spring-boot-starter-autoconfigure :: 自动配置</name>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -24,33 +23,15 @@
     </properties>
 
     <dependencies>
+        <!-- 引入spring-boot-starter，所有starter的基本配置 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency> 
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
-        
-        <!-- 引入自定义的starter -->
         <dependency>
-            <groupId>cn.colg</groupId>
-            <artifactId>colg-spring-boot-starter</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
-
 </project>
