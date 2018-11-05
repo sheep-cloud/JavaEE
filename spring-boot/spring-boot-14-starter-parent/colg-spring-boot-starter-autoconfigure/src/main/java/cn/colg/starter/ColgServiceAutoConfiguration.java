@@ -20,7 +20,7 @@ public class ColgServiceAutoConfiguration {
     private ColgProperties colgProperties;
 
     @Bean
-    public ColgService helloService() {
+    public ColgService colgService() {
         ColgService service = new ColgService();
         service.setColgProperties(colgProperties);
         return service;
