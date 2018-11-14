@@ -1,6 +1,6 @@
 /*
 	7中通用JOIN：
-		内连接、左连接、右连接、左独有连接、右独有连接、全连接、全连接去交集）
+		内连接、左连接、右连接、左独有连接、右独有连接、全连接、全连接去交集
 */
 USE mysql_advance;
 DROP TABLE IF EXISTS tbl_dept;

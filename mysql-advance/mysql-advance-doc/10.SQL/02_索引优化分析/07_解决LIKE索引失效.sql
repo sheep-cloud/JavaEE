@@ -27,6 +27,7 @@ EXPLAIN SELECT id, `name`, age FROM tbl_user WHERE `name` LIKE '%aa%';
 EXPLAIN SELECT id, age FROM tbl_user WHERE `name` LIKE '%aa%';
 EXPLAIN SELECT `name`, age FROM tbl_user WHERE `name` LIKE '%aa%';
 
+-- 索引失效
 EXPLAIN SELECT email FROM tbl_user WHERE `name` LIKE '%aa%';
 EXPLAIN SELECT * FROM tbl_user WHERE `name` LIKE '%aa%';
 EXPLAIN SELECT id, `name`, age, email FROM tbl_user WHERE `name` LIKE '%aa%';

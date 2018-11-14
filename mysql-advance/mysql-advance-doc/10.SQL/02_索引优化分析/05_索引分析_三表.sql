@@ -37,7 +37,7 @@ ALTER TABLE book ADD INDEX Y(card);
 
 # 开始 EXPLAIN 分析，三表左连接
 EXPLAIN SELECT * FROM class LEFT JOIN book ON class.card = book.card LEFT JOIN phone ON book.card = phone.card;
-# 后两行的 type 都是 ref，且总rows优化很好，效果不错。因此索引最好设置在需要经常查询的字段中。
+# 后两行的 type 都是 ref，且总rows优化很好，效果不错。因此索引最好设置在从表里需要经常查询的字段中。
 
 # 结论：
 /*

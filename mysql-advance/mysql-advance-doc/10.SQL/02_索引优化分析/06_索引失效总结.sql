@@ -28,7 +28,7 @@ EXPLAIN SELECT * FROM staffs WHERE `name` = 'July' AND age = 25 AND pos = 'dev';
 -- 2. 最佳左前缀法则：如果索引了多列，要遵守最左前缀法则，指的是查询从索引的最左前列开始并且 不跳过索引中的列 。
 EXPLAIN SELECT * FROM staffs WHERE pos = 'dev';
 EXPLAIN SELECT * FROM staffs WHERE `name` = 'July' AND pos = 'dev';
--- 2.1. MySQL 底层调优
+-- 2.1. MySQL 底层调优查询顺序
 EXPLAIN SELECT * FROM staffs WHERE pos = 'dev' AND age = 25 AND `name` = 'July';
 
 -- 3. 不在索引列上做任何操作（计算、函数、（自动or手动）类型转换），会导致索引失效而转向全表扫描

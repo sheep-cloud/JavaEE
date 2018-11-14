@@ -19,7 +19,7 @@ INSERT INTO article(author_id, category_id, views, comments, title, content) VAL
 SELECT * FROM article;
 SHOW INDEX FROM article;
 
-# 查询 category_id = 1 且 comments > 1 的情况下，views 最多的 article
+# 查询 category_id = 1 且 comments > 1 的情况下，views 最多的 id, author_id
 EXPLAIN SELECT id, author_id FROM article WHERE category_id = 1 AND comments > 1 ORDER BY views DESC LIMIT 1;
 
 # 结论：很显然type是ALL，即最坏的情况。Extra中还出现了Using filesort，也是最坏的情况，优化是必须的。
