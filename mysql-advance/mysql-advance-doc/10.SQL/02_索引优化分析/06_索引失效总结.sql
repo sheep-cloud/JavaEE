@@ -72,7 +72,8 @@ EXPLAIN SELECT * FROM staffs WHERE `name` = 'July' OR `name` = 'z3';
 	where b = 3 或 where b = 3 and c = 4 或 where c = 4	×
 	where a = 3 and c = 5					√	使用到a；但是c不可以，b中间断了
 	where a = 3 and b > 4 and c = 5				√	使用到a, b；c不能用在范围之后，b断了
-	where 3 = 3 and b like 'kk%' and c = 4			√	使用到a, b；c不能用在范围之后，b断了
+	where a = 3 and b like 'kk%' and c = 4			√	使用到a, b；c不能用在范围之后，b断了
+	where c = 5 and b = 3 and a = 2				√	使用到a, b, c；MySQL底层调优查询顺序
 */
 
 /*
