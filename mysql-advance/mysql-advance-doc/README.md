@@ -83,11 +83,11 @@
 
 ![](http://ww1.sinaimg.cn/large/005PjuVtgy1fx7d9td26tj30e80b7tcd.jpg)
 
-#### 2.2.3. 7种JOIN
+#### 2.2.3. 7种通用JOIN
 
 ```sql
 /*
-	7中通用JOIN：
+	7种通用JOIN：
 		内连接、左连接、右连接、左独有连接、右独有连接、全连接、全连接去交集
 */
 USE mysql_advance;
@@ -304,14 +304,14 @@ MySQL官方对索引的定义为：索引（Index）是帮助MySQL提高获取�
 
 - `table：`显示这一行的数据是关于哪张表的
 
-- `partitions`
+- `partitions`：匹配的分区信息
 
 - `type`：访问类型
 
   - 访问类型排列
 
     - `system`：表只有一行记录（等于系统表），这是const类型的特例，平时不会出现，这个也可以忽略不计
-    - `const`：表示通过索引一次就招到了，const用于比较primary key或者unique索引。因为只匹配一行数据，所以很快。如将主键置于where列表中，MySQL就能将该查询转换位一个常量
+    - `const`：表示通过索引一次就找到了，const用于比较primary key或者unique索引。因为只匹配一行数据，所以很快。如将主键置于where列表中，MySQL就能将该查询转换位一个常量
     - `eq_ref`：唯一性索引扫描，对于每个索引键，表中只有一条记录与之匹配。常见于主键或唯一索引扫描
     - `ref`：非唯一性索引扫描，返回匹配某个单独值的所有行，本质上也是一种索引访问，它返回所有匹配某个单独值的行。然而，它可能会找到多个符合条件的行，所以他应该属于查找和扫描的混合体
     - `range`：只检索给定范围的行，使用一个索引来选择行。key列显示使用了哪个索引。一般就是在where语句中出现了between, <, >, in等的查询。最后只能怪范围扫描索引扫描比权标要好，因为它只需要开始于索引的某一点，而结束于另一点，不用扫描全部索引。
@@ -335,7 +335,7 @@ MySQL官方对索引的定义为：索引（Index）是帮助MySQL提高获取�
 
 - `rows`：根据表统计信息及索引选用情况，大致估算出找到所需的记录所需要读取的行数
 
-- `filtered`
+- `filtered`：rows*filtered/100 表示该步骤最后得到的行数(估计值)。
 
 - `Extra`：包含不适合在其他列中显示但十分重要的额外信息
 
@@ -698,6 +698,78 @@ LIKE百分写最右，覆盖索引不写星；
 ## 3. 查询截取分析
 
 ### 3.1. 查询优化
+
+#### 3.1.1. 永远小表驱动大表
+
+```mysql
+-- 小表驱动大表，类似嵌套循环Nested Loop
+
+# 优化原则：小表驱动大表，即小的数据集驱动大的数据集
+
+/*	
+	当B表的数据集小于A表的数据集时，用IN优于EXISTS
+	
+	SELECT * FROM A WHERE id IN (
+	    SELECT id FROM B
+	);
+	相当于：
+	for SELECT id FROM B
+	for SELECT * FROM A WHERE A.id = B.id
+	
+        for (int i = 0; i < (SELECT id FROM B).length; i++) {
+            for (...) {
+                ...
+            }
+        }
+	
+	
+	当A表的数据集小于B表的数据集时，用EXISTS优于IN
+	
+	SELECT * FROM A WHERE EXISTS (
+	    SELECT 1 FROM B WHERE B.id = A.id
+	);
+	相当于：
+	for SELECT * FROM A
+	for SELECT * FROM B WHERE B.id = A.id
+	
+        for (int i = 0; i < (SELECT id FROM A).length; i++) {
+            for (...) {
+                ...
+            }
+        }
+	
+	注意：A与B表的id字段应建立索引
+	
+	
+	# EXISTS 公式：
+	SELECT 查询列表 FROM 表名 WHERE EXISTS (
+	    subquery
+	);
+	该语法可以理解为：将主查询的数据，放到子查询中做条件验证，根据验证结果(TRUE或FALSE)来决定主查询的数据结果是否得以保留。
+	
+	# 提示
+	1. EXISTS (subquery) 只返回 TRUE或FALSE，因此子查询中的 SELECT * 也可以是 SELECT 1 或其他。官方说法是实际执行时会忽略 SELECT 清单，因此没有区别。
+	2. EXISTS 子查询的实际执行过程可能经过了优化而不是我们理解上的逐条对比，如果担忧效率问题，可进行实际校验以确定是否有效率问题。
+	3. EXISTS 子查询往往也可以用条件表达式、其他子查询或者JOIN来替代，何种最优需要具体问题具体分析。
+*/
+
+SELECT * FROM tbl_emp;
+SELECT * FROM tbl_dept;
+
+EXPLAIN
+SELECT * FROM tbl_emp e WHERE e.dept_id IN (
+    SELECT d.id FROM tbl_dept d
+);
+
+EXPLAIN
+SELECT * FROM tbl_emp e WHERE EXISTS (
+    SELECT 1 FROM tbl_dept d WHERE d.id = e.dept_id
+);
+```
+
+#### 3.1.2. `order by`关键字优化
+
+#### 3.1.3. `group by`关键字优化
 
 ### 3.2. 慢查询日志
 

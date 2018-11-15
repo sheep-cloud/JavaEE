@@ -3,4 +3,13 @@
     <groupId>cn.colg</groupId>
     <artifactId>mysql-advance-01-helloworld</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>cn.colg</groupId>
+            <artifactId>colg-dependencies</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
 </project>
