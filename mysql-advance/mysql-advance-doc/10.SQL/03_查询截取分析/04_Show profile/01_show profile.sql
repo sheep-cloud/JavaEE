@@ -1,0 +1,8 @@
+--
+USE mysql_advance;
+
+SELECT * FROM emp GROUP BY id % 10 LIMIT 150000;
+
+SELECT * FROM emp GROUP BY id % 20 ORDER BY 5;
+
+SHOW PROFILES;

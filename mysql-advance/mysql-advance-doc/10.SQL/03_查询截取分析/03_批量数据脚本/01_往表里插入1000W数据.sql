@@ -22,12 +22,9 @@ CREATE TABLE emp (
 	dept_no MEDIUMINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '部门编号'
 ) COMMENT '员工表';
 
-SELECT * FROM dept;
-SELECT * FROM emp;
-
 # 2. 设置参数log_big_trust_function_creators
 /*
-	创建函数，加入报错：This function has none of DETERMINISTIC......
+	创建函数，假如报错：This function has none of DETERMINISTIC......
 	# 由于开启慢查询日志，因为开启了bin-log，就必须为funciton指定一个参数。
 	
 	SHOW VARIABLES LIKE 'log_bin_trust_function_creators';
@@ -36,7 +33,6 @@ SELECT * FROM emp;
 	# 这样添加了参数以后，如果mysqld重启，上述参数又会消失，永久方法：
 	window 下 my.ini [mysqld] 加上 log_bin_trust_function_creators=1
 	linux 下 /etc/my.cnf [mysqld] 加上 log_bin_trust_function_creators=1
-	
 */
 
 
@@ -144,52 +140,12 @@ COMMIT;
 END $;
 
 # 5. 调用存储过程
+# 5.1. 往dept表添加10条数据
 TRUNCATE TABLE dept;
 CALL insert_dept(100, 10);
 SELECT * FROM dept;
 
+# 5.2. 往emp表添加50W条数据
 TRUNCATE TABLE emp;
-CALL insert_emp(10, 1000000);
+CALL insert_emp(100001, 500000);
 SELECT * FROM emp;
-
-
-# 每个月入职的员工数
-EXPLAIN
-SELECT DATE_FORMAT(e.hiredate, '%Y年%m月') 入职日期, COUNT(*)
-FROM emp e
-GROUP BY 入职日期;
-
-# 统计姓名相同的员工
-EXPLAIN
-SELECT e.id FROM emp e
-INNER JOIN dept d ON e.dept_no = d.dept_no
-WHERE e.emp_name IN (
-	SELECT emp_name FROM emp
-	GROUP BY emp_name
-	HAVING COUNT(*) > 1
-);
-
-ALTER TABLE emp ADD INDEX adx_emp_empName(emp_name);
-ALTER TABLE emp ADD INDEX adx_emp_empNoEmpName(emp_no, emp_name);
-ALTER TABLE dept ADD INDEX idx_dept_deptNo(dept_no);
-ALTER TABLE dept ADD INDEX idx_dept_deptName(dept_name);
-ALTER TABLE dept ADD INDEX idx_dept_deptNoDeptName(dept_no, dept_name);
-
-DROP INDEX adx_emp_empName ON emp;
-DROP INDEX adx_emp_empNoEmpName ON emp;
-DROP INDEX idx_dept_deptNo ON dept;
-DROP INDEX idx_dept_deptName ON dept;
-DROP INDEX idx_dept_deptNoDeptName ON dept;
-
-
-# 查询姓名相同员工的最小id
-SELECT * FROM emp e
-WHERE e.emp_name IN (
-	SELECT emp_name FROM emp
-	GROUP BY emp_name
-	HAVING COUNT(*) > 1
-) AND id NOT IN (
-	SELECT MIN(id) FROM emp
-	GROUP BY emp_name
-	HAVING COUNT(*) > 1
-);

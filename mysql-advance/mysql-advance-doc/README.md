@@ -767,13 +767,306 @@ SELECT * FROM tbl_emp e WHERE EXISTS (
 );
 ```
 
-#### 3.1.2. `order by`关键字优化
+#### 3.1.2. `ORDER BY`关键字优化
 
-#### 3.1.3. `group by`关键字优化
+- ORDER BY子句，尽量使用index方式排序，避免使用FileSort方式排序
+
+  - MySQL支持两种方式的排序，FileSort和Index，Index效率高。它指MySQL扫描索引本身完成排序。FileSort方式效率较低。
+  - **ORDER BY满足两种情况，会使用Index方式排序**
+    - **ORDER BY语句使用索引最左前列**
+    - **使用WHERE子句与ORDER BY子句条件组合满足索引最左前列**
+
+- 尽可能在索引列上完成排序操作，遵照索引建的最佳左前缀
+
+- 如果不在索引列上，filesort有两种算法，mysql就要启动双路排序和单路排序
+
+  - 双路排序：MySQL4.1之前使用，扫描两次磁盘，最终得到数据。
+  - 单路排序：使用更多的空间，因为把每一行都保存在内存中了。
+
+- 优化策略
+
+  - ORDER BY 时 `SELECT *` 是一个大忌。
+  - 增大sort_buffer_size参数的设置
+  - 增大max_length_for_sort_data参数的设置
+
+- ORDER BY 产生 Using filesort 案例
+
+  ```mysql
+  -- order by 关键字优化
+  USE mysql_advance;
+  DROP TABLE IF EXISTS tbl_A;
+  CREATE TABLE tbl_A (
+  	id INT PRIMARY KEY AUTO_INCREMENT,
+  	age INT,
+  	birth TIMESTAMP NOT NULL
+  );
+  
+  INSERT INTO tbl_A(age, birth) VALUES
+  (22, NOW()),
+  (23, NOW()),
+  (24, NOW());
+  
+  # 添加索引
+  ALTER TABLE tbl_A ADD INDEX idx_A_ageBirth(age, birth);
+  
+  SELECT * FROM tbl_A;
+  SHOW INDEX FROM tbl_A;
+  
+  # 以下方式会产生 Using filesort
+  EXPLAIN
+  SELECT * FROM tbl_A WHERE age > 20 ORDER BY birth;
+  
+  EXPLAIN
+  SELECT * FROM tbl_A WHERE age > 20 ORDER BY birth, age;
+  
+  EXPLAIN
+  SELECT * FROM tbl_A ORDER BY birth;
+  
+  EXPLAIN
+  SELECT * FROM tbl_A WHERE birth > '2017-11-15 22:26:33' ORDER BY birth;
+  
+  EXPLAIN
+  SELECT * FROM tbl_A ORDER BY age ASC, birth DESC;
+  ```
+
+#### 3.1.3. `GROUP BY`关键字优化
+
+- GROUP BY 实质是先排序后进行分组，遵照索引建的最左做前缀
+- 当无法使用索引列，增大`max_length_sort_data`参数的设置+增大`sort_buffer_size`参数的设置
+- WHERE高于HAVING，能写在WHERE限定的条件就不要去HAVING限定了
 
 ### 3.2. 慢查询日志
 
+#### 3.2.1. 慢查询日志是什么？
+
+- MySQL的慢查询日志是MySQL提供的一种日志记录，它用来记录在MySQL中响应事件超过阈值的语句，具体指运行事件超过`long_query_time`值的SQL，则会被记录到慢查询日志中。
+- 具体指运行事件超过`long_query_time`值的SQL，则会被记录到慢查询日志中。`long_query_time`的默认值为10，意思是运行10秒以上的语句。
+- 由慢查询日志来查看哪些SQL超出了最大忍耐时间值，比如一条sql执行超过5秒钟，就算慢SQL，希望能收集超过5秒的sql，结合之前explain进行全面分析。
+
+#### 3.2.2. 慢查询日志怎么用？
+
+- 默认情况下，MySQL数据库没有开启慢查询日志，需要手动来设置这个参数。如果不是调优需要的话，一般不建议启动该参数。
+
+- 慢查询日志的开启
+
+  ```mysql
+  -- 慢查询日志的开启
+  # 查看慢查询日志是否开启；默认情况下slow_query_log的值为OFF，表示慢查询日志是禁用的。
+  SHOW VARIABLES LIKE '%slow_query_log%';
+  
+  # 开启慢查询日志
+  SET GLOBAL slow_query_log = 1;
+  
+  # 关闭慢查询日志
+  SET GLOBAL slow_query_log = 0;
+  
+  # 如果要永久生效，就必须修改配置文件my.cnf（其他系统变量也是如此）
+  
+  # 修改my.cnf文件，[mysqld]下增加或修改参数
+  # slow_query_log和slow_query_log_file后，然后重启MySQL服务器。也追加如下两行配置进行my.cnf文件
+  
+  # slow_query_log=1
+  # linux： 	slow_query_log_file=/var/lib/mysql/xxx-slow.log
+  # windiows：	slow_query_log_file=D:\Sybase\mysql-5.7.19-winx64\data\Black-Cloud-slow.log
+  
+  # 关于慢查询的参数slow_query_log_file，它指定慢查询日志文件的存放路径，系统默认会给一个缺省的文件host_name-slow.log（如果没有指定参数slow_query_log_file的话）
+  ```
+
+- 什么样的SQL会记录到慢查询日志里？
+
+  ```mysql
+  # 什么样的SQL会记录到慢查询日志里？
+  /*
+  	这个是由参数long_query_time控制，默认情况下long_query_time的值为10秒。保存大于10秒的，而不是大于等于
+  	命令：SHOW VARIABLES LIKE '%long_query_time%';
+  	
+  	可以使用命令修改，也可以在my.cnf参数里面修改。 
+  	
+  	如果要永久生效，就必须修改配置文件my.cnf
+  	long_query_time=3
+  	log_output=FILE
+  */
+  # 查看当前多少秒算慢
+  SHOW VARIABLES LIKE '%long_query_time%';
+  
+  # 设置慢查询的阈值时间，设置以后需要重新连接或重新开一个回话才能看到修改值
+  SET GLOBAL long_query_time = 3;
+  
+  # 回复慢查询的阈值时间
+  SET GLOBAL long_query_time = 10;
+  
+  # 使用新的命令查看慢查询的阈值时间
+  SHOW GLOBAL VARIABLES LIKE '%long_query_time%';
+  
+  # 测试是否记录到日志
+  SELECT SLEEP(4);
+  
+  # 查看慢查询日志记录的条数
+  SHOW GLOBAL STATUS LIKE '%Slow_queries%';
+  ```
+
+#### 3.2.3. 日志分析工具`mysqldumpslow`
+
+在生产环境中，如果要手工分析日志，查找、分析SQL，显然是个体力活，MySQL提供了日志分析工具`mysqldumpslow`
+
+- 查看`mysqldumpslow`的帮助信息
+- 工作常用参考
+
 ### 3.3. 批量数据脚本
+
+```mysql
+-- 往表里插入1000W数据
+# 1. 建表
+USE mysql_advance;
+DROP TABLE IF EXISTS dept;
+CREATE TABLE dept (
+	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT COMMENT '部门id',
+	dept_no MEDIUMINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '部门编号',
+	dept_name VARCHAR(32) NOT NULL DEFAULT '' COMMENT '部门名称',
+	loc VARCHAR(32) NOT NULL DEFAULT '' COMMENT '楼层'
+) COMMENT '部门表';
+
+DROP TABLE IF EXISTS emp;
+CREATE TABLE emp (
+	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT COMMENT '员工id',
+	emp_no MEDIUMINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '员工编号',
+	emp_name VARCHAR(32) NOT NULL DEFAULT '' COMMENT '员工名称',
+	job VARCHAR(32) NOT NULL DEFAULT '' COMMENT '工作',
+	mgr MEDIUMINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '上级编号',
+	hiredate DATE NOT NULL COMMENT '入职时间',
+	salary DECIMAL(7, 2) NOT NULL COMMENT '薪水',
+	comm DECIMAL(7, 2) NOT NULL COMMENT '红利',
+	dept_no MEDIUMINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '部门编号'
+) COMMENT '员工表';
+
+# 2. 设置参数log_big_trust_function_creators
+/*
+	创建函数，假如报错：This function has none of DETERMINISTIC......
+	# 由于开启慢查询日志，因为开启了bin-log，就必须为funciton指定一个参数。
+	
+	SHOW VARIABLES LIKE 'log_bin_trust_function_creators';
+	SET GLOBAL log_bin_trust_function_creators = 1;
+	
+	# 这样添加了参数以后，如果mysqld重启，上述参数又会消失，永久方法：
+	window 下 my.ini [mysqld] 加上 log_bin_trust_function_creators=1
+	linux 下 /etc/my.cnf [mysqld] 加上 log_bin_trust_function_creators=1
+*/
+
+
+# 3. 创建函数，保证每条数据都不同
+# 3.1. 获取指定范围内的随机数，用于随机产生部门编号
+DROP FUNCTION IF EXISTS random_int;
+DELIMITER $
+CREATE FUNCTION random_int(start_num INT, end_num INT) RETURNS INT
+BEGIN
+/*
+	获得指定范围内的随机数
+	
+	@params start_num 最小数（包含）
+	@params end_num 最大数（包含）
+	@return 随机数
+*/
+	DECLARE i INT DEFAULT 0;
+	# 若要在i ≤ R ≤ j 这个范围得到一个随机整数R ，需要用到表达式 FLOOR(i + RAND() * (j – i + 1))。
+	SET i = FLOOR(start_num + RAND() * (end_num - start_num + 1));
+	RETURN i;
+END $;
+
+SELECT random_int(1, 52);
+
+# 3.2. 获得一个随机的字符串（a-z，A-Z）
+DROP FUNCTION IF EXISTS random_string;
+DELIMITER $
+CREATE FUNCTION random_string(len INT) RETURNS VARCHAR(256)
+BEGIN
+/*
+	获得一个随机的字符串（a-z，A-Z）
+	
+	@params len 字符串的长度
+	@return 随机字符串
+*/
+	DECLARE base_char VARCHAR(32) DEFAULT 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	DECLARE return_str VARCHAR(256) DEFAULT '';
+	DECLARE base_length INT DEFAULT LENGTH(base_char);
+	DECLARE i INT DEFAULT 0;
+	WHILE i < len DO
+		SET return_str = CONCAT(return_str, SUBSTR(base_char, random_int(1, base_length), 1));
+		SET i = i + 1;
+	END WHILE;
+	RETURN return_str;
+END $;
+
+SELECT random_string(10);
+
+# 3.3. 获取一个随机日期
+DROP FUNCTION IF EXISTS random_date;
+DELIMITER $
+CREATE FUNCTION random_date(start_date VARCHAR(32), end_date VARCHAR(32)) RETURNS DATE
+BEGIN
+/*
+	获取随机日期，范围 start_date ~ end_date
+*/
+	DECLARE return_date DATE DEFAULT NULL;
+	SET return_date = DATE(FROM_UNIXTIME(random_int(UNIX_TIMESTAMP(start_date), UNIX_TIMESTAMP(end_date))));
+	RETURN return_date;
+END $;
+
+SELECT random_date('1963-01-01', '2000-01-01');
+
+
+# 4. 创建存储过程
+# 4.1. 创建往dept表中插入数据的存储过程
+DROP PROCEDURE IF EXISTS insert_dept;
+DELIMITER $
+CREATE PROCEDURE insert_dept(IN start_no INT, IN max_num INT)
+BEGIN
+/*
+	往dept表中插入数据
+	
+	@params start_no 部门起始编号
+	@params max_num 插入数量
+*/
+DECLARE i INT DEFAULT 0;
+START TRANSACTION;
+	WHILE i < max_num DO
+		INSERT INTO dept(dept_no, dept_name, loc) VALUES((start_no + i), random_string(5), random_string(8));
+		SET i = i + 1;
+	END WHILE;
+COMMIT;
+END $;
+
+# 4.2. 创建往emp表中插入数据的存储过程
+DROP PROCEDURE IF EXISTS insert_emp;
+DELIMITER $
+CREATE PROCEDURE insert_emp(IN start_no INT, IN max_num INT)
+BEGIN
+/*
+	往emp表中插入数据
+	
+	@params start_no 员工起始编号
+	@params max_num 插入数量
+*/
+DECLARE i INT DEFAULT 0;
+START TRANSACTION;
+	WHILE i < max_num DO
+		INSERT INTO emp(emp_no, emp_name, job, mgr, hiredate, salary, comm, dept_no) VALUES
+		((start_no + i), random_string(6), 'SALESMAN', 0001, random_date('1963-01-01', '2000-01-01'), random_int(2000, 4000), random_int(200, 400), random_int(100, 109));
+		SET i = i + 1;
+	END WHILE;
+COMMIT;
+END $;
+
+# 5. 调用存储过程
+# 5.1. 往dept表添加10条数据
+TRUNCATE TABLE dept;
+CALL insert_dept(100, 10);
+SELECT * FROM dept;
+
+# 5.2. 往emp表添加50W条数据
+TRUNCATE TABLE emp;
+CALL insert_emp(100001, 500000);
+SELECT * FROM emp;
+```
 
 ### 3.4. Show profile
 
