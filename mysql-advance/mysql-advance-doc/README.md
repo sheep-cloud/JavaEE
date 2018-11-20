@@ -1070,19 +1070,249 @@ SELECT * FROM emp;
 
 ### 3.4. Show profile
 
-### 3.5. 全局日志查询
+### 3.5. 全局查询日志
 
 ## 4. MySQL 锁机制
 
 ### 4.1. 概述
 
+#### 4.1.1. 定义
+
+- 锁是计算机协调多个进程或线程并发访问某一资源的机制。
+  - 在数据库中，除传统的计算资源（如CPU、RAM、I/O等）的争用意外，数据也是一种供许多用户共享的资源。如何保证数据并发访问的一致性、有效性是所有数据库必须解决的一个问题，锁冲突也是影响数据库并发访问性能的一个重要因素。从这角度来说，锁对数据库而言显得尤其重要，也更加复杂。
+- 举例：生活购物
+  - 商品只有一件库存，这个时候如果还有另一个人买，如何解决是自己买到还是另一个人买到？这里肯定要用到事务，先从库存表中取出物品数量，然后插入订单，付款后插入付款表信息，然后更新商品数量。在这个过程中，使用锁可以对有限的资源进行保护，解决隔离和并发的矛盾。
+
+#### 4.1.2. 锁的分类
+
+- 从对数据操作的类型（读/写）分
+  - 读锁（共享锁）：针对同一份数据，多个读操作可以同时进行而不会互相影响。
+  - 写锁（排它锁）：当前写操作没有完成前，它会阻断其它写锁和读锁。
+- 从对数据操作的粒度分
+  - 表锁
+  - 行锁
+
 ### 4.2. 三锁
+
+#### 4.2.1. 表锁（偏读）
+
+##### 4.2.1.1. 特点
+
+偏向MyISAM存储引擎，开销小、加锁快；无死锁；锁定粒度大，发生锁冲突的概率最高，并发度最低。
+
+##### 4.2.1.2. 案例分析
+
+```mysql
+-- 表锁（偏读）
+USE mysql_advance;
+DROP TABLE IF EXISTS test_myisam_lock;
+CREATE TABLE test_myisam_lock (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	`name` VARCHAR(32)
+) ENGINE MYISAM;
+
+INSERT INTO  test_myisam_lock(`name`) VALUES
+('a'),
+('b'),
+('c'),
+('d'),
+('e');
+
+SELECT * FROM test_myisam_lock;
+
+# 查看表上加过的锁，In_use > 0 表示被加锁
+SHOW OPEN TABLES FROM mysql_advance;
+
+# 手动增加表锁
+# lock table 表名 read/write, 表名2 read/write, ...;
+LOCK TABLE test_myisam_lock READ, book WRITE;
+
+# 释放表锁
+UNLOCK TABLES;
+
+
+-- 1. 加读锁
+LOCK TABLE test_myisam_lock READ;
+
+# 1.1. 当前session可以查询该表记录；其他session也可以查询该表记录
+SELECT * FROM test_myisam_lock;
+
+# 1.2. 当前session查询其他未锁定的表会报错；其他session可以查询或更新未锁定的表
+SELECT * FROM book;
+
+# 1.3. 当前session中插入或更新锁定的表都会报错；其他session插入或更新锁定表会一直等待获得锁（阻塞）
+UPDATE test_myisam_lock SET `name` = 'a2' WHERE id = 1;
+
+# 1.4. 释放锁；其他session获得锁，插入或更新操作完成。
+UNLOCK TABLES;
+
+-- 2. 加写锁
+LOCK TABLE test_myisam_lock WRITE;
+
+# 2.1. 当前session可以查询该表记录；其他session也可以查询该表记录会一直等待获得锁（阻塞）
+SELECT * FROM test_myisam_lock;
+
+# 2.2. 当前session查询其他未锁定的表会报错；其他session可以查询或更新未锁定的表
+SELECT * FROM book;
+
+# 2.3. 当前session中可以插入或更新；其他session插入或更新锁定表会一直等待获得锁（阻塞）
+UPDATE test_myisam_lock SET `name` = 'a3' WHERE id = 1;
+
+# 2.3. 释放锁；其他session获得锁，查询、插入或更新操作完成
+UNLOCK TABLES;
+
+
+
+
+# 通过检查 Table_locks_waited 和 Table_locks_immediate 状态变量来分析系统上的表锁定；
+SHOW STATUS LIKE 'table%'
+
+# Table_locks_waited：产生表级锁定的次数，表示可以立即获取锁的查询次数，每立即获取锁值加1；
+# Table_locks_immediate：出现表级锁定争用而发生等待的次数（不能立即获取锁的次数，每等待一次锁值加1），此值高则说明存在着比较严重的表级锁争用情况。
+
+# 此外，MyISAM的读写锁调度是写优先，这也是MyISAM不适合做写为主表的引擎。因为写锁后，其他线程不能做任何操作，大量的更新会使查询很难得到锁，从而造成永远阻塞。
+```
+
+##### 4.2.1.3. 案例结论
+
+MyISAM在执行查询语句（SELECT）前，会自动给涉及的所有表加读锁，在执行增删改操作前，会自动给涉及的表加写锁。
+
+MySQL的表锁有两种模式：
+
+- 表共享读锁（Table Read Lock）
+
+- 表独占写锁（Table Write Lock）
+
+| 锁类型 | 可否兼容 | 读锁 | 写锁 |
+| ------ | -------- | ---- | ---- |
+| 读锁   | 是       | 是   | 否   |
+| 写锁   | 是       | 否   | 否   |
+
+- 结论
+  - 对MyISAM表的读操作（加读锁），不会阻塞其他进程对同一表的读请求，但会阻塞对同一表的写请求。只有当读锁释放后，才会执行其他进程的写操作。
+  - 对MyISAM表的写操作（加写锁），会阻塞其他进程对同一表的读和写操作，只有当写锁释放后，才会执行其他进程的读写操作。
+- **简而言之，就是读锁会阻塞写，但是不会阻塞读，而写锁则会把读和写都堵塞。**
+
+##### 4.2.1.4. 表锁分析
+
+- 查看哪些表被加锁
+
+  ```mysql
+  # 查看表上加过的锁，In_use > 0 表示被加锁
+  SHOW OPEN TABLES FROM mysql_advance;
+  ```
+
+- 如何分析表锁定
+
+  ```mysql
+  # 通过检查 Table_locks_waited 和 Table_locks_immediate 状态变量来分析系统上的表锁定；
+  SHOW STATUS LIKE 'table%'
+  
+  # Table_locks_waited：产生表级锁定的次数，表示可以立即获取锁的查询次数，每立即获取锁值加1；
+  # Table_locks_immediate：出现表级锁定争用而发生等待的次数（不能立即获取锁的次数，每等待一次锁值加1），此值高则说明存在着比较严重的表级锁争用情况。
+  ```
+
+- **MyISAM的读写锁调度是写优先，这也是MyISAM不适合做写为主表的引擎。因为写锁后，其他线程不能做任何操作，大量的更新会使查询很难得到锁，从而造成永远阻塞。**
+
+#### 4.2.2. 行锁（偏写）
+
+##### 4.2.2.1. 特点
+
+偏向InnoDB存储引擎，开销大，加锁慢；会出现死锁；锁定粒度最小，发生锁冲突的概率最低，并发度也很高。
+
+InnoDB与MyISAM的最大不同点：一是支持事务（TRANSACTION）；二是采用了行级锁。
+
+##### 4.2.2.2. 案例分析
+
+###### 4.2.2.2.1. SQL
+
+```mysql
+-- 行锁（偏写）
+USE mysql_advance;
+DROP TABLE IF EXISTS test_innodb_lock;
+CREATE TABLE test_innodb_lock (
+	a INT,
+	b VARCHAR(32)
+) ENGINE = INNODB;
+
+INSERT INTO test_innodb_lock(a, b) VALUES
+(1, 'b2'),
+(3, '3'),
+(4, '4000'),
+(5, '5000'),
+(6, '6000'),
+(7, '7000'),
+(8, '8000'),
+(19, '9000'),
+(1, 'b1');
+
+SELECT * FROM test_innodb_lock;
+
+ALTER TABLE test_innodb_lock ADD INDEX idx_test_innodb_lock_a(a);
+ALTER TABLE test_innodb_lock ADD INDEX idx_test_innodb_lock_b(b);
+
+SHOW INDEX FROM test_innodb_lock;
+
+# 修改时，索引失效，行锁变表锁
+
+
+
+# 如何分析行锁锁定
+# 通过检查 innodb_row_lock 状态变量来分析系统上的行锁的争夺情况
+SHOW STATUS LIKE 'innodb_row_lock%';
+
+# Innodb_row_lock_current_waits			当前正在等待锁定的数量
+# Innodb_row_lock_time				从系统启动到现在锁定总时间长度
+# Innodb_row_lock_time_avg			每次等待所花平均时间
+# Innodb_row_lock_time_max			从系统启动到现在等待最长的一次所花的时间
+# Innodb_row_lock_waits				系统启动后到现在总共等待的次数
+```
+
+###### 4.2.2.2.2. 无索引行锁升级为表锁
+
+- 行锁实现方式
+  - **InnoDB行锁是通过给索引上的索引项加锁来实现的**，这一点MySQL与Oracle不同，后者是**通过在数据块中对相应数据行加锁来实现的。InnoDB这种行锁实现特点意味着：只有通过索引条件检索数据，InnoDB才使用行级锁，否则，InnoDB将使用表锁！**
+
+###### 4.2.2.2.3. 间隙锁
+
+- 什么是间隙锁
+  - 当使用范围条件而不是相等条件检索数据，并请求共享或排他锁时，InnoDB会给符合条件的已有数据记录的索引项加锁；对于键值在条件范围内但并不存在的记录，叫做“间隙（GAP）”，InnoDB也会对这个“间隙”加锁，这种锁机制就是所谓的间隙锁（Next-Key锁）。
+- 间隙锁危害
+  - 因为Query执行过程中通过范围查找的话，他会锁定整个范围内所有的索引键值，即使这个键值并不存在。间隙锁有一个比较致命的弱点，就是当锁定一个范围键值之后，即使某些不存在的键值也会被无辜的锁定，而造成锁定的时候无法插入锁定键值范围内的任何数据。在某些场景下这可能会对性能造成很大的危害。
+
+###### 4.2.2.2.4. 如何锁定一行
+
+##### 4.2.2.3. 案例结论
+
+##### 4.2.2.4. 行锁分析
+
+##### 4.2.2.5. 优化建议
+
+- 尽可能放所有数据检索都通过索引来完成，避免无索引行锁升级为表锁
+- 合理设计索引，尽量缩小锁的范围
+- 尽可能减少检索条件，避免间隙锁
+- 尽量控制事务大小，减少锁定资源量和时间长度
+- 尽可能低级别事务隔离
+
+#### 4.2.3. 页锁
+
+开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一般
 
 ## 5. 主从复制
 
 ### 5.1. 复制的基本原理
 
+- slave会从master读取binlog来进行数据同步
+- MySQL复制过程分为三步
+  - master将改变记录到二进制日志（binary log）。这些记录过程叫做二进制日志事件。binary log events
+  - slave将master的binary log events拷贝到它的中继日志（relay log）
+  - slave重做中继日志中的事件，将改变应用到自己的数据库中。MySQL复制是异步的且串行化的
+
 ### 5.2. 复制的基本原则
+
+- 每个slave只有一个master
+- 每个slave只能有一个唯一的服务器id
+- 每个master可以有多个salve
 
 ### 5.3. 复制的最大问题
 
