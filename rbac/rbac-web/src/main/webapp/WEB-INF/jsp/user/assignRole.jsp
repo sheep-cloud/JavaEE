@@ -9,9 +9,9 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/css/font-awesome.min.css">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/css/main.css">
+<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/font-awesome.min.css">
+<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/main.css">
 <style>
     .tree li {
         list-style-type: none;
@@ -94,10 +94,10 @@
             </div>
         </div>
     </div>
-    <script src="${applicationScope.APP_PATH}/jquery/jquery-2.1.1.min.js"></script>
-    <script src="${applicationScope.APP_PATH}/bootstrap/js/bootstrap.min.js"></script>
-    <script src="${applicationScope.APP_PATH}/script/docs.min.js"></script>
-    <script src="${applicationScope.APP_PATH}/layer/layer.js"></script>
+    <script src="${applicationScope.APP_PATH}/static/jquery/jquery-2.1.1.min.js"></script>
+    <script src="${applicationScope.APP_PATH}/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${applicationScope.APP_PATH}/static/script/docs.min.js"></script>
+    <script src="${applicationScope.APP_PATH}/static/layer/layer.js"></script>
     <script type="text/javascript">
         $(function () {
             $(".list-group-item").click(function () {

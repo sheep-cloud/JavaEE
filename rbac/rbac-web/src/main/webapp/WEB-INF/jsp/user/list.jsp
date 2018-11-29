@@ -9,9 +9,9 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/css/font-awesome.min.css">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/css/main.css">
+<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/font-awesome.min.css">
+<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/main.css">
 <style>
     .tree li {
         list-style-type: none;
@@ -101,10 +101,10 @@
         </div>
     </div>
 
-    <script src="${applicationScope.APP_PATH}/jquery/jquery-2.1.1.min.js"></script>
-    <script src="${applicationScope.APP_PATH}/bootstrap/js/bootstrap.min.js"></script>
-    <script src="${applicationScope.APP_PATH}/script/docs.min.js"></script>
-    <script src="${applicationScope.APP_PATH}/layer/layer.js"></script>
+    <script src="${applicationScope.APP_PATH}/static/jquery/jquery-2.1.1.min.js"></script>
+    <script src="${applicationScope.APP_PATH}/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${applicationScope.APP_PATH}/static/script/docs.min.js"></script>
+    <script src="${applicationScope.APP_PATH}/static/layer/layer.js"></script>
     <script type="text/javascript">
         $(function () {
             $(".list-group-item").click(function () {
@@ -123,13 +123,13 @@
 
             // 查询
             $('#queryBtn').click(function () {
-                let queryText = $('#queryText').val()
+                var queryText = $('#queryText').val()
                 pageQuery(1, queryText)
             })
 
             // 全选
             $('#allSelBox').click(function () {
-                let self = this
+                var self = this
                 $('#userData :checkbox').each(function () {
                     this.checked = self.checked
                 })
@@ -144,12 +144,12 @@
         });
 
         // 分页查询
-        let pageSize = 10
+        var pageSize = 10
 
         // 分页查询
         function pageQuery(pageNum, queryText) {
-            let loadingIndex = null
-            let jsonData = {
+            var loadingIndex = null
+            var jsonData = {
                 'pageNum': pageNum,
                 'pageSize': pageSize,
                 'loginacct': queryText
@@ -164,13 +164,13 @@
                 success: function (result) {
                     layer.close(loadingIndex)
 
-                    let userList = result.data
-                    let totalSize = result.total
-                    let totalPage = Math.ceil(totalSize / pageSize)
+                    var userList = result.data
+                    var totalSize = result.total
+                    var totalPage = Math.ceil(totalSize / pageSize)
 
                     // 局部刷新页面数据
                     // 表格
-                    let tableContext = ''
+                    var tableContext = ''
                     $.each(userList, function (index, user) {
                         tableContext += '<tr>'
                         tableContext += '   <td>' + (index + 1) + '</td>'
@@ -190,14 +190,14 @@
                     $('#userData').html(tableContext)
 
                     // 分页
-                    let paginationContext = ''
+                    var paginationContext = ''
                     if (pageNum <= 1) {
                         paginationContext += `<li class="disabled"><a href="#">上一页</a></li>`
                     } else {
                         paginationContext += '<li><a href="#" onclick="pageQuery(' + (pageNum - 1) + ')">上一页</a></li>'
                     }
 
-                    for (let i = 1; i <= totalPage; i++) {
+                    for (var i = 1; i <= totalPage; i++) {
                         if (i === pageNum) {
                             paginationContext += '<li class="active"><a href="#">' + i + '<span class="sr-only">(current)</span></a></li>'
                         } else {
@@ -228,7 +228,7 @@
         // 批量删除用户
         function deleteUsers() {
             /*
-            let ids = []
+            var ids = []
             $('#userData :checkbox').each(function () {
                 if (this.checked) {
                     ids.push($(this).val())
@@ -237,13 +237,13 @@
             ids = ids.join(',')
             */
 
-            let boxes = $('#userData :checkbox')
+            var boxes = $('#userData :checkbox')
             if (boxes.length === 0) {
                 layer.msg('请选择需要删除的用户信息', {time: 1000, icon: 5, shift: 6})
             } else {
                 layer.confirm('删除用户信息，是否继续？', {icon: 3, title: '提示'}, function (cindex) {
                     layer.close(cindex)
-                    let loadingIndex = null
+                    var loadingIndex = null
                     $.ajax({
                         type: 'post',
                         url: '${applicationScope.APP_PATH}/user/delUsers',
@@ -272,7 +272,7 @@
         function delUser(id) {
             layer.confirm('删除用户信息，是否继续？', {icon: 3, title: '提示'}, function (cindex) {
                 layer.close(cindex)
-                let loadingIndex = null
+                var loadingIndex = null
                 $.ajax({
                     type: 'post',
                     url: '${applicationScope.APP_PATH}/user/delUser',

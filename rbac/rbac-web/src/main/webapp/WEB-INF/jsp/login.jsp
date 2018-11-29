@@ -10,9 +10,9 @@
 <meta name="keys" content="">
 <meta name="author" content="">
 
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/css/font-awesome.min.css">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/css/login.css">
+<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/font-awesome.min.css">
+<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/login.css">
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -41,8 +41,7 @@
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
             <div class="form-group has-success has-feedback">
-                <input type="password" class="form-control" id="password" name="password" placeholder="请输入登录密码"
-                       style="margin-top:10px;">
+                <input type="password" class="form-control" id="password" name="password" placeholder="请输入登录密码">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="form-group has-success has-feedback">
@@ -65,28 +64,28 @@
             <a class="btn btn-lg btn-success btn-block" onclick="dologin()"> 登录</a>
         </form>
     </div>
-    <script src="${applicationScope.APP_PATH}/jquery/jquery-2.1.1.min.js"></script>
-    <script src="${applicationScope.APP_PATH}/bootstrap/js/bootstrap.min.js"></script>
-    <script src="${applicationScope.APP_PATH}/layer/layer.js"></script>
+    <script src="${applicationScope.APP_PATH}/static/jquery/jquery-2.1.1.min.js"></script>
+    <script src="${applicationScope.APP_PATH}/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${applicationScope.APP_PATH}/static/layer/layer.js"></script>
     <script type="text/javascript">
         // 用户登录
         function dologin() {
             // 非空校验
-            let loginacct = $('#loginacct').val()
+            var loginacct = $('#loginacct').val()
             // 表单元素的value取值不会为null，取值是空字符串
             if (!loginacct) {
                 layer.msg('用户登录帐号不能为空，请输入', {time: 1000, icon: 5, shift: 6})
                 return
             }
 
-            let password = $('#password').val()
+            var password = $('#password').val()
             if (!password) {
                 layer.msg('用户密码不能为空，请输入', {time: 1000, icon: 5, shift: 6})
                 return
             }
 
             // 使用ajax提交数据
-            let loadingIndex = null
+            var loadingIndex = null
             $.ajax({
                 type: 'post',
                 url: '${applicationScope.APP_PATH}/doAjaxLogin',

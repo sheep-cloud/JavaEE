@@ -61,7 +61,8 @@ public class LoginController extends BaseController {
     /**
      * ajax 执行登录
      *
-     * @param user
+     * @param loginacct 登录帐号
+     * @param password 密码
      * @return
      */
     @PostMapping("/doAjaxLogin")

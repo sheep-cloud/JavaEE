@@ -9,10 +9,10 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/css/font-awesome.min.css">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/css/main.css">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/ztree/zTreeStyle.css">
+<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/font-awesome.min.css">
+<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/main.css">
+<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/ztree/zTreeStyle.css">
 <style>
     .tree li {
         list-style-type: none;
@@ -80,11 +80,11 @@
         </div>
     </div>
 
-    <script src="${applicationScope.APP_PATH}/jquery/jquery-2.1.1.min.js"></script>
-    <script src="${applicationScope.APP_PATH}/bootstrap/js/bootstrap.min.js"></script>
-    <script src="${applicationScope.APP_PATH}/script/docs.min.js"></script>
-    <script src="${applicationScope.APP_PATH}/layer/layer.js"></script>
-    <script src="${applicationScope.APP_PATH}/ztree/jquery.ztree.all-3.5.min.js"></script>
+    <script src="${applicationScope.APP_PATH}/static/jquery/jquery-2.1.1.min.js"></script>
+    <script src="${applicationScope.APP_PATH}/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${applicationScope.APP_PATH}/static/script/docs.min.js"></script>
+    <script src="${applicationScope.APP_PATH}/static/layer/layer.js"></script>
+    <script src="${applicationScope.APP_PATH}/static/ztree/jquery.ztree.all-3.5.min.js"></script>
     <script type="text/javascript">
         $(function () {
             $(".list-group-item").click(function () {
@@ -99,7 +99,7 @@
             })
 
             // 树形结构
-            let setting = {
+            var setting = {
                 async: {
                     enable: true,
                     url: '${applicationScope.APP_PATH}/permission/loadData',
@@ -115,7 +115,7 @@
                     selectedMulti: false,
                     addDiyDom: function (treeId, treeNode) {
                         // 用于在节点上固定显示用户自定义控件
-                        let icoObj = $("#" + treeNode.tId + "_ico"); // tId = permissionTree_1, $("#permissionTree_1_ico")
+                        var icoObj = $("#" + treeNode.tId + "_ico"); // tId = permissionTree_1, $("#permissionTree_1_ico")
                         if (treeNode.icon) {
                             // 使用 bootstrop 中的样式
                             icoObj.removeClass("button ico_docu ico_open").addClass(treeNode.icon).css("background", "")
@@ -124,10 +124,10 @@
                     addHoverDom: function (treeId, treeNode) {
                         // 用于当鼠标移动到节点上时，显示用户自定义控件，显示隐藏状态同 zTree 内部的编辑、删除按钮
                         //   <a><span></span></a>
-                        let aObj = $("#" + treeNode.tId + "_a"); // tId = permissionTree_1, ==> $("#permissionTree_1_a")
+                        var aObj = $("#" + treeNode.tId + "_a"); // tId = permissionTree_1, ==> $("#permissionTree_1_a")
                         aObj.attr("href", "javascript:;");
                         if (treeNode.editNameFlag || $("#btnGroup" + treeNode.tId).length > 0) return;
-                        let s = '<span id="btnGroup' + treeNode.tId + '">'
+                        var s = '<span id="btnGroup' + treeNode.tId + '">'
                         if (treeNode.level === 0) {
                             s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" onclick=\'addNode("' + treeNode.id + '")\'" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>'
                         } else if (treeNode.level === 1) {
@@ -167,7 +167,7 @@
         function delNode(id) {
             layer.confirm('删除许可信息，是否继续？', {icon: 3, title: '提示'}, function (cindex) {
                 layer.close(cindex)
-                let loadingIndex = null
+                var loadingIndex = null
                 $.ajax({
                     type: 'post',
                     url: '${applicationScope.APP_PATH}/permission/delPermission',
@@ -182,7 +182,7 @@
                         if (result.code === 0) {
                             layer.msg('许可信息删除成功', {time: 1000, icon: 6, shift: 5}, function () {
                                 // 刷新当前树形结构数据
-                                let treeObj = $.fn.zTree.getZTreeObj('permissionTree')
+                                var treeObj = $.fn.zTree.getZTreeObj('permissionTree')
                                 treeObj.reAsyncChildNodes(null, 'refresh')
                             })
                         } else {

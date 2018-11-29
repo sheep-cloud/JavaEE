@@ -8,23 +8,9 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="css/font-awesome.min.css">
-<link rel="stylesheet" href="css/main.css">
-<style>
-    .tree li {
-        list-style-type: none;
-        cursor: pointer;
-    }
-
-    .tree-closed {
-        height: 40px;
-    }
-
-    .tree-expanded {
-        height: auto;
-    }
-</style>
+<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/font-awesome.min.css">
+<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/main.css">
 </head>
 
 <body>
@@ -66,9 +52,9 @@
             </div>
         </div>
     </div>
-    <script src="jquery/jquery-2.1.1.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-    <script src="script/docs.min.js"></script>
+    <script src="${applicationScope.APP_PATH}/static/jquery/jquery-2.1.1.min.js"></script>
+    <script src="${applicationScope.APP_PATH}/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${applicationScope.APP_PATH}/static/script/docs.min.js"></script>
     <script type="text/javascript">
         $(function () {
             $(".list-group-item").click(function () {
