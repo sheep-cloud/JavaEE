@@ -22,7 +22,6 @@
             collection：	定义关联集合类型的属性的封装规则
                 property="emps"：                                                        指定哪个属性是关联的集合
                 ofType="cn.colg.entity.Employee"：     指定这个集合中对象的类型（不能省略）
-				
          -->
         <collection property="emps" ofType="cn.colg.entity.Employee">
             <!-- 这里的 column 对应的是查询的别名，而不是表中的别名 -->
@@ -32,6 +31,10 @@
             <result property="email" column="email" />
         </collection>
     </resultMap>
+    <!-- 
+                        根据id查询部门，把员工也查询出来；
+                        方式一：关联查询
+     -->
     <select id="findByIdPlus" resultMap="MyDept">
         <!-- 不能有重复列名，需要起别名 -->
         SELECT
@@ -40,19 +43,19 @@
         FROM
             tbl_dept td
         INNER JOIN tbl_employee te ON td.id = te.dept_id
-        <where>
-            <if test="id != null and id != ''">
-                td.id = #{id}
-            </if>
-        </where>
+        WHERE td.id = #{id}
     </select>
 	 
     <!-- 一对多：分步查询 -->
     <resultMap type="cn.colg.entity.Department" id="MyDeptStep">
         <id property="id" column="id" />
         <result property="departmentName" column="dept_name" />
-        <collection property="emps" column="deptId=id" select="cn.colg.dao.EmployeeMapper.queryByDeptId" />
+        <collection property="emps" select="cn.colg.dao.EmployeeMapper.queryByDeptId" column="deptId=id" />
     </resultMap>
+    <!-- 
+                        根据id查询部门，把员工也查询出来；
+                        方式二：分步查询
+     -->
     <select id="findByIdStep" resultMap="MyDeptStep">
         SELECT
             td.id, td.dept_name
@@ -75,23 +78,15 @@
             tbl_dept td
     </select>
 
-
     <resultMap type="cn.colg.entity.Department" id="MyGroup">
         <id property="id" column="id" />
         <result property="departmentName" column="dept_name" />
-        <collection property="emps" column="deptId=id" select="cn.colg.dao.EmployeeMapper.queryByDeptId" />
+        <collection property="emps" select="cn.colg.dao.EmployeeMapper.queryByDeptId" column="deptId=id" />
     </resultMap>
 
     <select id="selectGroup" resultMap="MyGroup">
         SELECT
             td.id, td.dept_name
-        FROM
-            tbl_dept td
-    </select>
-
-    <select id="selectAll" resultType="cn.colg.entity.Department">
-        SELECT
-            td.id, td.dept_name as departmentName
         FROM
             tbl_dept td
     </select>

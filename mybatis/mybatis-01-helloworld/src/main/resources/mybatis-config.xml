@@ -22,8 +22,8 @@
         </environment>
     </environments>
 	
-    <!-- 将写好的sql映射文件（EmployeeMapper.xml）一定要注册到全局配置文件中 -->
+    <!-- 将写好的sql映射文件（mapper/EmployeeMapper.xml）一定要注册到全局配置文件中 -->
     <mappers>
-        <mapper resource="EmployeeMapper.xml" />
+        <mapper resource="mapper/EmployeeMapper.xml" />
     </mappers>
 </configuration>

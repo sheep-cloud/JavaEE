@@ -17,7 +17,8 @@
             where：
                                             查询的时候如果某些条件没有设置可能sql拼装有问题
                     1、给where后面加上1=1，以后的条件都加and
-                    2、使用where标签，将所有的查询条件包括在内；mybatis就会将where标签中拼装的sql，多出来的and或者or去掉
+                    2、使用where标签，将所有的查询条件包括在内；
+                        mybatis就会将where标签中拼装的sql，多出来的and或者or去掉
          -->
         <where>
             <if test="id != null">
@@ -136,11 +137,31 @@
     <insert id="addEmployees">
         INSERT INTO
             tbl_employee(last_name, gender, email, dept_id)
-        <!-- MySQL下批量保存:    可以foreach遍历；mysql支持values(), (), ()语法 -->
         VALUES
+        <!-- MySQL下批量保存:    可以foreach遍历；mysql支持values(), (), ()语法 -->
         <foreach collection="employees" item="employee" separator=",">
             (#{employee.lastName}, #{employee.gender}, #{employee.email}, #{employee.dept.id})
         </foreach>
     </insert>
+    
+    <!-- 
+                        两个内置参数
+                            不只是方法传递过来的参数可以用来判断,取值...
+         mybatis默认还有两个内置参数，
+            _parameter: 代表整个参数
+                                                    单个参数: _parameter就是这个参数
+                                                    多个参数: 参数会被封装为一个map；_parameter就是代表这个map
+            _databaseId: 如果配置了DatabaseIdProvide标签
+                _databaseId就是代表当前数据库的别名
+     -->
+     <select id="queryByParameter" resultType="cn.colg.entity.Employee">
+        SELECT
+            te.id, te.last_name lastName, te.gender, te.email, te.dept_id
+        FROM
+            tbl_employee te
+        <if test="_parameter != null">
+            WHERE te.last_name LIKE '%${_parameter.lastName}%'
+        </if>
+     </select>
 
 </mapper>

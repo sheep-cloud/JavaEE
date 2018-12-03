@@ -74,7 +74,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     }
     
     /**
-     * Test method for {@link cn.colg.dao.EmployeeMapper#addEmployees(java.util.List<Employee>)}.
+     * Test method for {@link cn.colg.dao.EmployeeMapper#addEmployees(cn.colg.entity.Employee)}.
      */
     @Test
     public void testAddEmployees() {
@@ -85,5 +85,15 @@ public class EmployeeMapperTest extends BaseMapperTest {
             );
         long result = employeeMapper.addEmployees(employees);
         log.info("result : {}", result);
+    }
+    
+    /**
+     * Test method for {@link cn.colg.dao.EmployeeMapper#queryByParameter(cn.colg.entity.Employee)}.
+     */
+    @Test
+    public void testQueryByParameter() {
+        EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
+        List<Employee> list = employeeMapper.queryByParameter(new Employee().setLastName("a"));
+        log.info("list : {}", list);
     }
 }

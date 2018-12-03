@@ -30,14 +30,13 @@
         WHERE te.id = #{id}
     </select>
 	
-	
-	
 	<!-- 
-		根据id查询员工，把部门也查出来
+                        根据id查询员工，把部门也查出来；
+                        方式一：级联属性封装，OGNL表达式，对象.属性
 	 -->
     <select id="findEmpAndDept01" resultType="cn.colg.entity.Employee">
         SELECT
-            te.id, te.last_name `lastName`, te.gender, te.email,
+            te.id, te.last_name `lastName`, te.gender, te.email, te.dept_id,
             td.id `dept.id`, td.dept_name `dept.departmentName`
         FROM
             tbl_employee te
@@ -46,8 +45,8 @@
     </select>
 	
 	<!-- 
-		员工与部门对应信息：
-			id		last_name		gender		email		dept_id		id		dept_name
+                        员工与部门对应信息：
+        id, last_name, gender, email, dept_id, dept_name
 	 -->
     <resultMap type="cn.colg.entity.Employee" id="MyDifEmp">
         <id property="id" column="id" />
@@ -57,10 +56,14 @@
         <result property="dept.id" column="dept_id" />
         <result property="dept.departmentName" column="dept_name" />
     </resultMap>
+    <!-- 
+                         根据id查询员工，把部门也查出来；
+                         方式二：级联属性封装
+     -->
     <select id="findEmpAndDept02" resultMap="MyDifEmp">
         SELECT
-            te.id, te.last_name, te.gender, te.email, te.dept_id,
-            td.id, td.dept_name
+            te.id, te.last_name, te.gender, te.email,
+            td.id `dept_id`, td.dept_name
         FROM
             tbl_employee te
         INNER JOIN tbl_dept td ON td.id = te.dept_id
@@ -82,9 +85,13 @@
             <result property="departmentName" column="dept_name" />
         </association>
     </resultMap>
+    <!-- 
+                        根据id查询员工，把部门也查出来；
+                        方式三：级联属性封装：使用association，关联对象
+     -->
     <select id="findEmpAndDept03" resultMap="MydifEmp2">
         SELECT
-            te.id, te.last_name, te.gender, te.email, te.dept_id,
+            te.id, te.last_name, te.gender, te.email,
             td.id, td.dept_name
         FROM
             tbl_employee te
@@ -105,9 +112,13 @@
 		 -->
         <association property="dept" select="cn.colg.dao.DepartmentMapper.findById" column="id" />
     </resultMap>
+    <!-- 
+                        根据id查询员工，把部门也查出来；
+                        方式四：分步查询：使用association，分步查询
+     -->
     <select id="findEmpAndDeptStep04" resultMap="MydifEmpStep3">
         SELECT
-            te.id, te.last_name, te.gender, te.email, te.dept_id
+            te.id, te.last_name, te.gender, te.email
         FROM tbl_employee te
         WHERE te.id = #{id}
     </select>

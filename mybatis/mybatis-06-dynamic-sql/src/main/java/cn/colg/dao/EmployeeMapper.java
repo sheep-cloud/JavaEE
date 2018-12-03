@@ -16,7 +16,7 @@ public interface EmployeeMapper {
     /**
      * 根据携带的条件查询（携带了哪些字段就查哪些）；
      * 
-     * test，where 语法
+     * if，where 语法
      *
      * @param employee
      * @return
@@ -72,4 +72,13 @@ public interface EmployeeMapper {
      * @return
      */
     long addEmployees(@Param("employees") List<Employee> employees);
+    
+    /**
+     * 根据内置参数_parameter查询
+     *
+     * @param employee
+     * @return
+     * @author colg
+     */
+    List<Employee> queryByParameter(Employee employee);
 }

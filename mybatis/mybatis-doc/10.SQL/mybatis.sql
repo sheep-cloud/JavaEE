@@ -36,9 +36,13 @@ ALTER TABLE tbl_employee ADD CONSTRAINT fk_emp_dept FOREIGN KEY(dept_id) REFEREN
 UPDATE tbl_employee SET dept_id = 1 WHERE id = 1;
 UPDATE tbl_employee SET dept_id = 2 WHERE id = 2;
 
-
+-- 创建索引
+ALTER TABLE tbl_employee ADD INDEX idx_lastName_gender_email(last_name, gender, email);
+ALTER TABLE tbl_dept ADD INDEX idx_deptName(dept_name);
+DROP INDEX idx_lastName_gender_email ON tbl_employee;
 
 -- 创建用户
+DROP USER IF EXISTS 'mybatis';
 CREATE USER 'mybatis' IDENTIFIED BY '123456';
 
 -- 用户授权
@@ -51,6 +55,8 @@ FLUSH PRIVILEGES;
 
 SELECT * FROM tbl_employee;
 SELECT * FROM tbl_dept;
+SHOW INDEX FROM tbl_employee;
+SHOW INDEX FROM tbl_dept;
 
 -- 根据id查询员工
 SELECT

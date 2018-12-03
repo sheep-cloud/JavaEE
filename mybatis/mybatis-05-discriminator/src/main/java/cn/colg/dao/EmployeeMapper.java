@@ -14,7 +14,7 @@ public interface EmployeeMapper {
     /**
      * 根据id查询员工；
      * 
-     * 如果员工是女生，就是部门信息查询出来，否则不查询； 如果员工是男生，就把姓名赋值给email。
+     * 如果员工是女生，就把部门信息查询出来，否则不查询； 如果员工是男生，就把lastName赋值给email。
      *
      * @param id
      * @return

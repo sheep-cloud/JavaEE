@@ -38,4 +38,10 @@ public class Employee extends BaseEntity implements Serializable {
     @JSONField(ordinal = 1)
     private Department dept;
 
+    public Employee(String lastName, String gender, String email) {
+        this.lastName = lastName;
+        this.gender = gender;
+        this.email = email;
+    }
+
 }

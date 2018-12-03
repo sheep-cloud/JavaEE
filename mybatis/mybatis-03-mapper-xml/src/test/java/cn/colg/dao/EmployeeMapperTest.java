@@ -113,7 +113,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     @Test
     public void testAddEmployee2() {
         EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
-        Employee employee = new Employee(null, "rose", "1", "rose@colg.com");
+        Employee employee = new Employee(null, "rose2", "1", "rose2@colg.com");
         employeeMapper.addEmployee2(employee);
         
         // 不是直接得到返回的主键id，而是通过之前的对象get出来

@@ -2,5 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.colg.dao.EmployeeMapper">
+    <!-- 
+        eviction: 缓存的回收策略；默认LUR；最近最少使用的:移除最长时间不被使用的对象
+        flushInterval: 缓存刷新间隔
+        readOnly: 只读；默认false
+        size: 缓存数目；默认1024
+        type: 指定自定义缓存的全类名
+     -->
+    <cache eviction="LRU" flushInterval="6000" readOnly="false" size="1024"></cache>
 
+    <select id="findById" resultType="cn.colg.entity.Employee" useCache="true">
+        SELECT
+            te.id, te.last_name, te.gender, te.email, te.dept_id,
+            td.id `dept.id`, td.dept_name `dept.departmentName`
+        FROM
+            tbl_employee te
+            LEFT JOIN tbl_dept td ON td.id = te.dept_id
+        WHERE te.id = #{id}
+    </select>
+    
+    <insert id="addEmployee" useGeneratedKeys="true" keyProperty="employee.id" flushCache="false">
+        INSERT INTO
+            tbl_employee (last_name, gender, email)
+        VALUES
+            (#{employee.lastName}, #{employee.gender}, #{employee.email})
+    </insert>
+    
 </mapper>

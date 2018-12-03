@@ -5,14 +5,14 @@
 
 <configuration>
     <!--
-        1、properties:   Mybatis 可以使用properties来引入外部properties配置文件的内容
+        1. properties:   Mybatis 可以使用properties来引入外部properties配置文件的内容
             resource:   引入类路径下的资源
             url:        引入网络路径或者磁盘路径洗的资源
      -->
     <properties resource="db.properties" />
 	
 	<!-- 
-	   2、settings:     MyBatis 中settings是极为重要的调整设置，它们会改变 MyBatis 的运行时行为
+	   2. settings:     MyBatis 中settings是极为重要的调整设置，它们会改变 MyBatis 的运行时行为
             setting:    用来设置每一个设置项目
                 name:   设置项名
                 value:  设置项目取值
@@ -22,7 +22,7 @@
     </settings>
 	
 	<!-- 
-        3、typeAliases: 别名处理器，可以为 Java 类型设置一个短的名字，别名不区分大小写
+        3. typeAliases: 别名处理器，可以为 Java 类型设置一个短的名字，别名不区分大小写
             typeAlias:  为某个java类型起别名
                 alias:  别名
                 type:   指定要起别名的类型全限定名；默认别名就是类名小写: employee
@@ -39,7 +39,7 @@
     </typeAliases>
 	
 	<!-- 
-        4、environments:	配置环境，Mybatis可以配置多种环境，default指定使用某种环境，可以达到快速切换
+        4. environments:	配置环境，Mybatis可以配置多种环境，default指定使用某种环境，可以达到快速切换
             environment:            配置一个具体的环境信息，必须包含两个标签，id代表当前环境的唯一标识
                 transactionManager: 事务管理器
                     type:           事务类型：JDBC(JdbcTransactionFactory) | MANAGED(ManagedTransactionFactory)
@@ -49,9 +49,8 @@
                     type:           有三种内建的数据源类型（也就是 type=”[UNPOOLED(UnpooledDataSourceFactory)|POOLED(PooledDataSourceFactory)|JNDI(JndiDataSourceFactory)]”）
                                                             自定义数据源:       实现DataSourceFactory接口，type是全类名
 	 -->
-
     <environments default="development">
-        <environment id="test">
+        <environment id="development">
             <transactionManager type="JDBC" />
             <dataSource type="POOLED">
                 <property name="driver" value="${jdbc.driver}" />
@@ -61,7 +60,7 @@
             </dataSource>
         </environment>
 
-        <environment id="development">
+        <environment id="test">
             <transactionManager type="JDBC" />
             <dataSource type="POOLED">
                 <property name="driver" value="${jdbc.driver}" />
@@ -73,11 +72,11 @@
     </environments>
 	
 	<!-- 
-		5、databaseIdProvider： MyBatis 可以根据不同的数据库厂商执行不同的语句，这种多厂商的支持是基于映射语句中的 databaseId 属性。
+		5. databaseIdProvider： MyBatis 可以根据不同的数据库厂商执行不同的语句，这种多厂商的支持是基于映射语句中的 databaseId 属性。
 	 -->
 	
 	<!-- 
-        6、mappers: 将sql映射注册到全局配置中
+        6. mappers: 将sql映射注册到全局配置中
             mapper: 注册一个sql映射
                 resource:   引用类路径下的sql映射文件  <mapper resource="org/mybatis/builder/PostMapper.xml"/>
                 url:        引用网络路径下或者磁盘路径下的sql映射文件  <mapper url="file:///var/mappers/PostMapper.xml"/>
@@ -89,9 +88,9 @@
             package:    批量注册：同包名、同命名
 	 -->
     <mappers>
-		<!-- <mapper resource="mapper/EmployeeMapper.xml" /> -->
-		<!-- <mapper class="cn.colg.dao.EmployeeMapperAnnotation"/> -->
-        <!-- <package name="cn.colg.dao" /> -->
+		<mapper resource="mapper/EmployeeMapper.xml" />
+		<mapper class="cn.colg.dao.EmployeeMapperAnnotation"/>
+        <package name="cn.colg.dao" />
     </mappers>
 
 </configuration>
