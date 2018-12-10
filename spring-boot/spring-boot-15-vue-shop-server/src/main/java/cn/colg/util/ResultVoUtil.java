@@ -1,12 +1,15 @@
 package cn.colg.util;
 
 import cn.colg.vo.ResultVo;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * http 请求工具类
  *
  * @author colg
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ResultVoUtil {
 
     /**

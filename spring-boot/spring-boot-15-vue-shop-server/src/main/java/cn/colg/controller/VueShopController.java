@@ -51,6 +51,7 @@ public class VueShopController {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    /** 定义map用于存储验证码 */
     private HashMap<String, String> users = new HashMap<>();
 
     /**
@@ -276,5 +277,4 @@ public class VueShopController {
         log.info("/logout: {}", DateUtil.now());
         return success(null);
     }
-
 }
