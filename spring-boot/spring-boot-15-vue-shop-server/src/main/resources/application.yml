@@ -4,4 +4,3 @@ spring:
   profiles:
     include:
       - mongodb
-      - sms
