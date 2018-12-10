@@ -42,7 +42,7 @@
             te.id te_id, te.last_name, te.gender, te.email, te.dept_id
         FROM
             tbl_dept td
-        INNER JOIN tbl_employee te ON td.id = te.dept_id
+            LEFT JOIN tbl_employee te ON td.id = te.dept_id
         WHERE td.id = #{id}
     </select>
 	 
@@ -77,17 +77,26 @@
         FROM
             tbl_dept td
     </select>
+    
+    <select id="selectGroupPlus" resultMap="MyDept">
+        SELECT
+            td.id, td.dept_name,
+            te.id te_id, te.last_name, te.gender, te.email, te.dept_id
+        FROM
+            tbl_dept td
+            LEFT JOIN tbl_employee te ON td.id = te.dept_id
+    </select>
 
     <resultMap type="cn.colg.entity.Department" id="MyGroup">
         <id property="id" column="id" />
         <result property="departmentName" column="dept_name" />
         <collection property="emps" select="cn.colg.dao.EmployeeMapper.queryByDeptId" column="deptId=id" />
     </resultMap>
-
-    <select id="selectGroup" resultMap="MyGroup">
+    <select id="selectGroupStep" resultMap="MyGroup">
         SELECT
             td.id, td.dept_name
         FROM
             tbl_dept td
     </select>
+
 </mapper>

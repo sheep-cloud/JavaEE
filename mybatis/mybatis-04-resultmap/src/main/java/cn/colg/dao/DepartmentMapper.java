@@ -51,17 +51,21 @@ public interface DepartmentMapper {
     
     /**
      * 分组查询员工列表（每个部门）
+     * 
+     * 方式一：关联查询
      *
      * @return
      * @author colg
      */
-    List<Department> selectGroup();
-
+    List<Department> selectGroupPlus();
+    
     /**
-     * 查询所有部门
+     * 分组查询员工列表（每个部门）
+     * 
+     * 方式二：分步查询
      *
      * @return
      * @author colg
      */
-    List<Department> selectAll();
+    List<Department> selectGroupStep();
 }

@@ -57,9 +57,16 @@ public class DepartmentMapperTest extends BaseMapperTest {
     }
 
     @Test
-    public void testSelectGroup() throws Exception {
+    public void testSelectGroupPlus() throws Exception {
         DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
-        List<Department> list = departmentMapper.selectGroup();
+        List<Department> list = departmentMapper.selectGroupPlus();
+        log.info("list : {}", list);
+    }
+    
+    @Test
+    public void testSelectStep() throws Exception {
+        DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
+        List<Department> list = departmentMapper.selectGroupStep();
         log.info("list : {}", list);
     }
 }
