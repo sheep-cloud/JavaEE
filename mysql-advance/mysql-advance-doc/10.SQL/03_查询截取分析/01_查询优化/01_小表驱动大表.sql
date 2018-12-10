@@ -19,7 +19,7 @@
         }
 	
 	
-	当A表的数据集小于B表的数据集时，用EXISTS优于IN
+	当B表的数据集大于A表的数据集时，用EXISTS优于IN
 	
 	SELECT * FROM A WHERE EXISTS (
 	    SELECT 1 FROM B WHERE B.id = A.id
