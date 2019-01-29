@@ -132,14 +132,42 @@ public class VueShopController {
      */
     @GetMapping("/captcha")
     public void captcha(HttpServletResponse response, HttpSession session) throws IOException {
+        // 使用Hutool CaptchaUtil 生成图形验证码
         ICaptcha iCaptcha = CaptchaUtil.createLineCaptcha(100, 37, 4, 0);
         OutputStream out = response.getOutputStream();
         iCaptcha.write(out);
         IoUtil.close(out);
-
+        String captcha = iCaptcha.getCode().toUpperCase();
+        log.info("/captcha; captcha: {}", captcha);
         // 保存到session
-        session.setAttribute("captcha", iCaptcha.getCode().toUpperCase());
-        log.info("/captcha; captcha: {}", session.getAttribute("captcha"));
+        session.setAttribute("captcha", captcha);
+        
+        /*
+        // 使用Google kaptcha 生成图形验证码
+        DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
+        Properties properties = new Properties();
+        properties.setProperty("kaptcha.image.width", "100");
+        properties.setProperty("kaptcha.image.height", "37");
+        properties.setProperty("kaptcha.textproducer.char.length", "4");
+        properties.setProperty("kaptcha.border", "no");
+        properties.setProperty("kaptcha.textproducer.char.string", "23456789abcdefghjklmnpqrstuvwxyz");
+        properties.setProperty("kaptcha.textproducer.font.names", "微软雅黑");
+        properties.setProperty("kaptcha.textproducer.font.size", "32");
+        Config config = new Config(properties);
+        defaultKaptcha.setConfig(config);
+        
+        ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
+        String createText = defaultKaptcha.createText();
+        BufferedImage challenge = defaultKaptcha.createImage(createText);
+        ImageIO.write(challenge, "jpg", jpegOutputStream);
+
+        byte[] captchaChallengeAsJpeg = jpegOutputStream.toByteArray();
+        ServletOutputStream out = response.getOutputStream();
+        out.write(captchaChallengeAsJpeg);
+        IoUtil.close(out);
+        // 保存到session
+        session.setAttribute("captcha", createText.toUpperCase());
+        */
     }
 
     /**
