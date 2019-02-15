@@ -3,15 +3,9 @@ package com.cloopen.rest.demo;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.HashMap;
-import java.util.Set;
 
 import com.cloopen.rest.sdk.CCPRestSDK;
-import com.cloopen.rest.sdk.CCPRestSDK.BodyType;
 
 public class SDKTestMediaFileUpload {
 
@@ -31,7 +25,6 @@ public class SDKTestMediaFileUpload {
 		try {
 			fis = new FileInputStream(file);
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		

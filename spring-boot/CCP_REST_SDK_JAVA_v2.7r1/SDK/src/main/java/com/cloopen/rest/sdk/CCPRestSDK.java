@@ -12,13 +12,9 @@
  */
 package com.cloopen.rest.sdk;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -34,6 +30,15 @@ import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
+import com.cloopen.rest.sdk.utils.CcopHttpClient;
+import com.cloopen.rest.sdk.utils.DateUtil;
+import com.cloopen.rest.sdk.utils.EncryptUtil;
+import com.cloopen.rest.sdk.utils.LoggerUtil;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import ytx.org.apache.http.HttpEntity;
 import ytx.org.apache.http.HttpResponse;
 import ytx.org.apache.http.client.methods.HttpGet;
@@ -43,15 +48,6 @@ import ytx.org.apache.http.entity.BasicHttpEntity;
 import ytx.org.apache.http.impl.client.DefaultHttpClient;
 import ytx.org.apache.http.message.AbstractHttpMessage;
 import ytx.org.apache.http.util.EntityUtils;
-
-import com.cloopen.rest.sdk.utils.CcopHttpClient;
-import com.cloopen.rest.sdk.utils.DateUtil;
-import com.cloopen.rest.sdk.utils.EncryptUtil;
-import com.cloopen.rest.sdk.utils.LoggerUtil;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 public class CCPRestSDK {
     int status;
