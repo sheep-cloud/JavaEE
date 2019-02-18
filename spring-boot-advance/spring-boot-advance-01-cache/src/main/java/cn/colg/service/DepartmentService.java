@@ -13,6 +13,13 @@ public interface DepartmentService {
 
     List<Department> query();
 
+    /**
+     * 根据id查询部门信息
+     *
+     * @param id
+     * @return
+     * @author colg
+     */
     Department getDeptById(Integer id);
 
     /**

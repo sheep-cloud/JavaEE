@@ -13,6 +13,13 @@ public interface EmployeeService {
 
     List<Employee> query();
 
+    /**
+     * 根据id查询员工信息
+     *
+     * @param id
+     * @return
+     * @author colg
+     */
     Employee getEmpById(Integer id);
 
     /**
@@ -22,4 +29,6 @@ public interface EmployeeService {
      * @author colg
      */
     void insertEmp(Employee employee);
+    
+    Employee getEmp2ById(Integer id);
 }

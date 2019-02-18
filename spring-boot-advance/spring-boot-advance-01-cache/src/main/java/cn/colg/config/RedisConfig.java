@@ -42,7 +42,7 @@ public class RedisConfig {
      * 定制缓存规则
      * 
      * <pre>
-     * `@Primary`: 默认使用；多个缓存管理器的情况下需要标注
+     * `@Primary`: 默认使用; 多个缓存管理器的情况下需要标注
      * </pre>
      *
      * @param redisTemplate

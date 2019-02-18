@@ -36,12 +36,12 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     /**
-     * 根据id查询部门；（注解方式）
+     * 根据id查询部门信息; (注解方式)
      * 
      * <pre>
-     * 缓存的数据能存入redis；
-     * 第二次从缓存中查询不能反序列化回来；
-     * 存的是dept的json数据集；cacheManager默认使用RedisTemplate<Object, Employee>操作redis
+     * 缓存的数据能存入redis;
+     * 第二次从缓存中查询不能反序列化回来;
+     * 存的是dept的json数据集; cacheManager默认使用RedisTemplate<Object, Employee>操作redis
      * </pre>
      *
      * @param id
@@ -60,7 +60,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     /**
-     * 根据id查询部门；（编码方式）
+     * 根据id查询部门信息; (编码方式)
      *
      * @param id
      * @return
@@ -68,11 +68,16 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Department getDept2ById(Integer id) {
         log.info("查询的部门ID： {}", id);
-        Department department = departmentMapper.getDeptById(id);
         
         // 获取某个缓存
-        Cache dept = deptCacheManager.getCache("dept");
-        dept.put("dept:" + id, department);
+        Cache cache = deptCacheManager.getCache("dept");
+        Department department = cache.get(id, Department.class);
+
+        // 查询数据库
+        if (department == null) {
+            department = departmentMapper.getDeptById(id);
+            cache.put(id, department);
+        }
         
         return department;
     }
