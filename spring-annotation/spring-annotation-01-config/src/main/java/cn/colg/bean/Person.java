@@ -2,8 +2,10 @@ package cn.colg.bean;
 
 import java.io.Serializable;
 
+import cn.colg.core.BaseEntity;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,9 +16,10 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Accessors(chain = true)
-public class Person implements Serializable {
+public class Person extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

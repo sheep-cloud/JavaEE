@@ -6,7 +6,7 @@
     <name>spring-annotation-01-config :: Spring 注解驱动开发</name>
 
     <properties>
-        <spring.version>4.3.17.RELEASE</spring.version>
+        <spring.version>4.3.22.RELEASE</spring.version>
     </properties>
 
     <dependencies>
@@ -16,7 +16,7 @@
             <version>${project.version}</version>
         </dependency>
 
-		<!-- spring-context 依赖，包含（core、beans、context、aop、expression、commons-logging） -->
+        <!-- spring-context 依赖, 包含(core, beans, context, aop, expression, commons-logging) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>

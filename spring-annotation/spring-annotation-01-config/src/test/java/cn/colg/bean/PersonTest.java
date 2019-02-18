@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PersonTest {
 
-    /** 创建一个新的ClassPathXmlApplicationContext，从给定的XML文件加载定义并自动刷新上下文。 */
+    /** 创建一个新的ClassPathXmlApplicationContext, 从给定的XML文件加载定义并自动刷新上下文 */
     private ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("beans.xml");
 
     @Test

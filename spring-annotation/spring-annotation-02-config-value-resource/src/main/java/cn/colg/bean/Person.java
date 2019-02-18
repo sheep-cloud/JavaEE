@@ -4,7 +4,11 @@ import java.io.Serializable;
 
 import org.springframework.beans.factory.annotation.Value;
 
-import lombok.ToString;
+import cn.colg.core.BaseEntity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -20,8 +24,11 @@ import lombok.extern.slf4j.Slf4j;
  * @author colg
  */
 @Slf4j
-@ToString
-public class Person implements Serializable {
+@AllArgsConstructor
+@Getter
+@Setter
+@Accessors(chain = true)
+public class Person extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
