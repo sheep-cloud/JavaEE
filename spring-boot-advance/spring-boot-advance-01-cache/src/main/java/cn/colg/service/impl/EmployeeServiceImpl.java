@@ -3,6 +3,7 @@ package cn.colg.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.Cache;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.cache.RedisCacheManager;
@@ -29,8 +30,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeMapper employeeMapper;
     
+    @Qualifier("empCacheManager")
     @Autowired
-    private RedisCacheManager redisCacheManager;
+    private RedisCacheManager empCacheManager;
 
     @Override
     public List<Employee> query() {
@@ -92,7 +94,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee getEmp2ById(Integer id) {
         log.info("查询的员工id: {}", id);
 
-        Cache cache = redisCacheManager.getCache("emp");
+        Cache cache = empCacheManager.getCache("emp");
         Employee employee = cache.get(id, Employee.class);
         
         if (employee == null) {
