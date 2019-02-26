@@ -31,8 +31,6 @@ import redis.clients.jedis.JedisPool;
 @Configuration
 public class RedisConfig {
 
-    // TODO colg [redis 使用 yml 注入属性，接收 int 异常，原因不明]
-
     @Value("${redis.host}")
     private String host;
     @Value("${redis.port}")
@@ -90,7 +88,7 @@ public class RedisConfig {
         poolConfig.setMaxWaitMillis(maxWait);
         poolConfig.setMinIdle(minIdle);
         poolConfig.setMaxIdle(maxIdle);
-        poolConfig.setMaxIdle(maxIdle);
+        poolConfig.setMaxTotal(maxActive);
         return poolConfig;
     }
 
