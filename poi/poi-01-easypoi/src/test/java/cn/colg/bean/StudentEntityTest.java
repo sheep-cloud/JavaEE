@@ -21,6 +21,7 @@ import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import cn.colg.BaseTest;
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.IdUtil;
@@ -42,11 +43,12 @@ public class StudentEntityTest extends BaseTest {
     public void test01() throws Exception {
         List<StudentEntity> list = new ArrayList<>();
         for (int i = 0, size = 100; i < size; i++) {
-            StudentEntity studentEntity = new StudentEntity().setId(IdUtil.simpleUUID())
-                                                             .setName("Jack-" + i)
-                                                             .setSex(i % 2 == 0 ? 1 : 2)
-                                                             .setBirthday(DateUtil.offset(new Date(), DateField.YEAR, -i))
-                                                             .setRegistrationDate(DateUtil.offsetMinute(new Date(), i));
+            StudentEntity studentEntity = new StudentEntity();
+            studentEntity.setId(IdUtil.simpleUUID())
+                         .setName("Jack-" + i)
+                         .setSex(i % 2 == 0 ? 1 : 2)
+                         .setBirthday(DateUtil.offset(new Date(), DateField.YEAR, -i))
+                         .setRegistrationDate(DateUtil.offsetMinute(new Date(), i));
             list.add(studentEntity);
         }
         
@@ -56,7 +58,9 @@ public class StudentEntityTest extends BaseTest {
         
         String filePath = "E:\\upload\\file\\计算机";
         String suffix = entity.getType().equals(ExcelType.HSSF) ? ".xls" : ".xlsx";
-        OutputStream out = new FileOutputStream(filePath + suffix);
+        File file = new File(filePath + suffix);
+        FileUtil.mkParentDirs(file);
+        OutputStream out = new FileOutputStream(file);
         workbook.write(out);
         IoUtil.close(out);
     }
@@ -92,5 +96,5 @@ public class StudentEntityTest extends BaseTest {
         Console.log(list.size());
         list.forEach(e -> Console.log(JSON.toJSONString(e)));
     }
-
+    
 }

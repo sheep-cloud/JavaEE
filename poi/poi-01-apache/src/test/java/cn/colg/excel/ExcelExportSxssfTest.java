@@ -10,14 +10,15 @@ import org.junit.Test;
 import cn.colg.BaseTest;
 import cn.colg.bean.Ypxx;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.NumberUtil;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * poi测试
  *
  * @author colg
  */
+@Slf4j
 public class ExcelExportSxssfTest extends BaseTest{
     
     @Test
@@ -43,23 +44,24 @@ public class ExcelExportSxssfTest extends BaseTest{
         List<Ypxx> list = new ArrayList<Ypxx>();
         int size = 1000;
         for (int i = 0; i < size; i++) {
-            Ypxx ypxx = new Ypxx().setBm(NumberUtil.decimalFormat("0000", i + 1))
-                                  .setMc("青霉素-" + i)
-                                  .setPrice(NumberUtil.roundStr(2.5f + i, 2))
-                                  .setYpjybgyxq(DateUtil.offsetHour(new Date(), i));
+            Ypxx ypxx = new Ypxx();
+            ypxx.setBm(NumberUtil.decimalFormat("0000", i + 1))
+                .setMc("青霉素-" + i)
+                .setPrice(NumberUtil.roundStr(2.5f + i, 2))
+                .setYpjybgyxq(DateUtil.offsetHour(new Date(), i));
             list.add(ypxx);
         }
         // 执行导出
         excelExportSXXSSF.writeDatasByObject(list);
         // 输出文件，返回下载文件的http地址
         String webpath = excelExportSXXSSF.exportFile();
-
-        Console.log(webpath);
+        log.info("webpath: {}", webpath);
     }
     
     @Test
     public void testName() throws Exception {
-        Console.log(NumberUtil.decimalFormat("#.00", 252.5));
+        String result = NumberUtil.decimalFormat("#.00", 252.5);
+        log.info("result: {}", result);
     }
     
 }

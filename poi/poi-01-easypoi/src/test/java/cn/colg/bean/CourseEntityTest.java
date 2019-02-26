@@ -21,14 +21,15 @@ import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.IoUtil;
-import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.IdUtil;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 课程测试 - 导出
  *
  * @author colg
  */
+@Slf4j
 public class CourseEntityTest {
 
     /**
@@ -42,28 +43,31 @@ public class CourseEntityTest {
         List<StudentEntity> studentlist1 = new ArrayList<>();
         int size = 10;
         for (int i = 0; i < size; i++) {
-            StudentEntity studentEntity = new StudentEntity().setId(IdUtil.simpleUUID())
-                                                             .setName("Jack-" + i)
-                                                             .setSex(i % 2 == 0 ? 1 : 2)
-                                                             .setBirthday(DateUtil.offset(new Date(), DateField.YEAR, -i))
-                                                             .setRegistrationDate(DateUtil.offsetMinute(new Date(), 1));
+            StudentEntity studentEntity = new StudentEntity();
+            studentEntity.setId(IdUtil.fastSimpleUUID())
+                         .setName("Jack-" + i)
+                         .setSex(i % 2 == 0 ? 1 : 2)
+                         .setBirthday(DateUtil.offset(new Date(), DateField.YEAR, -i))
+                         .setRegistrationDate(DateUtil.offsetMinute(new Date(), 1));
             studentlist1.add(studentEntity);
         }
         List<StudentEntity> studentlist2 = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            StudentEntity studentEntity = new StudentEntity().setId(IdUtil.simpleUUID())
-                                                             .setName("Rose-" + i)
-                                                             .setSex(i % 2 == 0 ? 1 : 2)
-                                                             .setBirthday(DateUtil.offset(new Date(), DateField.YEAR, -i))
-                                                             .setRegistrationDate(DateUtil.offsetMinute(new Date(), 1));
+            StudentEntity studentEntity = new StudentEntity();
+            studentEntity.setId(IdUtil.fastSimpleUUID())
+                         .setName("Rose-" + i)
+                         .setSex(i % 2 == 0 ? 1 : 2)
+                         .setBirthday(DateUtil.offset(new Date(), DateField.YEAR, -i))
+                         .setRegistrationDate(DateUtil.offsetMinute(new Date(), 1));
             studentlist2.add(studentEntity);
         }
         
         List<CourseEntity> list = new ArrayList<>();
-        CourseEntity courseEntity1 = new CourseEntity(IdUtil.simpleUUID(), "语文", studentlist1)
-                                                    .setMathTeacher(new TeacherEntity(IdUtil.simpleUUID(), "Jack"));
-        CourseEntity courseEntity2 = new CourseEntity(IdUtil.simpleUUID(), "数学", studentlist2)
-                                                    .setMathTeacher(new TeacherEntity(IdUtil.simpleUUID(), "Rose"));
+        CourseEntity courseEntity1 = new CourseEntity(IdUtil.fastSimpleUUID(), "语文", studentlist1);
+        courseEntity1.setMathTeacher(new TeacherEntity(IdUtil.fastSimpleUUID(), "Jack"));
+                                                    
+        CourseEntity courseEntity2 = new CourseEntity(IdUtil.fastSimpleUUID(), "数学", studentlist2);
+        courseEntity2.setMathTeacher(new TeacherEntity(IdUtil.fastSimpleUUID(), "Rose"));
         list.add(courseEntity1);
         list.add(courseEntity2);
         
@@ -91,7 +95,8 @@ public class CourseEntityTest {
         params.setTitleRows(2);
         params.setHeadRows(2);
         List<CourseEntity> list = ExcelImportUtil.importExcel(new File("E:\\upload\\file\\课程.xls"), CourseEntity.class, params);
-        list.forEach(Console::log);
+        log.info("list.size(): {}", list.size());
+        list.forEach(e -> log.info("e: {}", e));
     }
 
     /**
@@ -105,7 +110,7 @@ public class CourseEntityTest {
         ImportParams params = new ImportParams();
         params.setTitleRows(2);
         List<Map<String, Object>> list = ExcelImportUtil.importExcel(new File("E:\\upload\\file\\课程.xls"), Map.class, params);
-        Console.log(list.size());
-        list.forEach(e -> Console.log(JSON.toJSONString(e)));
+        log.info("list.size(): {}", list.size());
+        list.forEach(e -> log.info("e: {}", JSON.toJSONString(e)));
     }
 }

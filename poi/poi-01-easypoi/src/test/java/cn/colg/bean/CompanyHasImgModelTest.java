@@ -18,15 +18,17 @@ import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import cn.colg.BaseTest;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
-import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.IdUtil;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 公司测试 - 导出（集合）
  *
  * @author colg
  */
+@Slf4j
 public class CompanyHasImgModelTest extends BaseTest{
 
     /**
@@ -40,10 +42,11 @@ public class CompanyHasImgModelTest extends BaseTest{
         List<CompanyHasImgModel> list = new ArrayList<>();
         int size = 10;
         for (int i = 0; i < size; i++) {
-            CompanyHasImgModel companyHasImgModel = new CompanyHasImgModel().setCompanyId(IdUtil.simpleUUID())
-                                                                            .setCompanyName("百度-" + i)
-                                                                            .setCompanyLogo("E:\\upload\\file\\logo.png")
-                                                                            .setCompanyAddress("天河-" + i);
+            CompanyHasImgModel companyHasImgModel = new CompanyHasImgModel();
+            companyHasImgModel.setCompanyId(IdUtil.fastSimpleUUID())
+                              .setCompanyName("百度-" + i)
+                              .setCompanyLogo("E:\\upload\\file\\logo.png")
+                              .setCompanyAddress("天河-" + i);
             list.add(companyHasImgModel);
         }
         
@@ -51,9 +54,11 @@ public class CompanyHasImgModelTest extends BaseTest{
         entity.setHeight((short)64);
         Workbook workbook = ExcelExportUtil.exportExcel(entity, CompanyHasImgModel.class, list);
         
-        String file = "E:\\upload\\file\\公司信息";
+        String filePath = "E:\\upload\\file\\公司信息";
         String suffix = entity.getType().equals(ExcelType.HSSF) ? ".xls" : ".xlsx";
-        OutputStream out = new FileOutputStream(file + suffix);
+        File file = new File(filePath + suffix);
+        FileUtil.mkParentDirs(file);
+        OutputStream out = new FileOutputStream(file);
         workbook.write(out);
         IoUtil.close(out);
     }
@@ -70,8 +75,8 @@ public class CompanyHasImgModelTest extends BaseTest{
         params.setTitleRows(1);
         params.setNeedSave(true);
         List<CompanyHasImgModel> list = ExcelImportUtil.importExcel(new File("E:\\upload\\file\\公司信息.xls"), CompanyHasImgModel.class, params );
-        Console.log(list.size());
-        list.forEach(Console::log);
+        log.info("list.size(): {}", list.size());
+        list.forEach(e -> log.info("e: {}", e));
     }
     
     /**
@@ -86,7 +91,7 @@ public class CompanyHasImgModelTest extends BaseTest{
         params.setTitleRows(1);
         params.setNeedSave(true);
         List<Object> list = ExcelImportUtil.importExcel(new File("E:\\upload\\file\\公司信息.xls"), Map.class, params);
-        Console.log(list.size());
-        list.forEach(e -> Console.log(JSON.toJSONString(e)));
+        log.info("list.size(): {}", list.size());
+        list.forEach(e -> log.info("e: {}", JSON.toJSONString(e)));
     }
 }
