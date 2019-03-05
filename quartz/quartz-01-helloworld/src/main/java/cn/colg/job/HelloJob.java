@@ -18,17 +18,15 @@ public class HelloJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        log.info("HelloJob.execute() >> : {}", DateUtil.now());
+        log.info("HelloJob.execute: {}", DateUtil.now());
 
-        // 编写具体的业务逻辑
-        log.info("execute() >> Hello World : {}", "Quartz");
-        
+        /// 编写具体的业务逻辑
         
         JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
         String did = (String)jobDataMap.get("did");
         String air = (String)jobDataMap.get("air");
-        log.info("HelloJob.execute() >> did : {}", did);
-        log.info("HelloJob.execute() >> air : {}", air);
+        log.info("did: {}", did);
+        log.info("air: {}", air);
     }
 
 }

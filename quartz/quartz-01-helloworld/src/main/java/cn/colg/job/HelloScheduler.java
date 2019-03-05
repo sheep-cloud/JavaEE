@@ -40,13 +40,13 @@ public class HelloScheduler {
         jobDataMap.put("did", IdUtil.simpleUUID());
         jobDataMap.put("air", IdUtil.simpleUUID());
         
-        log.info("HelloScheduler.startHelloJob() : {}", JSON.toJSONString(jobDetail));
+        log.info("HelloScheduler.startHelloJob: {}", JSON.toJSONString(jobDetail));
         
-        // 创建一个Trigger实例，定义该job立即执行，并且每隔两秒钟重复执行一次，直到永远
+        // 创建一个Trigger实例，定义该job立即执行，并且每隔5秒钟重复执行一次，直到永远
         Trigger trigger = TriggerBuilder.newTrigger()
                                         .withIdentity("myTrigger")
                                         .startNow()
-                                        .withSchedule(CronScheduleBuilder.cronSchedule("0/2 * * * * ?"))
+                                        .withSchedule(CronScheduleBuilder.cronSchedule("0/5 * * * * ?"))
                                         .build();
         
         // 创建Scheduler实例
@@ -54,7 +54,7 @@ public class HelloScheduler {
         Scheduler scheduler = schedulerFactory.getScheduler();
         scheduler.start();
         
-        log.info("HelloScheduler.startHelloJob() : {}", DateUtil.now());
+        log.info("HelloScheduler.startHelloJob: {}", DateUtil.now());
         // 交由Scheduler安排触发
         scheduler.scheduleJob(jobDetail, trigger);
     }
