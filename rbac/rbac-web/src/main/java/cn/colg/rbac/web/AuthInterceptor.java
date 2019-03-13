@@ -35,12 +35,12 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         // 查询所有需要验证的路径集合
         List<PermissionDto> permissionDtoList = permissionService.querAll();
         Set<String> uriSet = new HashSet<>();
-        for (PermissionDto permissionDto : permissionDtoList) {
+        permissionDtoList.forEach(permissionDto -> {
             String permissionDtoUrl = permissionDto.getUrl();
             if (StrUtil.isNotBlank(permissionDtoUrl)) {
                 uriSet.add(path + permissionDtoUrl);
             }
-        }
+        });
 
         // 判断当前路径是否需要进行权限验证
         if (uriSet.contains(uri)) {
