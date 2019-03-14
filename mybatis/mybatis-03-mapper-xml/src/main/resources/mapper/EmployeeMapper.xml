@@ -85,7 +85,7 @@
             order:        在执行操作之前还是之后，执行查询操作
      -->
     <insert id="addEmployee2">
-        <selectKey keyProperty="employee.id" order="AFTER" resultType="int">
+        <selectKey keyProperty="employee.id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
         INSERT INTO
@@ -108,14 +108,14 @@
         WHERE id = #{id}
     </delete>
 
-    <select id="selectIds" resultType="String">
+    <select id="selectIds" resultType="string">
         SELECT
             te.id
         FROM
             tbl_employee te
     </select>
 
-    <select id="selectLastNamesByIds" resultType="String">
+    <select id="selectLastNamesByIds" resultType="string">
         SELECT
             te.last_name
         FROM
