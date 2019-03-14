@@ -1427,28 +1427,28 @@ public class ThymeleafController {
 ```ini
 # 简单表达
 ${...}: 变量表达式
-*{...}: 选择变量表达式，和${...}在功能上是一样的
+*{...}: 选择变量表达式, 和${...}在功能上是一样的
 #{...}: 获取国际化消息
 @{...}: url表达式
 ~{...}: 片段引用表达式
 # 字面
-文本文字: 'one text'，'Another one!'，...
-号码文字: 0，34，3.0，12.3，...
+文本文字: 'one text', 'Another one!', ...
+号码文字: 0, 34, 3.0, 12.3, ...
 布尔文字: true, false
 空字面: null
-文字标记: one, sometext，main，...
+文字标记: one, sometext, main，...
 # 文字操作
 字符串连接: +
 文字替换: |The name is ${name}|
 # 算术运算
-二元运算符: +，-，*，/，%
+二元运算符: +, -, *, /, %
 减号（一元运算符）: -
 布尔运算:
 二元运算符: and, or
 布尔否定（一元运算符）: !, not
 # 比较运算
-比较: >，<，>=，<=（gt，lt，ge，le）
-相等: ==，!=（eq，ne）
+比较: >, <, >=, <=（gt，lt，ge，le）
+相等: ==, !=（eq，ne）
 # 条件运算
 IF-THEN: (if) ? (then)
 IF-THEN-ELSE: (if) ? (then) : (else)
