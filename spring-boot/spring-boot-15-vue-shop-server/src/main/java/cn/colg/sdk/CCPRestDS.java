@@ -76,11 +76,11 @@ public class CCPRestDS {
                         props = new Props(path);
                     }
                     sdk = new CCPRestSDK();
-                    // 初始化服务器地址和端口，格式如下，服务器地址不需要写https://
-                    sdk.init(props.getStr("Rsst_URL", "app.cloopen.com"), props.getStr("Rest_Prot", "8883"));
-                    // 初始化主帐号和主帐号TOKEN
+                    // 初始化服务地址和端口; 服务器地址不需要写https://
+                    sdk.init(props.getStr("Rsst_URL"), props.getStr("Rest_Prot"));
+                    // 初始化主帐号信息
                     sdk.setAccount(props.getStr("ACCOUNT_SID"), props.getStr("AUTH_TOKEN"));
-                    // 初始化应用ID
+                    // 初始化应用Id
                     sdk.setAppId(props.getStr("AppID"));
                 }
             }

@@ -1,6 +1,9 @@
 server:
-  port: 3000
+  port: 9001
 spring:
   profiles:
     include:
       - mongodb
+logging:
+  level:
+    root: info
