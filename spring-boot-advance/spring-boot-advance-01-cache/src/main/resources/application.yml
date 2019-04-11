@@ -8,6 +8,12 @@ spring:
     password: root
   redis:
     host: 192.168.21.103
+    port: 6379
+    pool:
+      max-wait: -1
+      min-idle: 0
+      max-idle: 8
+      max-active: 8
 mybatis:
   configuration:
     map-underscore-to-camel-case: true            # 是否开启自动驼峰命名规则（camel case）映射
@@ -15,4 +21,4 @@ mybatis:
 logging:
   level:
     cn.colg.mapper: debug
-debug: true
+debug: false

@@ -29,7 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private EmployeeMapper employeeMapper;
-    
+
     @Qualifier("empCacheManager")
     @Autowired
     private RedisCacheManager empCacheManager;
@@ -94,13 +94,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee getEmp2ById(Integer id) {
         log.info("查询的员工id: {}", id);
 
+        // 查询缓存
         Cache cache = empCacheManager.getCache("emp");
         Employee employee = cache.get(id, Employee.class);
-        
-        if (employee == null) {
-            employee = employeeMapper.getEmpById(id);
-            cache.put(id, employee);
+        if (employee != null) {
+            return employee;
         }
+
+        // 缓存没有, 查询数据库
+        employee = employeeMapper.getEmpById(id);
+        // 把结果添加到缓存
+        cache.put(id, employee);
         return employee;
     }
 

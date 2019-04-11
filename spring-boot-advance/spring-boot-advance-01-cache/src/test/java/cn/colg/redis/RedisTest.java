@@ -10,7 +10,6 @@ import com.alibaba.fastjson.JSON;
 import cn.colg.SpringBootAdvance01CacheApplicationTests;
 import cn.colg.bean.Employee;
 import cn.colg.mapper.EmployeeMapper;
-import cn.hutool.core.lang.Console;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -33,15 +32,15 @@ public class RedisTest extends SpringBootAdvance01CacheApplicationTests {
     private RedisTemplate<Object, Employee> empRedisTemplate;
 
     /**
-     * Redis常见的五大数据类型：<br>
+     * Redis常见的五大数据类型: <br>
      * 
-     * String（字符串）, List（列表）, Set（集合）, Hash（散列）, Zset（有序集合）
+     * String(字符串), List(列表), Set(集合), Hash(散列), Zset(有序集合)
      *
      * @throws Exception
      * @author colg
      */
     @Test
-    public void test01() throws Exception {
+    public void testSet() throws Exception {
         String key = "msg";
         stringRedisTemplate.opsForValue()
                            .append(key, "hello");
@@ -49,7 +48,7 @@ public class RedisTest extends SpringBootAdvance01CacheApplicationTests {
         String result = stringRedisTemplate.opsForValue()
                                            .get(key);
         log.info("result: {}", result);
-        Console.log("----------------------------------------------------------------------------------------------------");
+        log.info("------------------------------------------------------------------------------------------");
         
         key = "myList";
         stringRedisTemplate.opsForList()
@@ -59,9 +58,14 @@ public class RedisTest extends SpringBootAdvance01CacheApplicationTests {
     }
     
     @Test
-    public void testName() throws Exception {
+    public void testGet() throws Exception {
+        String key = "emp-01";
         stringRedisTemplate.opsForValue()
-                           .set("emp-01", JSON.toJSONString(employeeMapper.getEmpById(1)));
+                           .set(key, JSON.toJSONString(employeeMapper.getEmpById(1)));
+        
+        String jsonStr = stringRedisTemplate.opsForValue()
+                                            .get(key);
+        log.info("jsonStr: {}", jsonStr);
     }
     
     /**
@@ -71,7 +75,7 @@ public class RedisTest extends SpringBootAdvance01CacheApplicationTests {
      * @author colg
      */
     @Test
-    public void test02() throws Exception {
+    public void testGetEneity() throws Exception {
         String key = "emp-01";
         // 默认如果保存对象，使用jdk序列化机制，序列化后的数据保存到redis
         empRedisTemplate.opsForValue()
@@ -84,9 +88,11 @@ public class RedisTest extends SpringBootAdvance01CacheApplicationTests {
         /*
          * colg  [将数据以json的方式保存]
          *  1. 自己将对象转为json
+         *       String key = "emp-01";
          *       stringRedisTemplate.opsForValue()
-         *                          .set("emp-01", JSON.toJSONString(employeeMapper.getEmpById(1)));
+         *                          .set(key, JSON.toJSONString(employeeMapper.getEmpById(1)));
          *  2. 修改redisTemplate默认的序列化规则
+         *      cn.colg.config.RedisConfig
          */
     }
 }

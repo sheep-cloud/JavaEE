@@ -25,7 +25,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Autowired
     private DepartmentMapper departmentMapper;
-    
+
     @Qualifier("deptCacheManager")
     @Autowired
     private RedisCacheManager deptCacheManager;
@@ -68,17 +68,17 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Department getDept2ById(Integer id) {
         log.info("查询的部门ID： {}", id);
-        
-        // 获取某个缓存
+
+        // 查询缓存
         Cache cache = deptCacheManager.getCache("dept");
         Department department = cache.get(id, Department.class);
+        if (department != null) {
+            return department;
+        }
 
         // 查询数据库
-        if (department == null) {
-            department = departmentMapper.getDeptById(id);
-            cache.put(id, department);
-        }
-        
+        department = departmentMapper.getDeptById(id);
+        cache.put(id, department);
         return department;
     }
 
