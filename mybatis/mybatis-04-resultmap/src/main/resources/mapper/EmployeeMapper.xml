@@ -28,6 +28,7 @@
         FROM
             tbl_employee te
         WHERE te.id = #{id}
+        AND te.id &gt; 0
     </select>
 	
 	<!-- 
