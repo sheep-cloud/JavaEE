@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +11,6 @@ import cn.colg.entities.Department;
 import cn.colg.entities.Employee;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.RandomUtil;
 
 /**
@@ -49,11 +47,6 @@ public class EmployeeDao {
     private static DateTime getRandomBirth() {
         long timeMillis = RandomUtil.randomLong(DateUtil.parse("1950-01-01").getTime(), DateUtil.parse("2000-01-01").getTime());
         return new DateTime(timeMillis);
-    }
-    
-    @Test
-    public void testName() throws Exception {
-        Console.log(getRandomBirth());
     }
     
     private static Integer initId = 1006;
