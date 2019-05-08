@@ -1,30 +1,27 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/font-awesome.min.css">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/main.css">
+<%@include file="/WEB-INF/jsp/common/head.jsp" %>
 <style>
   .tree li {
     list-style-type: none;
     cursor: pointer;
   }
+
   table tbody tr:nth-child(odd) {
     background: #F4F4F4;
   }
+
   table tbody td:nth-child(even) {
     color: #C00;
   }
 </style>
 </head>
+
 <body>
+
   <%--导航--%>
   <%@ include file="/WEB-INF/jsp/common/nav.jsp" %>
 
@@ -91,82 +88,75 @@
     </div>
   </div>
 
-  <script src="${applicationScope.APP_PATH}/static/jquery/jquery-2.1.1.min.js"></script>
-  <script src="${applicationScope.APP_PATH}/static/bootstrap/js/bootstrap.min.js"></script>
-  <script src="${applicationScope.APP_PATH}/static/script/docs.min.js"></script>
-  <script src="${applicationScope.APP_PATH}/static/layer/layer.js"></script>
   <script>
-    $(function () {
-      $('.list-group-item').click(function () {
-        if ($(this).find('ul')) {
-          $(this).toggleClass('tree-closed')
-          if ($(this).hasClass('tree-closed')) {
-            $('ul', this).hide('fast')
+    $(() => {
+      $(".list-group-item").click(function () {
+        if ($(this).find("ul")) {
+          $(this).toggleClass("tree-closed")
+          if ($(this).hasClass("tree-closed")) {
+            $("ul", this).hide("fast")
           } else {
-            $('ul', this).show('fast')
+            $("ul", this).show("fast")
           }
         }
-      })
+      });
 
       // 默认查第一页
-      pageQuery(1)
+      const startNum = 1
+      pageQuery(startNum)
 
       // 搜索
       $('#queryBtn').click(function () {
-        let queryText = $('#queryText').val()
-        pageQuery(1, queryText)
+        const queryText = $('#queryText').val()
+        pageQuery(startNum, queryText)
       })
 
       // 全选
       $('#allSelBox').click(function () {
-        let self = this
+        const self = this
         $('#roleData :checkbox').each(function () {
           this.checked = self.checked
         })
       })
-    })
+    });
 
-    $('tbody .btn-success').click(function () {
-      window.location.href = 'assign${applicationScope.APP_PATH}/permission/tree'
+    $("tbody .btn-success").click(() => {
+      window.location.href = "assign${applicationScope.APP_PATH}/permission/tree"
     })
 
     // 分页查询
-    let pageSize = 10
+    const pageSize = 10
 
-    function pageQuery(pageNum, queryText) {
+    function pageQuery(pageNum, name) {
       let loadingIndex = null
-      let jsonData = {
-        'pageNum': pageNum,
-        'pageSize': pageSize,
-        'name': queryText
-      }
       $.ajax({
         type: 'post',
         url: '${applicationScope.APP_PATH}/role/pageQuery',
-        data: jsonData,
-        beforeSend: function () {
+        data: {pageNum, pageSize, name},
+        beforeSend: () => {
           loadingIndex = layer.msg('处理中', {icon: 16})
         },
-        success: function (result) {
+        success: data => {
           layer.close(loadingIndex)
 
-          let userList = result.data
-          let totalSize = result.total
+          const {data: userList, total: totalSize} = data
           let totalPage = Math.ceil(totalSize / pageSize)
 
           // 表格
           let tableContext = ''
-          $.each(userList, function (index, role) {
+          $.each(userList, (index, role) => {
+            const {id, name, createTime, updateTime} = role
+
             tableContext += '<tr>'
             tableContext += '   <td>' + (index + 1) + '</td>'
-            tableContext += '   <td><input type="checkbox" name="id" value="' + role.id + '"></td>'
-            tableContext += '   <td>' + role.name + '</td>'
-            tableContext += '   <td>' + role.createTime + '</td>'
-            tableContext += '   <td>' + role.updateTime + '</td>'
+            tableContext += '   <td><input type="checkbox" name="id" value="' + id + '"></td>'
+            tableContext += '   <td>' + name + '</td>'
+            tableContext += '   <td>' + createTime + '</td>'
+            tableContext += '   <td>' + updateTime + '</td>'
             tableContext += '   <td>'
-            tableContext += '       <button type="button" onclick=\'goAssignPage("' + role.id + '")\'" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>'
-            tableContext += '       <button type="button" onclick=\'goUpbatePage("' + role.id + '")\'" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>'
-            tableContext += '       <button type="button" onclick=\'delRole("' + role.id + '")\'" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>'
+            tableContext += '       <button type="button" onclick=\'goAssignPage("' + id + '")\'" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>'
+            tableContext += '       <button type="button" onclick=\'goUpbatePage("' + id + '")\'" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>'
+            tableContext += '       <button type="button" onclick=\'delRole("' + id + '")\'" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>'
             tableContext += '   </td>'
             tableContext += '</tr>'
           })
@@ -175,7 +165,7 @@
           // 分页
           let paginationContext = ''
           if (pageNum <= 1) {
-            paginationContext += `<li class="disabled"><a href="#">上一页</a></li>`
+            paginationContext += '<li class="disabled"><a href="#">上一页</a></li>'
           } else {
             paginationContext += '<li><a href="#" onclick="pageQuery(' + (pageNum - 1) + ')">上一页</a></li>'
           }
@@ -191,7 +181,7 @@
           if (pageNum < totalPage) {
             paginationContext += '<li><a href="#" onclick="pageQuery(' + (pageNum + 1) + ')">下一页</a></li>'
           } else {
-            paginationContext += `<li class="disabled"><a href="#">下一页</a></li>`
+            paginationContext += '<li class="disabled"><a href="#">下一页</a></li>'
           }
           $('.pagination').html(paginationContext)
         }
@@ -209,28 +199,28 @@
       if (boxes.length === 0) {
         layer.msg('请选择需要删除的角色信息', {time: 1000, icon: 5, shift: 6})
       } else {
-        layer.confirm('删除角色信息，是否继续？', {icon: 3, title: '提示'}, function (cindex) {
+        layer.confirm('删除角色信息, 是否继续?', {icon: 3, title: '提示'}, cindex => {
           layer.close(cindex)
           let loadingIndex = null
           $.ajax({
             type: 'post',
             url: '${applicationScope.APP_PATH}/role/delRoles',
             data: $('#roleForm').serialize(),
-            beforeSend: function () {
+            beforeSend: () => {
               loadingIndex = layer.msg('处理中', {icon: 16})
             },
-            success: function (result) {
-              layer.close(loadingIndex)
-              if (result.code === 0) {
-                layer.msg('角色信息删除成功', {time: 1000, icon: 6, shift: 5}, function () {
+            success: data => {
+              layer.close(loadingIndex);
+              if (data.code === 0) {
+                layer.msg('角色信息删除成功', {time: 1000, icon: 6, shift: 5}, () => {
                   window.location.href = '${applicationScope.APP_PATH}/role/list'
                 })
               } else {
-                layer.msg(result.message, {time: 1000, icon: 5, shift: 6})
+                layer.msg(data.message, {time: 1000, icon: 5, shift: 6})
               }
             }
           })
-        }, function (cindex) {
+        }, cindex => {
           layer.close(cindex)
         })
       }
@@ -238,30 +228,28 @@
 
     // 删除角色
     function delRole(id) {
-      layer.confirm('删除角色信息，是否继续？', {icon: 3, title: '提示'}, function (cindex) {
+      layer.confirm('删除角色信息, 是否继续?', {icon: 3, title: '提示'}, cindex => {
         layer.close(cindex)
         let loadingIndex = null
         $.ajax({
           type: 'post',
           url: '${applicationScope.APP_PATH}/role/delRole',
-          data: {
-            'id': id
-          },
-          beforeSend: function () {
+          data: {id},
+          beforeSend: () => {
             loadingIndex = layer.msg('处理中', {icon: 16})
           },
-          success: function (result) {
-            layer.close(loadingIndex)
-            if (result.code === 0) {
-              layer.msg('角色信息删除成功', {time: 1000, icon: 6, shift: 5}, function () {
+          success: data => {
+            layer.close(loadingIndex);
+            if (data.code === 0) {
+              layer.msg('角色信息删除成功', {time: 1000, icon: 6, shift: 5}, () => {
                 window.location.href = '${applicationScope.APP_PATH}/role/list'
               })
             } else {
-              layer.msg(result.message, {time: 1000, icon: 5, shift: 6})
+              layer.msg(data.message, {time: 1000, icon: 5, shift: 6})
             }
           }
         })
-      }, function (cindex) {
+      }, cindex => {
         layer.close(cindex)
       })
     }

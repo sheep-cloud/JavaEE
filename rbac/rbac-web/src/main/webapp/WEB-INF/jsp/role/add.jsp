@@ -1,17 +1,9 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/font-awesome.min.css">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/main.css">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/doc.min.css">
+<%@include file="/WEB-INF/jsp/common/head.jsp" %>
 <style>
   .tree li {
     list-style-type: none;
@@ -19,7 +11,9 @@
   }
 </style>
 </head>
+
 <body>
+
   <%--导航--%>
   <%@ include file="/WEB-INF/jsp/common/nav.jsp" %>
 
@@ -80,35 +74,32 @@
       </div>
     </div>
   </div>
-  <script src="${applicationScope.APP_PATH}/static/jquery/jquery-2.1.1.min.js"></script>
-  <script src="${applicationScope.APP_PATH}/static/bootstrap/js/bootstrap.min.js"></script>
-  <script src="${applicationScope.APP_PATH}/static/script/docs.min.js"></script>
-  <script src="${applicationScope.APP_PATH}/static/layer/layer.js"></script>
+
   <script>
-    $(function () {
-      $('.list-group-item').click(function () {
-        if ($(this).find('ul')) {
-          $(this).toggleClass('tree-closed')
-          if ($(this).hasClass('tree-closed')) {
-            $('ul', this).hide('fast')
+    $(() => {
+      $(".list-group-item").click(function () {
+        if ($(this).find("ul")) {
+          $(this).toggleClass("tree-closed")
+          if ($(this).hasClass("tree-closed")) {
+            $("ul", this).hide("fast")
           } else {
-            $('ul', this).show('fast')
+            $("ul", this).show("fast")
           }
         }
       })
 
       // 重置
-      $('#resetBtn').click(function () {
+      $('#resetBtn').click(() => {
         // jQuery[0]    ===> DOM
         // $(DOM)       ===> jQuery
         $('#roleForm')[0].reset()
       })
 
       // 新增
-      $('#insertBtn').click(function () {
+      $('#insertBtn').click(() => {
         let name = $('#name').val()
         if (!name) {
-          layer.msg('角色名称不能为空，请输入', {time: 1000, icon: 5, shift: 6})
+          layer.msg('角色名称不能为空, 请输入', {time: 1000, icon: 5, shift: 6})
           return
         }
 
@@ -116,20 +107,18 @@
         $.ajax({
           type: 'post',
           url: '${applicationScope.APP_PATH}/role/insert',
-          data: {
-            'name': name
-          },
-          beforeSend: function () {
+          data: {name},
+          beforeSend: () => {
             loadingIndex = layer.msg('处理中', {icon: 16})
           },
-          success: function (result) {
-            layer.close(loadingIndex)
-            if (result.code === 0) {
-              layer.msg('用户信息保存成功', {time: 1000, icon: 6, shift: 5}, function () {
+          success: data => {
+            layer.close(loadingIndex);
+            if (data.code === 0) {
+              layer.msg('用户信息保存成功', {time: 1000, icon: 6, shift: 5}, () => {
                 window.location.href = '${applicationScope.APP_PATH}/role/list'
               })
             } else {
-              layer.msg(result.message, {time: 1000, icon: 5, shift: 6})
+              layer.msg(data.message, {time: 1000, icon: 5, shift: 6})
             }
           }
         })

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -12,11 +12,11 @@
 </head>
 <body>
   <!-- 代码 开始 -->
-  <div id="container"><img class="png" src="${applicationScope.APP_PATH}/static/imgages/404.png"/>
-    <img class="png msg" src="${applicationScope.APP_PATH}/static/imgages/404_msg.png"/>
+  <div id="container"><img class="png" src="${applicationScope.APP_PATH}/static/images/404.png"/>
+    <img class="png msg" src="${applicationScope.APP_PATH}/static/images/404_msg.png"/>
     <p>
       <a href="${applicationScope.APP_PATH}/login" target="_blank">
-        <img class="png" src="${applicationScope.APP_PATH}/static/imgages/404_to_index.png"/>
+        <img class="png" src="${applicationScope.APP_PATH}/static/images/404_to_index.png"/>
       </a>
     </p>
   </div>

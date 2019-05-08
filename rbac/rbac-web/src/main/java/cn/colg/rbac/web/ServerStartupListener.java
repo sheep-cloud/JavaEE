@@ -24,5 +24,7 @@ public class ServerStartupListener implements ServletContextListener {
     }
 
     @Override
-    public void contextDestroyed(ServletContextEvent sce) {}
+    public void contextDestroyed(ServletContextEvent sce) {
+
+    }
 }

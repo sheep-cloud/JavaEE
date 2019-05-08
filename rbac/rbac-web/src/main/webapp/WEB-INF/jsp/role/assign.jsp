@@ -1,31 +1,29 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/font-awesome.min.css">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/main.css">
+<%@include file="/WEB-INF/jsp/common/head.jsp" %>
 <link rel="stylesheet" href="${applicationScope.APP_PATH}/static/ztree/zTreeStyle.css">
+<script src="${applicationScope.APP_PATH}/static/ztree/jquery.ztree.all-3.5.min.js"></script>
 <style>
   .tree li {
     list-style-type: none;
     cursor: pointer;
   }
+
   table tbody tr:nth-child(odd) {
     background: #F4F4F4;
   }
+
   table tbody td:nth-child(even) {
     color: #C00;
   }
 </style>
 </head>
+
 <body>
+
   <%--导航--%>
   <%@ include file="/WEB-INF/jsp/common/nav.jsp" %>
 
@@ -40,7 +38,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <i class="glyphicon glyphicon-th-list"></i>
-                                    权限分配列表
+            权限分配列表
             <div class="pull-right" style="cursor:pointer;" data-toggle="modal" data-target="#myModal">
               <i class="glyphicon glyphicon-question-sign"></i>
             </div>
@@ -80,20 +78,15 @@
     </div>
   </div>
 
-  <script src="${applicationScope.APP_PATH}/static/jquery/jquery-2.1.1.min.js"></script>
-  <script src="${applicationScope.APP_PATH}/static/bootstrap/js/bootstrap.min.js"></script>
-  <script src="${applicationScope.APP_PATH}/static/script/docs.min.js"></script>
-  <script src="${applicationScope.APP_PATH}/static/layer/layer.js"></script>
-  <script src="${applicationScope.APP_PATH}/static/ztree/jquery.ztree.all-3.5.min.js"></script>
-  <script type="text/javascript">
-    $(function () {
-      $('.list-group-item').click(function () {
-        if ($(this).find('ul')) {
-          $(this).toggleClass('tree-closed')
-          if ($(this).hasClass('tree-closed')) {
-            $('ul', this).hide('fast')
+  <script>
+    $(() => {
+      $(".list-group-item").click(function () {
+        if ($(this).find("ul")) {
+          $(this).toggleClass("tree-closed")
+          if ($(this).hasClass("tree-closed")) {
+            $("ul", this).hide("fast")
           } else {
-            $('ul', this).show('fast')
+            $("ul", this).show("fast")
           }
         }
       })
@@ -106,54 +99,54 @@
         async: {
           enable: true,
           url: '${applicationScope.APP_PATH}/permission/loadAssignData?roleId=${param.id}',
-          autoParam: ['id', 'name=n', 'level=lv'],
-          dataFilter: function (treeId, parentNode, responseData) {
-            console.log(treeId)
-            console.log(parentNode)
-            console.log(responseData)
+          autoParam: ["id", "name=n", "level=lv"],
+          dataFilter: (treeId, parentNode, responseData) => {
+            console.log(treeId, parentNode, responseData)
             return responseData.data
           }
         },
         view: {
           selectedMulti: false,
-          addDiyDom: function (treeId, treeNode) {
+          addDiyDom: (treeId, treeNode) => {
             // 用于在节点上固定显示用户自定义控件
-            let icoObj = $('#' + treeNode.tId + '_ico') // tId = permissionTree_1, $("#permissionTree_1_ico")
+            let icoObj = $("#" + treeNode.tId + "_ico"); // tId = permissionTree_1, $("#permissionTree_1_ico")
             if (treeNode.icon) {
               // 使用 bootstrop 中的样式
-              icoObj.removeClass('button ico_docu ico_open').addClass(treeNode.icon).css('background', '')
+              icoObj.removeClass("button ico_docu ico_open").addClass(treeNode.icon).css("background", "")
             }
           },
-          addHoverDom: function (treeId, treeNode) {
+          addHoverDom: (treeId, treeNode) => {
             // 用于当鼠标移动到节点上时，显示用户自定义控件，显示隐藏状态同 zTree 内部的编辑、删除按钮
             //   <a><span></span></a>
-            let aObj = $('#' + treeNode.tId + '_a') // tId = permissionTree_1, ==> $("#permissionTree_1_a")
-            aObj.attr('href', 'javascript:;')
-            if (treeNode.editNameFlag || $('#btnGroup' + treeNode.tId).length > 0) return
+            let aObj = $("#" + treeNode.tId + "_a"); // tId = permissionTree_1, ==> $("#permissionTree_1_a")
+            aObj.attr("href", "javascript:;");
+            if (treeNode.editNameFlag || $("#btnGroup" + treeNode.tId).length > 0) {
+              return
+            }
             let s = '<span id="btnGroup' + treeNode.tId + '">'
             if (treeNode.level === 0) {
-              s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0;" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>'
+              s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>'
             } else if (treeNode.level === 1) {
-              s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0;" href="#" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>'
+              s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>'
               if (treeNode.children.length === 0) {
-                s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0;" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>'
+                s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>'
               }
-              s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0;" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>'
+              s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>'
             } else if (treeNode.level === 2) {
-              s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0;" href="#" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>'
-              s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0;" href="#">&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>'
+              s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>'
+              s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#">&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>'
             }
             s += '</span>'
             aObj.after(s)
           },
-          removeHoverDom: function (treeId, treeNode) {
-            $('#btnGroup' + treeNode.tId).remove()
+          removeHoverDom: (treeId, treeNode) => {
+            $("#btnGroup" + treeNode.tId).remove()
           }
         }
       }
 
       // 异步获取属性结构数据
-      $.fn.zTree.init($('#permissionTree'), setting)
+      $.fn.zTree.init($("#permissionTree"), setting)
     })
 
     // 分配许可
@@ -164,18 +157,18 @@
         layer.msg('请选择需要分配的许可信息', {time: 2000, icon: 5, shift: 6})
       } else {
         let d = 'roleId=${param.id}'
-        $.each(nodes, function (i, node) {
+        $.each(nodes, (i, node) => {
           d += '&permissionIds=' + node.id
         })
         $.ajax({
           type: 'post',
           url: '${applicationScope.APP_PATH}/role/doAssign',
           data: d,
-          success: function (result) {
-            if (result.code === 0) {
+          success: data => {
+            if (data.code === 0) {
               layer.msg('分配许可信息成功', {time: 1000, icon: 6, shift: 5})
             } else {
-              layer.msg(result.message, {time: 1000, icon: 5, shift: 6})
+              layer.msg(data.message, {time: 1000, icon: 5, shift: 6})
             }
           }
         })

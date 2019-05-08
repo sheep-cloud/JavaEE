@@ -1,37 +1,20 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<style>
-  .tree li {
-    list-style-type: none;
-    cursor: pointer;
-  }
-  .tree-closed {
-    height: 40px;
-  }
-  .tree-expanded {
-    height: auto;
-  }
-</style>
 <div class="tree">
-  <ul class="list-group">
+  <ul style="padding-left:0px;" class="list-group">
     <c:forEach items="${sessionScope.rootPermission.children}" var="permission">
       <c:if test="${empty permission.children}">
         <li class="list-group-item tree-closed">
-          <a href="javascript:"><i class="${permission.icon}"></i> ${permission.name}</a>
+          <a href="${applicationScope.APP_PATH}${permission.url}"><i class="${permission.icon}"></i> ${permission.name}</a>
         </li>
       </c:if>
       <c:if test="${not empty permission.children}">
         <li class="list-group-item tree-closed">
           <span><i class="${permission.icon}"></i> ${permission.name} <span class="badge pull-right">${permission.children.size()}</span></span>
-          <ul style="margin-top: 10px; display: none;">
+          <ul style="margin-top:10px;display:none;">
             <c:forEach items="${permission.children}" var="child">
-              <li style="height: 30px;">
-                <c:if test="${empty child.url}">
-                  <a href="javascript:"><i class="${child.icon}"></i> ${child.name}</a>
-                </c:if>
-                <c:if test="${not empty child.url}">
-                  <a href="${applicationScope.APP_PATH}${child.url}"><i class="${child.icon}"></i> ${child.name}</a>
-                </c:if>
+              <li style="height:30px;">
+                <a href="${applicationScope.APP_PATH}${child.url}"><i class="${child.icon}"></i> ${child.name}</a>
               </li>
             </c:forEach>
           </ul>
@@ -40,8 +23,8 @@
     </c:forEach>
   </ul>
 </div>
-
 <%--
+
 <div class="tree">
   <li class="list-group-item tree-closed">
     <a href="${applicationScope.APP_PATH}/main"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a>

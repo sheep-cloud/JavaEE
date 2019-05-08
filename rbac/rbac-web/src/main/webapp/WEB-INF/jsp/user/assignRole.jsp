@@ -3,14 +3,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/font-awesome.min.css">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/main.css">
+<%@include file="/WEB-INF/jsp/common/head.jsp" %>
 <style>
   .tree li {
     list-style-type: none;
@@ -18,7 +11,9 @@
   }
 </style>
 </head>
+
 <body>
+
   <%--导航--%>
   <%@ include file="/WEB-INF/jsp/common/nav.jsp" %>
 
@@ -91,27 +86,23 @@
       </div>
     </div>
   </div>
-  <script src="${applicationScope.APP_PATH}/static/jquery/jquery-2.1.1.min.js"></script>
-  <script src="${applicationScope.APP_PATH}/static/bootstrap/js/bootstrap.min.js"></script>
-  <script src="${applicationScope.APP_PATH}/static/script/docs.min.js"></script>
-  <script src="${applicationScope.APP_PATH}/static/layer/layer.js"></script>
+
   <script>
-    $(function () {
-      $('.list-group-item').click(function () {
-        if ($(this).find('ul')) {
-          $(this).toggleClass('tree-closed')
-          if ($(this).hasClass('tree-closed')) {
-            $('ul', this).hide('fast')
+    $(() => {
+      $(".list-group-item").click(function () {
+        if ($(this).find("ul")) {
+          $(this).toggleClass("tree-closed")
+          if ($(this).hasClass("tree-closed")) {
+            $("ul", this).hide("fast")
           } else {
-            $('ul', this).show('fast')
+            $("ul", this).show("fast")
           }
         }
       })
 
       // 穿梭框（左到右）
-      $('#left2RightBtn').click(function () {
+      $('#left2RightBtn').click(() => {
         let leftOpts = $('#leftList :selected')
-        console.log($('#roleForm').serialize())
         if (leftOpts.length === 0) {
           layer.msg('请选择需要分配的角色数据', {time: 1000, icon: 5, shift: 6})
         } else {
@@ -119,15 +110,15 @@
             type: 'post',
             url: '${applicationScope.APP_PATH}/user/doAssign',
             data: $('#roleForm').serialize(),
-            success: function (result) {
-              if (result.code === 0) {
+            success: data => {
+              if (data.code === 0) {
                 $('#rightList').append(leftOpts)
                 layer.msg('分配角色数据成功', {time: 1000, icon: 6, shift: 5})
               } else {
-                layer.msg(result.message, {time: 1000, icon: 5, shift: 5})
+                layer.msg(data.message, {time: 1000, icon: 5, shift: 5})
               }
             },
-            error: function () {
+            error: () => {
               layer.msg('分配角色数据失败', {time: 1000, icon: 5, shift: 5})
             }
           })
@@ -135,7 +126,7 @@
       })
 
       // 穿梭框（右到左）
-      $('#right2LeftBtn').click(function () {
+      $('#right2LeftBtn').click(() => {
         let rightOpts = $('#rightList :selected')
         if (rightOpts.length === 0) {
           layer.msg('请选择需要取消分配的角色数据', {time: 1000, icon: 5, shift: 6})
@@ -144,13 +135,16 @@
             type: 'post',
             url: '${applicationScope.APP_PATH}/user/dounAssign',
             data: $('#roleForm').serialize(),
-            success: function (result) {
-              if (result.code === 0) {
+            success: data => {
+              if (data.code === 0) {
                 $('#leftList').append(rightOpts)
                 layer.msg('取消分配角色数据成功', {time: 1000, icon: 6, shift: 5})
               } else {
-                layer.msg(result.message, {time: 1000, icon: 5, shift: 5})
+                layer.msg(data.message, {time: 1000, icon: 5, shift: 5})
               }
+            },
+            error: () => {
+              layer.msg('取消分配角色数据失败', {time: 1000, icon: 5, shift: 5})
             }
           })
         }

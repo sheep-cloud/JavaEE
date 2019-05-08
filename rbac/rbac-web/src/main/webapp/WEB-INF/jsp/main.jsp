@@ -1,17 +1,22 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/font-awesome.min.css">
-<link rel="stylesheet" href="${applicationScope.APP_PATH}/static/css/main.css">
+<%@include file="/WEB-INF/jsp/common/head.jsp" %>
+<style>
+  .tree li {
+    list-style-type: none;
+    cursor: pointer;
+  }
+
+  .tree-closed {
+    height: 40px;
+  }
+</style>
 </head>
+
 <body>
+
   <%--导航--%>
   <%@ include file="/WEB-INF/jsp/common/nav.jsp" %>
 
@@ -49,20 +54,18 @@
       </div>
     </div>
   </div>
-  <script src="${applicationScope.APP_PATH}/static/jquery/jquery-2.1.1.min.js"></script>
-  <script src="${applicationScope.APP_PATH}/static/bootstrap/js/bootstrap.min.js"></script>
-  <script src="${applicationScope.APP_PATH}/static/script/docs.min.js"></script>
+
   <script>
-    $(function () {
-      $('.list-group-item').click(function () {
+    $(() => {
+      $(".list-group-item").click(function () {
         // jquery对象的回调方法中的this关键字为DOM对象
         // $(DOM) ==> JQuery
-        if ($(this).find('ul')) { // 3 li
-          $(this).toggleClass('tree-closed')
-          if ($(this).hasClass('tree-closed')) {
-            $('ul', this).hide('fast')
+        if ($(this).find("ul")) { // 3 li
+          $(this).toggleClass("tree-closed")
+          if ($(this).hasClass("tree-closed")) {
+            $("ul", this).hide("fast")
           } else {
-            $('ul', this).show('fast')
+            $("ul", this).show("fast")
           }
         }
       })
