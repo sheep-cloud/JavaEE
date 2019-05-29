@@ -27,8 +27,8 @@
             te.id, te.last_name, te.gender, te.email
         FROM
             tbl_employee te
-        WHERE te.id = #{id}
-        AND te.id &gt; 0
+        WHERE
+            te.id = #{id}
     </select>
 	
 	<!-- 
@@ -41,8 +41,9 @@
             td.id `dept.id`, td.dept_name `dept.departmentName`
         FROM
             tbl_employee te
-        INNER JOIN tbl_dept td ON td.id = te.dept_id
-        WHERE te.id = #{id}
+            INNER JOIN tbl_dept td ON td.id = te.dept_id
+        WHERE
+            te.id = #{id}
     </select>
 	
 	<!-- 
@@ -67,8 +68,9 @@
             td.id `dept_id`, td.dept_name
         FROM
             tbl_employee te
-        INNER JOIN tbl_dept td ON td.id = te.dept_id
-        WHERE te.id = #{id}
+            INNER JOIN tbl_dept td ON td.id = te.dept_id
+        WHERE
+            te.id = #{id}
     </select>
 
     <resultMap type="cn.colg.entity.Employee" id="MydifEmp2">
@@ -96,8 +98,9 @@
             td.id, td.dept_name
         FROM
             tbl_employee te
-        INNER JOIN tbl_dept td ON td.id = te.dept_id
-        WHERE te.id = #{id}
+            INNER JOIN tbl_dept td ON td.id = te.dept_id
+        WHERE
+            te.id = #{id}
     </select>
 
     <resultMap type="cn.colg.entity.Employee" id="MydifEmpStep3">
@@ -111,7 +114,7 @@
 				column="id"：										指定将哪一列的值传给这个方法；findById(Integer id);入参
 			流程：使用select指定的方法（传入column指定的这列参数的值）查出对象，并封装给property指定的属性。
 		 -->
-        <association property="dept" select="cn.colg.dao.DepartmentMapper.findById" column="id" />
+        <association property="dept" column="id" select="cn.colg.dao.DepartmentMapper.findById" />
     </resultMap>
     <!-- 
                         根据id查询员工，把部门也查出来；
@@ -120,8 +123,10 @@
     <select id="findEmpAndDeptStep04" resultMap="MydifEmpStep3">
         SELECT
             te.id, te.last_name, te.gender, te.email
-        FROM tbl_employee te
-        WHERE te.id = #{id}
+        FROM
+            tbl_employee te
+        WHERE
+            te.id = #{id}
     </select>
 
     <select id="queryByDeptId" resultType="cn.colg.entity.Employee">
@@ -129,14 +134,18 @@
             te.id, te.last_name `lastName`, te.gender, te.email, te.dept_id
         FROM
             tbl_employee te
-        WHERE te.dept_id = #{deptId}
+        WHERE
+            te.dept_id = #{deptId}
     </select>
 
     <select id="queryByDeptIdAndLastName" resultType="cn.colg.entity.Employee">
         SELECT
             te.id, te.last_name 'lastName', te.gender, te.email, te.dept_id
-        FROM tbl_employee te
-        WHERE te.dept_id = #{deptId} AND te.last_name LIKE '%${lastName}%'
+        FROM
+            tbl_employee te
+        WHERE
+            te.dept_id = #{deptId}
+            AND te.last_name LIKE '%${lastName}%'
     </select>
 
 </mapper>

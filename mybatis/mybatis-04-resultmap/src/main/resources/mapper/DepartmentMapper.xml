@@ -50,7 +50,7 @@
     <resultMap type="cn.colg.entity.Department" id="MyDeptStep">
         <id property="id" column="id" />
         <result property="departmentName" column="dept_name" />
-        <collection property="emps" select="cn.colg.dao.EmployeeMapper.queryByDeptId" column="deptId=id" />
+        <collection property="emps" column="deptId=id" select="cn.colg.dao.EmployeeMapper.queryByDeptId" />
     </resultMap>
     <!-- 
                         根据id查询部门，把员工也查询出来；
