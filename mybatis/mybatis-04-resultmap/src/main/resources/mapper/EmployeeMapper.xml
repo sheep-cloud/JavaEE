@@ -143,9 +143,14 @@
             te.id, te.last_name 'lastName', te.gender, te.email, te.dept_id
         FROM
             tbl_employee te
-        WHERE
-            te.dept_id = #{deptId}
-            AND te.last_name LIKE '%${lastName}%'
+        <where>
+            <if test="deptId != null and deptId != ''">
+                 te.dept_id = #{deptId}
+            </if>
+            <if test="lastName != null and lastName != ''">
+                AND te.last_name LIKE '%${lastName}%'
+            </if>
+        </where>
     </select>
 
 </mapper>

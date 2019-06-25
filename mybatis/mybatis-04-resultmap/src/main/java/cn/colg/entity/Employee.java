@@ -33,6 +33,8 @@ public class Employee extends BaseEntity implements Serializable {
     private String gender;
     /** 邮箱 */
     private String email;
+    
+    private String deptId;
 
     /** 部门；多对一 */
     @JSONField(ordinal = 1)
