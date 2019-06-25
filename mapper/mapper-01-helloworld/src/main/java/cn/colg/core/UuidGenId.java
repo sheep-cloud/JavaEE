@@ -12,7 +12,7 @@ public class UuidGenId implements GenId<String> {
 
     @Override
     public String genId(String table, String column) {
-        return IdUtil.simpleUUID();
+        return IdUtil.fastSimpleUUID();
     }
 
 }

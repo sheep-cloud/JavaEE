@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.colg.BaseMapperTest;
 import cn.colg.bean.Employee;
-import cn.hutool.core.lang.Console;
 import lombok.extern.slf4j.Slf4j;
 import tk.mybatis.mapper.entity.Example;
 
@@ -28,7 +27,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     @Test
     public final void testSelectOne() {
         Employee employee = mapper.selectOne(new Employee("tom", 1254.37));
-        Console.log(employee);
+        log.info("员工信息: {}", employee);
     }
 
     /**
@@ -37,8 +36,8 @@ public class EmployeeMapperTest extends BaseMapperTest {
     @Test
     public final void testSelect() {
         List<Employee> employeeList = mapper.select(new Employee("tom", 1254.37));
-        Console.log("员工数量: {}", employeeList.size());
-        Console.log("员工列表： {}", employeeList);
+        log.info("员工数量: {}", employeeList.size());
+        log.info("员工列表: {}", employeeList);
     }
 
     /**
@@ -47,8 +46,8 @@ public class EmployeeMapperTest extends BaseMapperTest {
     @Test
     public final void testSelectAll() {
         List<Employee> employeeList = mapper.selectAll();
-        Console.log("员工数量: {}", employeeList.size());
-        Console.log("员工列表: {}", employeeList);
+        log.info("员工数量: {}", employeeList.size());
+        log.info("员工列表: {}", employeeList);
     }
 
     /**
@@ -57,7 +56,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     @Test
     public final void testSelectCount() {
         int count = mapper.selectCount(new Employee("tom", 1254.37));
-        Console.log(count);
+        log.info("员工数量: {}", count);
     }
 
     /**
@@ -65,8 +64,8 @@ public class EmployeeMapperTest extends BaseMapperTest {
      */
     @Test
     public final void testSelectByPrimaryKey() {
-        Employee employee = mapper.selectByPrimaryKey("8a4864ae7a7f11e8ad9154ee75c6aeb0");
-        Console.log(employee);
+        Employee employee = mapper.selectByPrimaryKey("f5dccdca658f11e986ca54ee75c6aeb0");
+        log.info("员工信息: {}", employee);
     }
 
     /**
@@ -74,8 +73,8 @@ public class EmployeeMapperTest extends BaseMapperTest {
      */
     @Test
     public final void testExistsWithPrimaryKey() {
-        boolean exists = mapper.existsWithPrimaryKey("8a4864ae7a7f11e8ad9154ee75c6aeb0");
-        Console.log(exists);
+        boolean exists = mapper.existsWithPrimaryKey("f5dccdca658f11e986ca54ee75c6aeb0_");
+        log.info("员工存在: {}", exists);
     }
 
     /**
@@ -84,8 +83,8 @@ public class EmployeeMapperTest extends BaseMapperTest {
     @Test
     public final void testInsert() {
         Employee employee = new Employee("jack", 9999.99);
-        mapper.insert(employee);
-        Console.log(employee.getEmpId());
+        int result = mapper.insert(employee);
+        log.info("新增状态: {}", result);
     }
 
     /**
@@ -94,8 +93,8 @@ public class EmployeeMapperTest extends BaseMapperTest {
     @Test
     public final void testInsertSelective() {
         Employee employee = new Employee("rose", 8888.88);
-        mapper.insertSelective(employee);
-        Console.log(employee.getEmpId());
+        int result = mapper.insertSelective(employee);
+        log.info("新增状态: {}", result);
     }
 
     /**
@@ -103,8 +102,10 @@ public class EmployeeMapperTest extends BaseMapperTest {
      */
     @Test
     public final void testUpdateByPrimaryKey() {
-        Employee employee = new Employee("jack", 9999.88).setEmpId("b88e654b9d3c4f0db8b54db7874784d8");
-        mapper.updateByPrimaryKey(employee);
+        String empId = "018c545565454c7582127af5d462827c";
+        Employee employee = new Employee("jack", 9999.88).setEmpId(empId);
+        int result = mapper.updateByPrimaryKey(employee);
+        log.info("修改状态: {}", result);
     }
 
     /**
@@ -112,8 +113,10 @@ public class EmployeeMapperTest extends BaseMapperTest {
      */
     @Test
     public final void testUpdateByPrimaryKeySelective() {
-        Employee employee = new Employee("rose", 8888.88).setEmpId("f62134b196864a63bdf63194bc9c80d7");
-        mapper.updateByPrimaryKeySelective(employee);
+        String empId = "35e1238ac7a347e3ac8ffccef11099a8";
+        Employee employee = new Employee("rose", 8888.77).setEmpId(empId);
+        int result = mapper.updateByPrimaryKeySelective(employee);
+        log.info("修改状态: {}", result);
     }
 
     /**
@@ -122,8 +125,8 @@ public class EmployeeMapperTest extends BaseMapperTest {
     @Test
     public final void testDelete() {
         Employee employee = new Employee("justin", 4203.15000);
-        int delete = mapper.delete(employee);
-        Console.log(delete);
+        int result = mapper.delete(employee);
+        log.info("删除状态: {}", result);
     }
 
     /**
@@ -132,7 +135,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
     @Test
     public final void testDeleteByPrimaryKey() {
         int result = mapper.deleteByPrimaryKey("45f68c067cdb11e8a2c454ee75c6aeb0");
-        Console.log(result);
+        log.info("删除状态: {}", result);
     }
 
     /**
@@ -143,8 +146,8 @@ public class EmployeeMapperTest extends BaseMapperTest {
         Example example = new Example(Employee.class);
         example.createCriteria().andLike("empName", "%o%");
         List<Employee> employeeList = mapper.selectByExample(example);
-        Console.log("员工数量: {}", employeeList.size());
-        Console.log("员工列表: {}", employeeList);
+        log.info("员工数量: {}", employeeList.size());
+        log.info("员工列表: {}", employeeList);
     }
 
     /**
@@ -155,7 +158,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
         Example example = new Example(Employee.class);
         example.createCriteria().andEqualTo("empName", "bob").andEqualTo("empSalary", 5560.11000);
         Employee employee = mapper.selectOneByExample(example);
-        Console.log(employee);
+        log.info("员工信息: {}", employee);
     }
 
     /**
@@ -166,7 +169,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
         Example example = new Example(Employee.class);
         example.createCriteria().andLike("empName", "%o%");
         int count = mapper.selectCountByExample(example);
-        Console.log(count);
+        log.info("员工数量: {}", count);
     }
 
     /**
@@ -177,7 +180,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
         Example example = new Example(Employee.class);
         example.createCriteria().andBetween("empSalary", 1000D, 3000D);
         int result = mapper.deleteByExample(example);
-        Console.log(result);
+        log.info("删除状态: {}", result);
     }
 
     /**
@@ -188,7 +191,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
         Example example = new Example(Employee.class);
         example.createCriteria().andEqualTo("empName", "bob");
         int result = mapper.updateByExample(new Employee("bob", 5550.11000), example);
-        Console.log(result);
+        log.info("修改状态: {}", result);
     }
 
     /**
@@ -199,7 +202,7 @@ public class EmployeeMapperTest extends BaseMapperTest {
         Example example = new Example(Employee.class);
         example.createCriteria().andEqualTo("empName", "bob");
         int result = mapper.updateByExampleSelective(new Employee("bob", 5550.11000), example);
-        log.info("EmployeeMapperTest.testUpdateByExample() >> result : {}", result);
+        log.info("删除状态: {}", result);
     }
     
 }
